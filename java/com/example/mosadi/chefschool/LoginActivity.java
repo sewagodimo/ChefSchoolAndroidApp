@@ -18,10 +18,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -69,13 +71,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+    ActionBar bar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //
+        bar = getSupportActionBar();
+         bar.setTitle("Alumni App");
 
-
+        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -91,7 +98,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-
 
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
@@ -149,6 +155,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 //      THE BUTTONS METHODS
 public void onForgotPassword(View view){
 
@@ -160,6 +178,7 @@ public void onForgotPassword(View view){
 
 }
 public void getNewPassword(View v){
+    bar.setTitle("Forgot Password");
     Context context = getApplicationContext();
     Toast toast = Toast.makeText(context, "New password request sent", Toast.LENGTH_SHORT);
     toast.show();
@@ -179,6 +198,7 @@ public void getNewPassword(View v){
     }
 }
 public void onLoginRegister(View view){
+    bar.setTitle("Terms and Conditions");
     FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
     fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
     RegisterAgreement agreement = new RegisterAgreement();
@@ -186,6 +206,7 @@ public void onLoginRegister(View view){
     fragmentTransaction.commit();
 }
     public void onAgreedRegister(View v){
+        bar.setTitle("Register");
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         RegisterFragment register = new RegisterFragment();
@@ -193,6 +214,7 @@ public void onLoginRegister(View view){
         fragmentTransaction.commit();
     }
     public void onContactSchool(View v){
+        bar.setTitle("School Contact Information");
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         ContactSchool contact = new ContactSchool();
@@ -200,6 +222,7 @@ public void onLoginRegister(View view){
         fragmentTransaction.commit();
     }
     public void backtoMain(View v){
+        bar.setTitle("Alimi App");
         FragmentManager fm = this.getSupportFragmentManager();
         for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
@@ -207,7 +230,7 @@ public void onLoginRegister(View view){
     }
 //Allows us to change the custom bar title
     public void setActionBarTitle(String title){
-        setActionBarTitle(title);//.setText(title);
+        bar.setTitle(title);//.setText(title);
     }
 
 
