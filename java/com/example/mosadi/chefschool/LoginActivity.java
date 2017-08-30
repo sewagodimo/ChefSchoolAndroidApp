@@ -190,8 +190,8 @@ public void onRegisterUser( View v){
     AutoCompleteTextView nametxt =(AutoCompleteTextView) findViewById(R.id.register_name);
     AutoCompleteTextView surnametxt=(AutoCompleteTextView) findViewById(R.id.register_surname);
     AutoCompleteTextView contacttxt=(AutoCompleteTextView) findViewById(R.id.register_contact);;
-    EditText regpasswordtxt = (EditText) findViewById(R.id.register_password);
-    EditText confirmpasswordtxt = (EditText) findViewById(R.id.confirm_password);
+    EditText regpasswordtxt = (EditText) findViewById(R.id.look);
+    EditText confirmpasswordtxt = (EditText) findViewById(R.id.confirm_look);
     //assume that all the values are ok
     nametxt.setError(null);
     surnametxt.setError(null);
@@ -228,7 +228,7 @@ public void onRegisterUser( View v){
         focusView= regpasswordtxt;
         cancel=true;// return basically
     }
-    else  if(TextUtils.equals(cpassword,password)){
+    else  if(!TextUtils.equals(cpassword,password)){
         confirmpasswordtxt.setError("Passwords do not match");
         focusView= confirmpasswordtxt;
         cancel=true;// return basically
