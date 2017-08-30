@@ -6,25 +6,76 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <EditText
-        android:id="@+id/editText"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.30"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/contact_school" />
+        android:layout_height="match_parent"
+        android:layout_weight="0.30">
 
-    <Button
-        android:id="@+id/backbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.12"
-        android:background="@color/logoColorTransparent"
-        android:fontFamily="serif"
-        android:text="I agree"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/mywhite"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/contactschool_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/mywhite" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/contact_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/contact_person" />
+
+            <EditText
+                android:id="@+id/contact_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/contact_website"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="12dp"
+                android:layout_weight="0.30"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/contact_email" />
+
+            <EditText
+                android:id="@+id/contact_website"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/backbutton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="54dp"
+                android:layout_weight="0.30"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/contact_website" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/backbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="124dp"
+            android:layout_marginStart="124dp"
+            android:layout_marginTop="170dp"
+            android:layout_weight="0.12"
+            android:background="@color/logoColorTransparent"
+            android:fontFamily="serif"
+            android:text="Back"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/mywhite"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
 </LinearLayout>

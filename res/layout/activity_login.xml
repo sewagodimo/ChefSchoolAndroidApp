@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:background="@color/logoColor"
         android:fontFamily="monospace"
+        android:onClick="onForgotPassword"
         android:shadowColor="@android:color/background_dark"
         android:text="Forgot your password"
         android:textColor="@android:color/darker_gray"
@@ -115,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
+                    android:onClick="onLoginRegister"
                     android:text="Register"
                     android:textColor="@android:color/holo_green_light"
                     android:textStyle="bold" />

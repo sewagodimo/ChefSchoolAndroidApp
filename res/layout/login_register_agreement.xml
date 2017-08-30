@@ -6,39 +6,65 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <TextView
-        android:id="@+id/agreement_text"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.26"
-        android:text="@string/login_register_agreement"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/logoColor"
-        android:textSize="30sp"
-        android:typeface="normal" />
+        android:layout_height="match_parent"
+        android:layout_weight="0.26">
 
-    <Button
-        android:id="@+id/agreebutton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.26"
-        android:background="@color/logoColorTransparent"
-        android:fontFamily="serif"
-        android:text="I agree"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/mywhite"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/agreement_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.26"
+            android:background="@color/mywhite" />
 
-    <Button
-        android:id="@+id/contact_school_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.26"
-        android:background="@color/mywhite"
-        android:text="Contact the school"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/agreement_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.26"
+            android:text="@string/login_register_agreement"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/logoColor"
+            android:textSize="14sp"
+            android:typeface="normal" />
+
+        <Button
+            android:id="@+id/contact_school_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/agreebutton"
+            android:layout_marginTop="63dp"
+            android:layout_weight="0.26"
+            android:background="@color/mywhite"
+            android:onClick="onContactSchool"
+            android:text="Contact the school"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/agreebutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="78dp"
+            android:layout_weight="0.26"
+            android:background="@color/logoColorTransparent"
+            android:fontFamily="serif"
+            android:onClick="onAgreedRegister"
+            android:text="I agree"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/mywhite"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/agreement_text"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
 </LinearLayout>

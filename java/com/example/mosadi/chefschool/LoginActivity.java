@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -15,9 +16,11 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +30,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.mosadi.chefschool.loginfragments.ContactSchool;
+import com.example.mosadi.chefschool.loginfragments.ForgotPassword;
+import com.example.mosadi.chefschool.loginfragments.RegisterAgreement;
+import com.example.mosadi.chefschool.loginfragments.RegisterFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +73,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -81,13 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button registerbtn =(Button) findViewById(R.id.Register);
-        registerbtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // GO TO THE REGISRER FRAGMENT
-                //call the fragment
-            }
-        });
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -149,10 +154,62 @@ public void onForgotPassword(View view){
 
     FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
     fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-    fragment_forgot_password forgot = new fragment_forgot_password();
+    ForgotPassword forgot = new ForgotPassword();
     fragmentTransaction.replace(android.R.id.content, forgot);
     fragmentTransaction.commit();
+
 }
+public void getNewPassword(View v){
+    Context context = getApplicationContext();
+    Toast toast = Toast.makeText(context, "New password request sent", Toast.LENGTH_SHORT);
+    toast.show();
+    toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);//for now
+   TextView name = (TextView)  findViewById(R.id.name_request);
+    TextView errormsg=(TextView)findViewById(R.id.forgot_password_error_message);
+    if(name.toString().isEmpty()){
+        errormsg.setText("Please enter your username or email");
+                                       }
+    else{
+        //errormsg.setText("New password request sent to Admin, you will be contacted shortly");
+       // errormsg.setTextColor(Color.green(1));
+                                       }
+    FragmentManager fm = this.getSupportFragmentManager();
+    for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+        fm.popBackStack();
+    }
+}
+public void onLoginRegister(View view){
+    FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
+    fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+    RegisterAgreement agreement = new RegisterAgreement();
+    fragmentTransaction.replace(android.R.id.content, agreement);
+    fragmentTransaction.commit();
+}
+    public void onAgreedRegister(View v){
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        RegisterFragment register = new RegisterFragment();
+        fragmentTransaction.replace(android.R.id.content, register);
+        fragmentTransaction.commit();
+    }
+    public void onContactSchool(View v){
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        ContactSchool contact = new ContactSchool();
+        fragmentTransaction.replace(android.R.id.content, contact);
+        fragmentTransaction.commit();
+    }
+    public void backtoMain(View v){
+        FragmentManager fm = this.getSupportFragmentManager();
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+    }
+//Allows us to change the custom bar title
+    public void setActionBarTitle(String title){
+        setActionBarTitle(title);//.setText(title);
+    }
+
 
     /**
      * Attempts to sign in or register the account specified by the login form.

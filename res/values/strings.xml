@@ -17,9 +17,10 @@
         The details you enter will be sent to the school
         and they will confirm your account..."
     </string>
-    <string name="contact_school">
-        "Contact Melinda&gt;
-        email: melinda@ictchefs.org/&gt;
-        go to: http://www.ictchefs.org"
+    <string name="contact_person">
+        "Contact Melinda"
     </string>
+    <string name="contact_email">"Email : melinda@ictchefs.org" </string>
+    <string name="contact_website">"Go to: http://www.ictchefs.org" </string>
+
 </resources>
