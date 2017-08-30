@@ -24,10 +24,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.26"
             android:text="@string/login_register_agreement"
-            android:textAlignment="textStart"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/logoColor"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:typeface="normal" />
 
         <Button

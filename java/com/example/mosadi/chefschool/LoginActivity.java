@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -37,6 +38,7 @@ import android.widget.Toast;
 import com.example.mosadi.chefschool.loginfragments.ContactSchool;
 import com.example.mosadi.chefschool.loginfragments.ForgotPassword;
 import com.example.mosadi.chefschool.loginfragments.RegisterAgreement;
+import com.example.mosadi.chefschool.loginfragments.RegisterConfirmation;
 import com.example.mosadi.chefschool.loginfragments.RegisterFragment;
 
 import java.util.ArrayList;
@@ -75,11 +77,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //
+        //The Action Bar
         bar = getSupportActionBar();
          bar.setTitle("Alumni App");
-
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bar.setHomeButtonEnabled(false);
+        bar.setDisplayHomeAsUpEnabled(false);
+        //The Default View
         setContentView(R.layout.activity_login);
 
 
@@ -146,6 +149,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Callback received when a permissions request has been completed.
      */
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -158,10 +162,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        bar.setDisplayHomeAsUpEnabled(false);
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; goto parent activity.
-                this.finish();
+                // app icon in action bar clicked; go home
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -169,7 +176,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 //      THE BUTTONS METHODS
 public void onForgotPassword(View view){
-
+    bar.setTitle("Forgot Password");
+    bar.setDisplayHomeAsUpEnabled(true);
     FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
     fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
     ForgotPassword forgot = new ForgotPassword();
@@ -177,8 +185,82 @@ public void onForgotPassword(View view){
     fragmentTransaction.commit();
 
 }
+public void onRegisterUser( View v){
+    //fetch the values from the view
+    AutoCompleteTextView nametxt =(AutoCompleteTextView) findViewById(R.id.register_name);
+    AutoCompleteTextView surnametxt=(AutoCompleteTextView) findViewById(R.id.register_surname);
+    AutoCompleteTextView contacttxt=(AutoCompleteTextView) findViewById(R.id.register_contact);;
+    EditText regpasswordtxt = (EditText) findViewById(R.id.register_password);
+    EditText confirmpasswordtxt = (EditText) findViewById(R.id.confirm_password);
+    //assume that all the values are ok
+    nametxt.setError(null);
+    surnametxt.setError(null);
+    contacttxt.setError(null);
+    regpasswordtxt.setError(null);
+    confirmpasswordtxt.setError(null);
+    //Convert the values to strings
+    String name = nametxt.getText().toString();
+    String surname = surnametxt.getText().toString();
+    String contact = contacttxt.getText().toString();
+    String password= regpasswordtxt.getText().toString();
+    String cpassword= confirmpasswordtxt.getText().toString();
+    //whhat to look at if things go wrong
+    boolean cancel = false;//cancel the whole transaction
+    View focusView = null;
+    //check for a valid name
+    if(TextUtils.isEmpty(name)){
+        nametxt.setError("Your name is required");
+        focusView = nametxt;
+        cancel=true;// return basically
+    }
+    else  if(TextUtils.isEmpty(surname)){
+        surnametxt.setError("Your surname is required");
+        focusView= surnametxt;
+        cancel=true;// return basically
+    }
+    else  if(TextUtils.isEmpty(contact)){
+        contacttxt.setError("Your contact is required");
+        focusView=contacttxt;
+        cancel=true;// return basically
+    }
+    else  if(TextUtils.isEmpty(password)){
+        regpasswordtxt.setError("Password is required");
+        focusView= regpasswordtxt;
+        cancel=true;// return basically
+    }
+    else  if(TextUtils.equals(cpassword,password)){
+        confirmpasswordtxt.setError("Passwords do not match");
+        focusView= confirmpasswordtxt;
+        cancel=true;// return basically
+    }
+    if (cancel) {
+        // There was an error; don't attempt login and focus the first
+        focusView.requestFocus();
+    } else {
+        // Show a progress spinner, and kick off a background task to
+        // Register user
+        //showProgress(true);
+      //  mAuthTask = new UserRegisterTask(email, password);
+       // mAuthTask.execute((Void) null);
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, "Processing Regsitration", Toast.LENGTH_SHORT);
+        toast.show();
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);//for now
+        bar.setTitle("Processing Registration");
+       // bar.setDisplayHomeAsUpEnabled(true);
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
+        fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+        RegisterConfirmation agreement = new RegisterConfirmation();
+        fragmentTransaction.replace(android.R.id.content, agreement);
+        fragmentTransaction.commit();
+    }
+
+
+
+}
 public void getNewPassword(View v){
     bar.setTitle("Forgot Password");
+    bar.setDisplayHomeAsUpEnabled(true);
     Context context = getApplicationContext();
     Toast toast = Toast.makeText(context, "New password request sent", Toast.LENGTH_SHORT);
     toast.show();
@@ -199,6 +281,7 @@ public void getNewPassword(View v){
 }
 public void onLoginRegister(View view){
     bar.setTitle("Terms and Conditions");
+    bar.setDisplayHomeAsUpEnabled(true);
     FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
     fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
     RegisterAgreement agreement = new RegisterAgreement();
@@ -207,6 +290,7 @@ public void onLoginRegister(View view){
 }
     public void onAgreedRegister(View v){
         bar.setTitle("Register");
+        bar.setDisplayHomeAsUpEnabled(true);
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         RegisterFragment register = new RegisterFragment();
@@ -221,18 +305,6 @@ public void onLoginRegister(View view){
         fragmentTransaction.replace(android.R.id.content, contact);
         fragmentTransaction.commit();
     }
-    public void backtoMain(View v){
-        bar.setTitle("Alimi App");
-        FragmentManager fm = this.getSupportFragmentManager();
-        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
-        }
-    }
-//Allows us to change the custom bar title
-    public void setActionBarTitle(String title){
-        bar.setTitle(title);//.setText(title);
-    }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.

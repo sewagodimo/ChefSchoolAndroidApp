@@ -2,8 +2,8 @@
     <string name="app_name">Alumni App</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_email">Name or Phone number</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -13,7 +13,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="login_register_agreement">"By continuing to create an account you are agreeing agreeing to being an alumni of Infinity culinary school.
+    <string name="login_register_agreement">
+        "
+        By continuing to create an account you are
+        agreeing agreeing to being an alumni
+        of Infinity culinary school.
         The details you enter will be sent to the school
         and they will confirm your account..."
     </string>
@@ -22,5 +26,11 @@
     </string>
     <string name="contact_email">"Email : melinda@ictchefs.org" </string>
     <string name="contact_website">"Go to: http://www.ictchefs.org" </string>
+    <string name="confirm_registration">
+        "
+        Your account is being processed,
+        you will be receive an SMS
+        or an email from us soon"</string>
+
 
 </resources>

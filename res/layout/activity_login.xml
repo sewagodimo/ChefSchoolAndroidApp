@@ -37,8 +37,9 @@
         android:onClick="onForgotPassword"
         android:shadowColor="@android:color/background_dark"
         android:text="Forgot your password"
-        android:textColor="@android:color/darker_gray"
-        android:textColorHighlight="@color/colorAccent" />
+        android:textColor="@color/mywhite"
+        android:textColorHighlight="@color/colorAccent"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -107,7 +108,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
+                    android:background="@color/logoColorTransparent"
                     android:text="LOGIN"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -117,9 +120,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
+                    android:background="@color/logoColorTransparent"
                     android:onClick="onLoginRegister"
                     android:text="Register"
-                    android:textColor="@android:color/holo_green_light"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
