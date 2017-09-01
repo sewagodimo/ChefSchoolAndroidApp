@@ -26,11 +26,9 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,14 +101,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+     /*   Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
             }
         });
-
+*/
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -305,6 +303,11 @@ public void onLoginRegister(View view){
         fragmentTransaction.replace(android.R.id.content, contact);
         fragmentTransaction.commit();
     }
+
+    public void onTempLogin(View v){
+        //This is their login
+    }
+
 
     /**
      * Attempts to sign in or register the account specified by the login form.
