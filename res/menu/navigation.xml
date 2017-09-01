@@ -21,7 +21,7 @@
         android:title="@string/help_me" />
     <item
         android:id="@+id/meeting_request"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_alarm_black_24dp"
         android:title="@string/request_meeting" />
 
 </menu>
