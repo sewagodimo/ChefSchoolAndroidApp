@@ -31,6 +31,12 @@
         Your account is being processed,
         you will be receive an SMS
         or an email from us soon"</string>
+    <!--Strings related to the Navaigation Drawer -->
+    <string name="home"> Home</string>
+    <string name="my_life_has_changed"> My Life Has Changed</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="help_me"> Help Me</string>
+    <string name="request_meeting"> Request a Meeting</string>
 
 
 </resources>

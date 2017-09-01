@@ -306,6 +306,9 @@ public void onLoginRegister(View view){
 
     public void onTempLogin(View v){
         //This is their login
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
 
