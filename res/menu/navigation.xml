@@ -4,24 +4,25 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/home" />
+        android:title="_" />
 
     <item
         android:id="@+id/edit_profile"
         android:icon="@drawable/profile"
-        android:title="@string/edit_profile" />
+        android:title="_" />
 
     <item
         android:id="@+id/life_changed"
         android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/my_life_has_changed" />
+        android:title="_" />
     <item
         android:id="@+id/help_me"
         android:icon="@drawable/help"
-        android:title="@string/help_me" />
+        android:title="_" />
     <item
         android:id="@+id/meeting_request"
         android:icon="@drawable/ic_alarm_black_24dp"
-        android:title="@string/request_meeting" />
+        android:title="_"
+        />
 
 </menu>
