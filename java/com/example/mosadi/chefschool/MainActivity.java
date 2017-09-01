@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.home:
+                case R.id.navigation_home:
                     mTextMessage.setText(R.string.home);
                     bar.setTitle(R.string.home);
                     return true;
@@ -28,12 +28,15 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.life_changed:
                     mTextMessage.setText(R.string.my_life_has_changed);
+                    bar.setTitle(R.string.my_life_has_changed);
                     return true;
                 case R.id.help_me:
                     mTextMessage.setText(R.string.help_me);
+                    bar.setTitle(R.string.help_me);
                     return true;
                 case R.id.meeting_request:
                     mTextMessage.setText(R.string.request_meeting);
+                    bar.setTitle(R.string.request_meeting);
                     return true;
             }
             return false;
