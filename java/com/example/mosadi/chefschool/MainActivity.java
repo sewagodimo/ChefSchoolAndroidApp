@@ -20,9 +20,11 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     mTextMessage.setText(R.string.home);
+                    bar.setTitle(R.string.home);
                     return true;
                 case R.id.edit_profile:
                     mTextMessage.setText(R.string.edit_profile);
+                    bar.setTitle(R.string.edit_profile);
                     return true;
                 case R.id.life_changed:
                     mTextMessage.setText(R.string.my_life_has_changed);
