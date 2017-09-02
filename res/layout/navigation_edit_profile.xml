@@ -14,80 +14,97 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/name_container"
+            android:id="@+id/image_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+            android:layout_height="50dp"
             android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_weight="2"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/nametxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="Name"
-                        android:textAlignment="viewStart"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/edit_name"
-                        android:layout_width="159dp"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Name"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/surnametxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:text="Surname"
-                        android:textAlignment="viewStart"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/edit_surname"
-                        android:layout_width="163dp"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Carter"
-                        android:textAlignment="center" />
-                </LinearLayout>
-            </LinearLayout>
 
             <ImageView
                 android:id="@+id/display_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_weight="2"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+
                 android:adjustViewBounds="false"
                 android:cropToPadding="true"
                 app:srcCompat="@mipmap/ic_launcher" />
 
+            <Button
+                android:id="@+id/edit_image"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Change Photo"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/logoColorTransparent"
+                android:textSize="10sp"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/name_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/nametxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:text="Name"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/editText"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:textAlignment="viewStart" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/surname_container"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/surnametxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="Surname"
+
+                android:textAlignment="viewStart"
+
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/edit_surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/editText"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textPersonName"
+                android:text="Carter"
+                android:textAlignment="viewStart" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,23 +117,28 @@
 
             <TextView
                 android:id="@+id/phonetxt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:textAlignment="viewStart"
                 android:layout_height="wrap_content"
                 android:text="Phone Number"
-                android:gravity="start"
-                android:textAlignment="textStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/edit_phone"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:background="@color/editText"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:textAlignment="viewStart"
                 android:layout_height="wrap_content"
 
                 android:ems="10"
                 android:inputType="phone"
                 android:text="0764324522"
-                android:textAlignment="center" />
+             />
 
         </LinearLayout>
 
@@ -130,24 +152,31 @@
 
             <TextView
                 android:id="@+id/emailtxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:layout_height="wrap_content"
+
                 android:text="Email"
-                android:textAlignment="textStart"
+
 
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/edit_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
+                android:background="@color/editText"
+                android:gravity="start"
+                android:textAlignment="viewStart"
+                android:layout_height="wrap_content"
+
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:text="example@yolo.com"
-                android:textAlignment="center" />
+                 />
 
         </LinearLayout>
 
@@ -155,30 +184,37 @@
             android:id="@+id/dob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/dobtxt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_weight="1"
+                android:gravity="start"
                 android:text="Date of Birth"
-                android:textAlignment="viewStart"
+
+                android:textAlignment="textStart"
+
 
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText4"
-                android:layout_width="wrap_content"
+                android:id="@+id/editdob"
+                android:layout_width="match_parent"
+                android:background="@color/editText"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:textAlignment="viewStart"
                 android:layout_height="wrap_content"
 
                 android:ems="10"
                 android:inputType="date"
-                android:text="09 April 1995"
-                android:textAlignment="center" />
+                android:text="09/04/1995"
+                />
 
         </LinearLayout>
 
@@ -189,7 +225,7 @@
             android:paddingTop="5dp">
 
             <Button
-                android:id="@+id/backbutton"
+                android:id="@+id/cancel_profile_editing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.42"

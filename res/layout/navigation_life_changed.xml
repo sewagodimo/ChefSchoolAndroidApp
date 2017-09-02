@@ -79,7 +79,7 @@
                 android:background="@drawable/savebutton"
                 android:paddingRight="10dp"
 
-                android:text="I have a new Address" />
+                android:text="Update Address" />
         </LinearLayout>
 
         <LinearLayout

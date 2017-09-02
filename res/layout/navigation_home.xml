@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
+        android:paddingLeft="20dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -102,21 +103,21 @@
 
             <TextView
                 android:id="@+id/phonetxt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.16"
+                android:layout_weight="1"
                 android:text="Phone Number"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/display_phone"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textAlignment="textStart"
                 android:text="0 *** **** **"
-                android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -133,22 +134,23 @@
 
             <TextView
                 android:id="@+id/emailtxt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.98"
+                android:layout_weight="1"
+                android:textAlignment="textStart"
                 android:text="Email"
-                android:textAlignment="textEnd"
+
 
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/display_email"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="example@gmail.com"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -165,22 +167,22 @@
 
             <TextView
                 android:id="@+id/classtxt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.29"
+                android:layout_weight="1"
                 android:text="Class Number"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
 
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/display_class"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:text="22"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -197,22 +199,22 @@
 
             <TextView
                 android:id="@+id/worktxt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.59"
+                android:layout_weight="1"
                 android:text="Work Status"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
 
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/display_status"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:text="Employed"
-                android:textAlignment="center"
+                android:textAlignment="textStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -228,22 +230,21 @@
 
             <TextView
                 android:id="@+id/dobtxt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.59"
+                android:layout_weight="1"
                 android:text="Date of Birth"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
 
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/display_status"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:text="09 April 1995"
-                android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
