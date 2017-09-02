@@ -16,10 +16,11 @@ import com.example.mosadi.chefschool.R;
  */
 
 public class navigation_meeting_request_fragment extends Fragment
-       // implements AdapterView.OnItemSelectedListener
+        implements AdapterView.OnItemSelectedListener
 {
     String reason="";
     String when="";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.navigation_meetin_request, container, false);

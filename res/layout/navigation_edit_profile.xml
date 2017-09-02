@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -19,33 +19,24 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/display_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_weight="2"
-                android:adjustViewBounds="false"
-                android:cropToPadding="true"
-                app:srcCompat="@mipmap/ic_launcher" />
-
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:layout_weight="2"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/nametxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+
                         android:text="Name"
                         android:textAlignment="viewStart"
                         android:textColor="@android:color/black"
@@ -64,14 +55,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
+
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/surnametxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+
                         android:text="Surname"
                         android:textAlignment="viewStart"
                         android:textColor="@android:color/black"
@@ -88,6 +79,15 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/display_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="2"
+                android:adjustViewBounds="false"
+                android:cropToPadding="true"
+                app:srcCompat="@mipmap/ic_launcher" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -102,9 +102,9 @@
                 android:id="@+id/phonetxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.16"
                 android:text="Phone Number"
-                android:textAlignment="textEnd"
+                android:gravity="start"
+                android:textAlignment="textStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
@@ -112,7 +112,7 @@
                 android:id="@+id/edit_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.16"
+
                 android:ems="10"
                 android:inputType="phone"
                 android:text="0764324522"
@@ -132,9 +132,9 @@
                 android:id="@+id/emailtxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.98"
+                android:layout_weight="1"
                 android:text="Email"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
 
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
@@ -143,43 +143,11 @@
                 android:id="@+id/edit_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.98"
+                android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:text="example@yolo.com"
                 android:textAlignment="center" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:id="@+id/class_number"
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/classtxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.29"
-                android:text="Class Number"
-                android:textAlignment="textEnd"
-
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/display_class"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="22"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -195,9 +163,9 @@
                 android:id="@+id/dobtxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.59"
+
                 android:text="Date of Birth"
-                android:textAlignment="textEnd"
+                android:textAlignment="viewStart"
 
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
@@ -206,7 +174,7 @@
                 android:id="@+id/editText4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.59"
+
                 android:ems="10"
                 android:inputType="date"
                 android:text="09 April 1995"
