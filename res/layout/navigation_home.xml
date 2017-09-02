@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,33 +8,392 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/name_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/display_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="2"
+                android:adjustViewBounds="false"
+                android:cropToPadding="true"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/nametxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Name"
+                        android:textAlignment="viewStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/display_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Blue Ivy"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/surnametxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Surname"
+                        android:textAlignment="viewStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/display_surname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Surname"
+                        android:textAlignment="textStart"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:id="@+id/contact_number"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/nametxt"
+                android:id="@+id/phonetxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Name"
-                android:textAlignment="center"
+                android:layout_weight="0.16"
+                android:text="Phone Number"
+                android:textAlignment="textEnd"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/display_name"
+                android:id="@+id/display_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Blue Ivy"
-                android:textAlignment="textStart"
+                android:text="0 *** **** **"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/email"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/emailtxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.98"
+                android:text="Email"
+                android:textAlignment="textEnd"
+
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="example@gmail.com"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:id="@+id/class_number"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/classtxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.29"
+                android:text="Class Number"
+                android:textAlignment="textEnd"
+
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_class"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="22"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/work_status"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/worktxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.59"
+                android:text="Work Status"
+                android:textAlignment="textEnd"
+
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Employed"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/dob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dobtxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.59"
+                android:text="Date of Birth"
+                android:textAlignment="textEnd"
+
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="09 April 1995"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addresstxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Address"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/country"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/countrytxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Country"
+                android:textAlignment="viewEnd"
+
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="South Africa"
+                android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/province"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/provincetxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Province"
+                android:textAlignment="textEnd"
+
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_province"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Western Cape"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/city"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/citytxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.35"
+                android:text="City"
+                android:textAlignment="viewEnd"
+
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Cape Town"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/work_surburb"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/surburbtxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Surburb"
+                android:textAlignment="textEnd"
+
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_surburb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Rondebosch"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+
+
 </FrameLayout>

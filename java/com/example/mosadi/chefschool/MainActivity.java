@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.example.mosadi.chefschool.navigation_fragments.navigation_edit_fragment;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_home_fragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment fragment;
     private FragmentManager fragmentManager;
+    private boolean updated;
+    private int currentNav=0;//zero is home
+    FragmentTransaction ft;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -27,14 +31,18 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
 
                     bar.setTitle(R.string.home);
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                     ft = fragmentManager.beginTransaction();
                     fragment= new navigation_home_fragment();
                     ft.replace(R.id.content, fragment);
                     ft.commit();
                     return true;
                 case R.id.edit_profile:
-
                     bar.setTitle(R.string.edit_profile);
+                    ft= fragmentManager.beginTransaction();
+                    fragment= new navigation_edit_fragment();
+                    ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                    ft.replace(R.id.content, fragment);
+                    ft.commit();
                     return true;
                 case R.id.life_changed:
 
@@ -45,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     bar.setTitle(R.string.help_me);
                     return true;
                 case R.id.meeting_request:
-                    
+
                     bar.setTitle(R.string.request_meeting);
                     return true;
             }
@@ -63,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
         bar.setDisplayHomeAsUpEnabled(false);
         fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.navigation_main);
-
+         ft = fragmentManager.beginTransaction();
+        fragment= new navigation_home_fragment();
+        ft.replace(R.id.content, fragment);
+        ft.commit();
 
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

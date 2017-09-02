@@ -9,4 +9,5 @@
     <color name="colorDivider">#2FE897</color>
     <color name="colorBorder">#a7a4a4</color>
     <color name="colorExtra">#fffac1</color>
+    <color name="transparent">#00fffac1</color>
 </resources>
