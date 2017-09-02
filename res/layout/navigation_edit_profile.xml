@@ -227,7 +227,7 @@
                 android:layout_weight="0.42"
                 android:background="@drawable/backbutton"
 
-                android:text="Back" />
+                android:text="Cancel" />
 
             <TextView
                 android:id="@+id/textView3"

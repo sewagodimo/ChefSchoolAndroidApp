@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import com.example.mosadi.chefschool.navigation_fragments.navigation_edit_fragment;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_home_fragment;
+import com.example.mosadi.chefschool.navigation_fragments.navigation_life_changed;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,8 +46,12 @@ public class MainActivity extends AppCompatActivity {
                     ft.commit();
                     return true;
                 case R.id.life_changed:
-
                     bar.setTitle(R.string.my_life_has_changed);
+                     ft = getSupportFragmentManager().beginTransaction();
+                    fragment= new navigation_life_changed();
+                    ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                    ft.replace(R.id.content, fragment);
+                    ft.commit();
                     return true;
                 case R.id.help_me:
 
