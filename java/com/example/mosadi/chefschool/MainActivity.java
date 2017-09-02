@@ -11,8 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.example.mosadi.chefschool.navigation_fragments.navigation_edit_fragment;
+import com.example.mosadi.chefschool.navigation_fragments.navigation_help_fragment;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_home_fragment;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_life_changed;
+import com.example.mosadi.chefschool.navigation_fragments.navigation_meeting_request_fragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private boolean updated;
     private int currentNav=0;//zero is home
+    ActionBar bar;
     FragmentTransaction ft;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -30,43 +33,81 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    if(currentNav!=0) {
+                        bar.setTitle(R.string.home);
+                        ft = fragmentManager.beginTransaction();
+                        fragment = new navigation_home_fragment();
+                        //moving down
+                            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
 
-                    bar.setTitle(R.string.home);
-                     ft = fragmentManager.beginTransaction();
-                    fragment= new navigation_home_fragment();
-                    ft.replace(R.id.content, fragment);
-                    ft.commit();
+                        ft.replace(R.id.content, fragment);
+                        ft.commit();
+                        currentNav=0;
+                    }
                     return true;
                 case R.id.edit_profile:
-                    bar.setTitle(R.string.edit_profile);
-                    ft= fragmentManager.beginTransaction();
-                    fragment= new navigation_edit_fragment();
-                    ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-                    ft.replace(R.id.content, fragment);
-                    ft.commit();
+                    if(currentNav!=1) {
+                        bar.setTitle(R.string.edit_profile);
+                        ft = fragmentManager.beginTransaction();
+                        fragment = new navigation_edit_fragment();
+                        if (currentNav > 1) {//moving down
+                            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+                        } else {
+                            ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                        }
+                        ft.replace(R.id.content, fragment);
+                        ft.commit();
+                        currentNav = 1;
+                    }
                     return true;
                 case R.id.life_changed:
-                    bar.setTitle(R.string.my_life_has_changed);
-                     ft = getSupportFragmentManager().beginTransaction();
-                    fragment= new navigation_life_changed();
-                    ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
-                    ft.replace(R.id.content, fragment);
-                    ft.commit();
+                    if(currentNav!=2) {
+                        bar.setTitle(R.string.my_life_has_changed);
+                        ft = getSupportFragmentManager().beginTransaction();
+                        fragment = new navigation_life_changed();
+                        ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                        if (currentNav > 2) {//moving down
+                            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+                        } else {
+                            ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                        }
+                        ft.replace(R.id.content, fragment);
+                        ft.commit();
+                        currentNav=2;
+                    }
                     return true;
                 case R.id.help_me:
-
-                    bar.setTitle(R.string.help_me);
+                    if(currentNav!=3) {
+                        bar.setTitle(R.string.help_me);
+                        ft = getSupportFragmentManager().beginTransaction();
+                        fragment = new navigation_help_fragment();
+                        if (currentNav > 3) {//moving down
+                            ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+                        } else {
+                            ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                        }
+                        ft.replace(R.id.content, fragment);
+                        ft.commit();
+                        currentNav=3;
+                    }
                     return true;
                 case R.id.meeting_request:
-
-                    bar.setTitle(R.string.request_meeting);
+                    if(currentNav!=4) {
+                        bar.setTitle(R.string.request_meeting);
+                        ft = getSupportFragmentManager().beginTransaction();
+                        fragment = new navigation_meeting_request_fragment();
+                        ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
+                        ft.replace(R.id.content, fragment);
+                        ft.commit();
+                        currentNav=4;
+                    }
                     return true;
             }
             return false;
         }
 
     };
-    ActionBar bar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,5 +126,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
+
 
 }

@@ -21,48 +21,48 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/savebutton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/savebutton"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:text="I found a better Job" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/needjob"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/savebutton"
-                android:paddingRight="10dp"
-
-                android:text="I need a job" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:orientation="horizontal">
-
-            <Button
                 android:id="@+id/transport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/savebutton"
+                android:background="@drawable/greenbutton"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:text="I need transport money" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/contactme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/greenbutton"
+                android:paddingRight="10dp"
+
+                android:text="Please contact me" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/uniform"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/greenbutton"
 
 
-                android:text="I am unemployed" />
+                android:text="I need new uniform" />
         </LinearLayout>
 
 
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/savebutton"
+                android:background="@drawable/greenbutton"
                 android:paddingRight="10dp"
 
                 android:text="Other" />
