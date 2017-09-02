@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.meeting_request:
                     if(currentNav!=4) {
+
                         bar.setTitle(R.string.request_meeting);
                         ft = getSupportFragmentManager().beginTransaction();
                         fragment = new navigation_meeting_request_fragment();
