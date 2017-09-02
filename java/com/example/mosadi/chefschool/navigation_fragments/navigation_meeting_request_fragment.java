@@ -19,7 +19,7 @@ public class navigation_meeting_request_fragment extends Fragment
         implements AdapterView.OnItemSelectedListener
 {
     String reason="";
-    String when="";
+    int when=-1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,10 +36,10 @@ public class navigation_meeting_request_fragment extends Fragment
         // Inflate the layout for this fragment
         return v;
     }
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
+        when=pos;
+        String choice = parent.getItemAtPosition(pos).toString();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

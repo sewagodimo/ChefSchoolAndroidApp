@@ -17,19 +17,19 @@ import com.example.mosadi.chefschool.R;
  */
 
 public class navigation_edit_address extends Fragment {
-    Button address;
+    Button cancel,saveaddress;
     FragmentTransaction ft;
     ActionBar bar;
     Fragment fragment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
          View v= inflater.inflate(R.layout.navigation_edit_address, container, false);
         bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-
-        address = (Button) v.findViewById(R.id.cancel_address_editing);
-        address.setOnClickListener(
+        cancel = (Button) v.findViewById(R.id.cancel_address_editing);
+        cancel.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // WHEN the user clicks that they want to get a new address
