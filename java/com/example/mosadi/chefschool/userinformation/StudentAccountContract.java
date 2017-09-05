@@ -1,9 +1,13 @@
 package com.example.mosadi.chefschool.userinformation;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+
+import java.util.List;
 
 /**
  * Created by Mosadi on 2017/09/04.
@@ -129,7 +133,82 @@ public class StudentAccountContract {
         public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             onUpgrade(db, oldVersion, newVersion);
         }
+        // Adding new Profile
+        public void addProfile(Profile profile) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            //Get a new profile
+            ContentValues values = new ContentValues();
+            values.put(ProfileEntry.COLUMN_NAME_NAME, profile.getName()); // Contact Name
+            values.put(ProfileEntry.COLUMN_NAME_SURNAME, profile.getPhone()); // Contact Phone Number
+            values.put(ProfileEntry.COLUMN_NAME_EMAIL, profile.getEmail()); // Contact EMAIL
+            values.put(ProfileEntry.COLUMN_NAME_PICTURE, profile.getImage());// Contact the profile picture
+            values.put(ProfileEntry.COLUMN_NAME_CLASS, profile.getClass_number()); // get the user's class
+            values.put(ProfileEntry.COLUMN_NAME_EMAIL, profile.getEmail()); // Contact EMAIL
+            values.put(ProfileEntry.COLUMN_NAME_DOB, profile.getDob()); // Contact DATE OF BIRTH
+            values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status()); // Contact EMAIL
+            values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status());
+            // Inserting Profle Row
+            db.insert(ProfileEntry.TABLE_NAME, null, values);
+            //Add a new Address
+            ContentValues address = new ContentValues();
+           address.put(AddressEntry.COLUMN_NAME_COUNTRY, profile.getCountry()); //The user's country
+            address.put(AddressEntry.COLUMN_NAME_PROVINCE, profile.getProvince()); //The user's country
+            address.put(AddressEntry.COLUMN_NAME_CITY, profile.getCity()); //The user's country0
+            address.put(AddressEntry.COLUMN_NAME_SURBURB, profile.getSurburb()); //The user's country0
+            db.insert(AddressEntry.TABLE_NAME,null,address);
+            db.close(); // Closing database connection
+        }
 
+        // Getting single contact
+        public Profile getContact(int id) {
+            SQLiteDatabase db = this.getReadableDatabase();
+
+            Cursor cursor = db.query(
+                    ProfileEntry.TABLE_NAME, new String[] {
+                            ProfileEntry._ID,
+                            ProfileEntry.COLUMN_NAME_NAME,
+                            ProfileEntry.COLUMN_NAME_SURNAME,
+                            ProfileEntry.COLUMN_NAME_PICTURE,
+                            ProfileEntry.COLUMN_NAME_EMAIL,
+                            ProfileEntry.COLUMN_NAME_PHONE,
+                            ProfileEntry.COLUMN_NAME_CLASS,
+                            ProfileEntry.COLUMN_NAME_WORK_STATUS,
+                            ProfileEntry.COLUMN_NAME_DOB,
+
+                    }, ProfileEntry._ID + "=?",
+                    new String[] { String.valueOf(id) }, null, null, null, null);
+            if (cursor != null)
+                cursor.moveToFirst();
+            Cursor address = db.query(
+                    AddressEntry.TABLE_NAME, new String[] {
+                            AddressEntry._ID,
+                            AddressEntry.COLUMN_NAME_COUNTRY,
+                            AddressEntry.COLUMN_NAME_PROVINCE,
+                            AddressEntry.COLUMN_NAME_CITY,
+                            AddressEntry.COLUMN_NAME_SURBURB
+                    }, AddressEntry._ID + "=?",new String[] { String.valueOf(id) }, null, null, null, null);
+            if (address!= null)
+                cursor.moveToFirst();
+
+            Profile profile = new Profile(
+                    Integer.parseInt(cursor.getString(0)),
+                    cursor.getString(1),
+                    cursor.getString(2)
+            );
+            // return contact
+            return profile;
+        }
+
+        // Getting All Contacts
+        public List<Profile> getAllProfile() {}
+
+        // Getting contacts Count
+        public int getContactsCount() {}
+        // Updating single contact
+        public int updateContact(Profile profile) {}
+
+        // Deleting single contact
+        public void deleteContact(Profile profile) {}
     }
     //ACCESS THE DB
    // StudentsAccountDbHelper mDbHelper = new StudentsAccountDbHelper(getContext());

@@ -9,56 +9,48 @@ public class Profile {
     private String name;
     private String surname;
     private String phone;
-    private String contact;
     private String email;
-    private int class_number;
+    private String class_number;
     private String dob;
+    private String work_status;
+
     private String country;
     private String province;
     private String city;
     private String surburb;
-
     private String image;
     //Create a user
-    public Profile(String id, String name,String surname, String contact, int classnr, String dob){//when a user register
+    public Profile(String id, String name,String surname,String image,String email,String phone, String classnr, String work_status, String dob,String country, String province,String city,String surburb){//when a user register
         this.setUserID(id);
-        this.image="";//There is no image so far
+        this.setImage(image);//There is no image so far
+        this.setWork_status(work_status);
         this.setName(name);
         this.setSurname(surname);
         this.setClass_number(classnr);
-        this.setEmail("");
-        this.setPhone("");
-        this.setContact(contact);
+        this.setEmail(email);
+        this.setPhone(phone);
+       // this.setContact(contact);
         this.setDob(dob);
-        this.setCountry("South Africa");
-        this.setProvince("Western Cape");
-        this.setCity("Cape Town");
-        this.setSurburb("");
-        if(contact.contains("@")){
-            this.setEmail(contact);
-        }
-        else{
-            this.setPhone(contact);}
+        this.setCountry(country);
+        this.setProvince(province);
+        this.setCity(city);
+        this.setSurburb(surburb);
     }//end of constructor
-    public void edit_profile(String id, String name,String surname, String contact, int classnr, String dob){//when a user register
+    public void edit_profile(String id, String name,String surname, String classnr, String dob){//when a user register
         this.setUserID(id);
-        this.image="";//There is no image so far
+        this.setImage("");//There is no image so far
         this.setName(name);
         this.setSurname(surname);
         this.setClass_number(classnr);
         this.setEmail("");
         this.setPhone("");
-        this.setContact(contact);
+       // this.setContact(contact);
         this.setDob(dob);
         this.setCountry("South Africa");
         this.setProvince("Western Cape");
         this.setCity("Cape Town");
         this.setSurburb("");
-        if(contact.contains("@")){
-            this.setEmail(contact);
-        }
-        else{
-            this.setPhone(contact);}
+
     }//end of constructor
     public void edit_profile(){
         //get values from different parts and edit them
@@ -106,13 +98,7 @@ public class Profile {
         this.phone = phone;
     }
 
-    public String getContact() {
-        return contact;
-    }
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
 
     public String getEmail() {
         return email;
@@ -122,11 +108,11 @@ public class Profile {
         this.email = email;
     }
 
-    public int getClass_number() {
+    public String getClass_number() {
         return class_number;
     }
 
-    public void setClass_number(int class_number) {
+    public void setClass_number(String class_number) {
         this.class_number = class_number;
     }
 
@@ -168,5 +154,21 @@ public class Profile {
 
     public void setSurburb(String surburb) {
         this.surburb = surburb;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getWork_status() {
+        return work_status;
+    }
+
+    public void setWork_status(String work_status) {
+        this.work_status = work_status;
     }
 }
