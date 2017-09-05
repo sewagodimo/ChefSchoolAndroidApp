@@ -14,10 +14,11 @@ import java.util.List;
  * Created by Mosadi on 2017/09/04.
  */
 
-public class StudentAccountContract {
+public class StudentAccountContract  extends SQLiteOpenHelper {
     //make the constructor private
 
-        //public static final String COLUMN_NAME_= "";
+
+    //public static final String COLUMN_NAME_= "";
 
     /* Inner class that defines the table contents */
     public static class EventsEntry implements BaseColumns {
@@ -106,11 +107,11 @@ public class StudentAccountContract {
                 "DROP TABLE IF EXISTS " + AddressEntry.TABLE_NAME;
 
     //the sdqlite helper class
-    public class StudentsAccountDbHelper extends SQLiteOpenHelper {
+
         public static final int DATABASE_VERSION = 1;
         public static final String DATABASE_NAME = "ictstudents.db";
 
-        private StudentsAccountDbHelper(Context context) {
+        public StudentAccountContract(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
         @Override
@@ -282,4 +283,4 @@ public class StudentAccountContract {
 
     // Create a new map of values, where column names are the keys
 
-}
+

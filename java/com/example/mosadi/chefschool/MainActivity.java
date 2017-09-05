@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.mosadi.chefschool.navigation_fragments.navigation_edit_fragment;
@@ -15,6 +16,8 @@ import com.example.mosadi.chefschool.navigation_fragments.navigation_help_fragme
 import com.example.mosadi.chefschool.navigation_fragments.navigation_home_fragment;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_life_changed;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_meeting_request_fragment;
+import com.example.mosadi.chefschool.userinformation.Profile;
+import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -122,10 +125,21 @@ public class MainActivity extends AppCompatActivity {
         fragment= new navigation_home_fragment();
         ft.replace(R.id.content, fragment);
         ft.commit();
-
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        StudentAccountContract db = new StudentAccountContract(this);
+
+        Log.d("Insert: ", "Inserting ..");
+        db.addProfile(new Profile("001","Nosipho", "Brodie","22","amy@khumalo.com"));
+        /* db.addProfile(new Profile("003","Nosipho2", "Brodie2","22","00706050"));
+        Log.d("Reading: ", "Reading all contacts..");
+        List<Profile> contacts = db.getAllProfile();//all the user profiles
+        for (Profile cn : contacts) {
+            String log = "Id: "+cn.getUserID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhone() + " ,Email: " + cn.getEmail();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
+        */
     }
 
 

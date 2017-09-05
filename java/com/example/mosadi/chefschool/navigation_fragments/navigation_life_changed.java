@@ -27,13 +27,14 @@ public class navigation_life_changed extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.navigation_life_changed, container, false);
         bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        bar.setTitle("Update Address");
+
+        bar.setTitle(R.string.my_life_has_changed);
         address = (Button) v.findViewById(R.id.changeAddress);
         address.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // WHEN the user clicks that they want to get a new address
-
+                        bar.setTitle("Upadate Address");
                         ft = getFragmentManager().beginTransaction();
                         fragment = new navigation_edit_address();
                         //moving down
