@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -190,25 +191,89 @@ public class StudentAccountContract {
             if (address!= null)
                 cursor.moveToFirst();
 
-            Profile profile = new Profile(
-                    Integer.parseInt(cursor.getString(0)),
+            Profile profile = new Profile(cursor.getString(0),
                     cursor.getString(1),
-                    cursor.getString(2)
-            );
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),cursor.getString(7),cursor.getString(8),
+                    address.getString(1),
+                    address.getString(2),
+                    address.getString(3),
+                    address.getString(4) );
             // return contact
             return profile;
         }
 
         // Getting All Contacts
-        public List<Profile> getAllProfile() {}
+        public List<Profile> getAllProfile() {
+            List<Profile> contactList = new ArrayList<>();
+            // Select All Query
+            String selectQuery = "SELECT  * FROM " + ProfileEntry.TABLE_NAME;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    Profile profile = new Profile();
+                    profile.setUserID(cursor.getString(0));
+                    profile.setName(cursor.getString(1));
+                    profile.setPhone(cursor.getString(5));
+                    // Adding contact to list
+                    contactList.add(profile);
+                } while (cursor.moveToNext());
+            }
+
+            // return contact list
+            return contactList;
+        }
 
         // Getting contacts Count
-        public int getContactsCount() {}
+       // public int getContactsCount() {}
         // Updating single contact
-        public int updateContact(Profile profile) {}
+        public int updateProfile(Profile profile) {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(ProfileEntry.COLUMN_NAME_NAME, profile.getName());
+            values.put(ProfileEntry.COLUMN_NAME_SURNAME, profile.getSurname());
+            values.put(ProfileEntry.COLUMN_NAME_PICTURE, profile.getImage());
+            values.put(ProfileEntry.COLUMN_NAME_EMAIL, profile.getEmail());
+            values.put(ProfileEntry.COLUMN_NAME_PHONE, profile.getPhone());
+            values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status());
+            values.put(ProfileEntry.COLUMN_NAME_DOB, profile.getDob());
+
+            // updating row
+            return db.update(ProfileEntry.TABLE_NAME, values, ProfileEntry._ID + " = ?",
+                    new String[] { String.valueOf(profile.getUserID()) });
+        }
+
+        public int updateAddress(Profile profile) {
+            SQLiteDatabase db = this.getWritableDatabase();
+
+            ContentValues values = new ContentValues();
+            values.put(AddressEntry.COLUMN_NAME_COUNTRY, profile.getCountry());
+            values.put(AddressEntry.COLUMN_NAME_CITY, profile.getCity());
+            values.put(AddressEntry.COLUMN_NAME_PROVINCE, profile.getProvince());
+            values.put(AddressEntry.COLUMN_NAME_SURBURB, profile.getSurburb());
+
+            // updating row
+            return db.update(ProfileEntry.TABLE_NAME, values, ProfileEntry._ID + " = ?",
+                    new String[] { String.valueOf(profile.getUserID()) });
+        }
 
         // Deleting single contact
-        public void deleteContact(Profile profile) {}
+        public void deleteContact(Profile profile) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete(ProfileEntry.TABLE_NAME,ProfileEntry._ID + " = ?",
+                    new String[] { String.valueOf(profile.getUserID()) });
+            db.delete(AddressEntry.TABLE_NAME,AddressEntry._ID + " = ?",
+                    new String[] { String.valueOf(profile.getUserID()) });
+            db.close();
+        }
     }
     //ACCESS THE DB
    // StudentsAccountDbHelper mDbHelper = new StudentsAccountDbHelper(getContext());

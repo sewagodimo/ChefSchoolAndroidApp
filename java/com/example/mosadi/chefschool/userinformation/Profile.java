@@ -20,6 +20,7 @@ public class Profile {
     private String surburb;
     private String image;
     //Create a user
+
     public Profile(String id, String name,String surname,String image,String email,String phone, String classnr, String work_status, String dob,String country, String province,String city,String surburb){//when a user register
         this.setUserID(id);
         this.setImage(image);//There is no image so far
@@ -36,6 +37,47 @@ public class Profile {
         this.setCity(city);
         this.setSurburb(surburb);
     }//end of constructor
+    public Profile(String id,String name, String surname,String classnr,String contact){
+        this.setUserID(id);
+        this.setImage("");//There is no image so far
+        this.setWork_status("");
+        this.setName(name);
+        this.setSurname(surname);
+        this.setClass_number(classnr);
+        this.setEmail("");
+        this.setPhone("");
+        if(contact.contains("@")){
+            this.setEmail(contact);
+        }
+        else{
+            this.setPhone(contact);
+        }
+
+        // this.setContact(contact);
+        this.setDob("");
+        this.setCountry("");
+        this.setProvince("");
+        this.setCity("");
+        this.setSurburb("");
+
+    }
+    public Profile(){
+        this.setUserID("");
+        this.setImage("");//There is no image so far
+        this.setWork_status("");
+        this.setName("");
+        this.setSurname("");
+        this.setClass_number("");
+        this.setEmail("");
+        this.setPhone("");
+        // this.setContact(contact);
+        this.setDob("");
+        this.setCountry("");
+        this.setProvince("");
+        this.setCity("");
+        this.setSurburb("");
+    }
+
     public void edit_profile(String id, String name,String surname, String classnr, String dob){//when a user register
         this.setUserID(id);
         this.setImage("");//There is no image so far
