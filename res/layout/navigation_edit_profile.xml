@@ -27,7 +27,7 @@
 
                 android:adjustViewBounds="false"
                 android:cropToPadding="true"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:srcCompat="@drawable/profilepic" />
 
             <Button
                 android:id="@+id/edit_image"

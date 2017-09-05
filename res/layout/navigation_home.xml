@@ -16,6 +16,7 @@
             android:id="@+id/image_container"
             android:layout_width="match_parent"
             android:paddingLeft="80dp"
+            android:paddingBottom="20dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -26,7 +27,7 @@
 
                 android:adjustViewBounds="false"
                 android:cropToPadding="true"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:srcCompat="@drawable/profilepic" />
 
         </LinearLayout>
 
@@ -42,11 +43,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="Name"
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/display_name"
@@ -57,7 +58,7 @@
                 android:text="Blue Ivy"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -70,25 +71,25 @@
 
             <TextView
                 android:id="@+id/surnametxt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="Surname"
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/display_surname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_weight="1"
                 android:text="Surname"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -104,12 +105,12 @@
                 android:id="@+id/phonetxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="Phone Number"
                 android:layout_gravity="start"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/display_phone"
@@ -120,7 +121,7 @@
                 android:textAlignment="textStart"
                 android:text="0 *** **** **"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -137,25 +138,25 @@
                 android:id="@+id/emailtxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:layout_gravity="start"
                 android:textAlignment="textStart"
                 android:text="Email"
 
 
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/display_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="example@gmail.com"
+                android:text="example.example@gmail.com"
                 android:layout_gravity="start"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -172,12 +173,12 @@
                 android:id="@+id/classtxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="Class Number"
                 android:textAlignment="textStart"
                 android:layout_gravity="start"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/display_class"
@@ -188,7 +189,7 @@
                 android:layout_gravity="start"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -205,12 +206,12 @@
                 android:id="@+id/worktxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="Work Status"
                 android:textAlignment="textStart"
                 android:layout_gravity="start"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/display_employment"
@@ -221,7 +222,7 @@
                 android:layout_gravity="start"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -237,13 +238,13 @@
                 android:id="@+id/dobtxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="Date of Birth"
                 android:layout_gravity="start"
                 android:textAlignment="textStart"
 
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/display_dob"
@@ -252,7 +253,7 @@
                 android:layout_weight="1"
                 android:text="09 April 1995"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -269,7 +270,7 @@
                 android:id="@+id/addresstxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="Address"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
