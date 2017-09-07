@@ -19,8 +19,6 @@ import com.example.mosadi.chefschool.navigation_fragments.navigation_meeting_req
 import com.example.mosadi.chefschool.userinformation.Profile;
 import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
 
@@ -140,16 +138,11 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-        //Profile cn = db.getContact(1);
-        //List<Profile> contacts = db.getAllProfile();
-        //String log = "Id: "+cn.getUserID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhone() + " ,Email: " + cn.getEmail();
-        // Writing Contacts to log
-        //Log.d("Name: ", log);
-       List<Profile> contacts = db.getAllProfile();//all the user profiles
-        System.out.println("The size of the contact list"+contacts.size());
-        for (Profile cn : contacts) {
-            System.out.println(cn.addressString());
-        }
+
+      Profile contacts = db.getContact("Nosipho");//all the user profiles
+        contacts.edit_address("USA","Washington","Seattle","Town");
+        db.updateAddress(contacts);
+        System.out.println(contacts.addressString());
 
 
     }

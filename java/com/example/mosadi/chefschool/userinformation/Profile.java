@@ -78,22 +78,26 @@ public class Profile {
         this.setSurburb("");
     }
 
-    public void edit_profile(String id, String name,String surname, String classnr, String dob){//when a user register
-        this.setUserID(id);
-        this.setImage("");//There is no image so far
+    public void edit_profile( String name,String surname,String image,String email, String phone, String dob){//when a user register
+        //this.setUserID(id);
+        this.setImage(image);//There is no image so far
         this.setName(name);
         this.setSurname(surname);
-        this.setClass_number(classnr);
-        this.setEmail("");
-        this.setPhone("");
+       // this.setClass_number(classnr);
+        this.setEmail(email);
+        this.setPhone(phone);
        // this.setContact(contact);
         this.setDob(dob);
-        this.setCountry("South Africa");
-        this.setProvince("Western Cape");
-        this.setCity("Cape Town");
-        this.setSurburb("");
+
 
     }//end of constructor
+public void edit_address(String country, String prov, String city, String surburb){
+this.setCountry(country);
+    this.setProvince(prov);
+    this.setCity(city);
+    this.setSurburb(surburb);
+}
+
 
     public String profileString(){
         String log = "Id: "+this.getUserID()+" ,Name: " + this.getName() +" ,Surame: " + this.getSurname()
@@ -109,9 +113,6 @@ public class Profile {
         return log;
     }
 
-    public void edit_profile(){
-        //get values from different parts and edit them
-    }
     public void cancelProfileChanges(){
         //when the user does not want the changes they have made
     }

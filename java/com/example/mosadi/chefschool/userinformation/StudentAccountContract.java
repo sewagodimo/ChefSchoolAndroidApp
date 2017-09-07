@@ -153,7 +153,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         }
 
         // Getting single contact
-        public Profile getContact(int id) {
+        public Profile getContact(String name) {
             SQLiteDatabase db = this.getReadableDatabase();
 
             Cursor cursor = db.query(
@@ -172,8 +172,8 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
                             ProfileEntry.COLUMN_NAME_CITY,
                             ProfileEntry.COLUMN_NAME_SURBURB
 
-                    }, ProfileEntry._ID + "=?",
-                    new String[] { String.valueOf(id) }, null, null, null, null);
+                    }, ProfileEntry.COLUMN_NAME_NAME + "=?", new String[] { String.valueOf(name) }
+                    , null, null, null, null);
             if (cursor != null)
                 cursor.moveToFirst();
 
@@ -246,7 +246,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             values.put(ProfileEntry.COLUMN_NAME_PICTURE, profile.getImage());
             values.put(ProfileEntry.COLUMN_NAME_EMAIL, profile.getEmail());
             values.put(ProfileEntry.COLUMN_NAME_PHONE, profile.getPhone());
-            values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status());
+           // values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status());
             values.put(ProfileEntry.COLUMN_NAME_DOB, profile.getDob());
 
             // updating row
