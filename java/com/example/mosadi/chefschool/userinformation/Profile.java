@@ -94,6 +94,21 @@ public class Profile {
         this.setSurburb("");
 
     }//end of constructor
+
+    public String profileString(){
+        String log = "Id: "+this.getUserID()+" ,Name: " + this.getName() +" ,Surame: " + this.getSurname()
+                +" ,Class: " + this.getClass_number() + " ,Phone: " + this.getPhone() + " ,Email: "
+                + this.getEmail();
+        // Writing Contacts to log
+        return log;
+    }
+    public String addressString(){
+        String log = "Id: "+this.getUserID()+" ,Country: " + this.getCountry() +" ,Province: " + this.getProvince()
+                +" ,City: " + this.getCity() + " ,Surburb: "+this.getSurburb();
+        // Writing Contacts to log
+        return log;
+    }
+
     public void edit_profile(){
         //get values from different parts and edit them
     }

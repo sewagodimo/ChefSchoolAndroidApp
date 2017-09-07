@@ -148,9 +148,7 @@ public class MainActivity extends AppCompatActivity {
        List<Profile> contacts = db.getAllProfile();//all the user profiles
         System.out.println("The size of the contact list"+contacts.size());
         for (Profile cn : contacts) {
-            String log = "Id: "+cn.getUserID()+" ,Name: " + cn.getName() +" ,Surame: " + cn.getSurname() +" ,Class: " + cn.getClass_number() + " ,Phone: " + cn.getPhone() + " ,Email: " + cn.getEmail();
-            // Writing Contacts to log
-            System.out.println(log);
+            System.out.println(cn.addressString());
         }
 
 

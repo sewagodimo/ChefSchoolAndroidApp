@@ -71,6 +71,10 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_CLASS = "class";
         public static final String COLUMN_NAME_WORK_STATUS = "work_status";
         public static final String COLUMN_NAME_DOB = "date_of_birth";
+        public static final String COLUMN_NAME_COUNTRY = "country";
+        public static final String COLUMN_NAME_CITY = "City";
+        public static final String COLUMN_NAME_PROVINCE = "Province";
+        public static final String COLUMN_NAME_SURBURB = "Surburb";
     }
         private static final String SQL_CREATE_PROFILE_ENTRIES =
            "CREATE TABLE " + ProfileEntry.TABLE_NAME + " (" +
@@ -82,29 +86,18 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
                    ProfileEntry.COLUMN_NAME_PHONE + " TEXT," +
                    ProfileEntry.COLUMN_NAME_CLASS + " TEXT," +
                    ProfileEntry.COLUMN_NAME_WORK_STATUS + " TEXT," +
-                   ProfileEntry.COLUMN_NAME_DOB + " TEXT)" ;
+                   ProfileEntry.COLUMN_NAME_DOB + " TEXT," +
+                   ProfileEntry.COLUMN_NAME_COUNTRY + " TEXT," +
+                   ProfileEntry.COLUMN_NAME_CITY + " TEXT," +
+                   ProfileEntry.COLUMN_NAME_PROVINCE+ " TEXT," +
+                   ProfileEntry.COLUMN_NAME_SURBURB+ " TEXT)" ;
         private static final String SQL_DELETE_PROFILE =
                 "DROP TABLE IF EXISTS " + ProfileEntry.TABLE_NAME;
 
 
 
     //a table to store all the user addresses
-    public static class AddressEntry implements BaseColumns {
-        public static final String TABLE_NAME = "address";
-        public static final String COLUMN_NAME_COUNTRY = "country";
-        public static final String COLUMN_NAME_CITY = "City";
-        public static final String COLUMN_NAME_PROVINCE = "Province";
-        public static final String COLUMN_NAME_SURBURB = "Surburb";
-    }
-        private static final String SQL_CREATE_ADDRESS_ENTRIES =
-                "CREATE TABLE " + AddressEntry.TABLE_NAME + " (" +
-                        AddressEntry._ID + " INTEGER PRIMARY KEY," +
-                        AddressEntry.COLUMN_NAME_COUNTRY + " TEXT," +
-                        AddressEntry.COLUMN_NAME_CITY + " TEXT," +
-                        AddressEntry.COLUMN_NAME_PROVINCE+ " TEXT," +
-                        AddressEntry.COLUMN_NAME_SURBURB+ " TEXT)" ;
-        private static final String SQL_DELETE_ADDRESS =
-                "DROP TABLE IF EXISTS " + AddressEntry.TABLE_NAME;
+
 
     //the sdqlite helper class
 
@@ -119,13 +112,13 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             db.execSQL(SQL_CREATE_EVENTS_ENTRIES);
             db.execSQL(SQL_CREATE_lOGIN_ENTRIES);
            db.execSQL(SQL_CREATE_PROFILE_ENTRIES);
-            db.execSQL(SQL_CREATE_ADDRESS_ENTRIES);
+           // db.execSQL(SQL_CREATE_ADDRESS_ENTRIES);
         }
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             // Drop older table if existed
             db.execSQL("DROP TABLE IF EXISTS " + ProfileEntry.TABLE_NAME);
-            db.execSQL("DROP TABLE IF EXISTS " + AddressEntry.TABLE_NAME);
+           // db.execSQL("DROP TABLE IF EXISTS " + AddressEntry.TABLE_NAME);
             db.execSQL("DROP TABLE IF EXISTS " + EventsEntry.TABLE_NAME);
             db.execSQL("DROP TABLE IF EXISTS " + LoginDetailsEntry.TABLE_NAME);
 
@@ -150,18 +143,12 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             values.put(ProfileEntry.COLUMN_NAME_EMAIL, profile.getEmail()); // Contact EMAIL
             values.put(ProfileEntry.COLUMN_NAME_DOB, profile.getDob()); // Contact DATE OF BIRTH
             values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status()); // Contact EMAIL
-            //values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status());
-          // Inserting Profle Row
+            values.put(ProfileEntry.COLUMN_NAME_COUNTRY, profile.getCountry()); //The user's country
+            values.put(ProfileEntry.COLUMN_NAME_PROVINCE, profile.getProvince()); //The user's country
+            values.put(ProfileEntry.COLUMN_NAME_CITY, profile.getCity()); //The user's country0
+            values.put(ProfileEntry.COLUMN_NAME_SURBURB, profile.getSurburb()); //The user's country0
+          //  db.insert(AddressEntry.TABLE_NAME,null,address);
             db.insert(ProfileEntry.TABLE_NAME, null, values);
-        /*
-            //Add a new Address
-            ContentValues address = new ContentValues();
-           address.put(AddressEntry.COLUMN_NAME_COUNTRY, profile.getCountry()); //The user's country
-            address.put(AddressEntry.COLUMN_NAME_PROVINCE, profile.getProvince()); //The user's country
-            address.put(AddressEntry.COLUMN_NAME_CITY, profile.getCity()); //The user's country0
-            address.put(AddressEntry.COLUMN_NAME_SURBURB, profile.getSurburb()); //The user's country0
-            db.insert(AddressEntry.TABLE_NAME,null,address);
-        */
             db.close(); // Closing database connection
         }
 
@@ -180,20 +167,14 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
                             ProfileEntry.COLUMN_NAME_CLASS,
                             ProfileEntry.COLUMN_NAME_WORK_STATUS,
                             ProfileEntry.COLUMN_NAME_DOB,
+                            ProfileEntry.COLUMN_NAME_COUNTRY,
+                            ProfileEntry.COLUMN_NAME_PROVINCE,
+                            ProfileEntry.COLUMN_NAME_CITY,
+                            ProfileEntry.COLUMN_NAME_SURBURB
 
                     }, ProfileEntry._ID + "=?",
                     new String[] { String.valueOf(id) }, null, null, null, null);
             if (cursor != null)
-                cursor.moveToFirst();
-            Cursor address = db.query(
-                    AddressEntry.TABLE_NAME, new String[] {
-                            AddressEntry._ID,
-                            AddressEntry.COLUMN_NAME_COUNTRY,
-                            AddressEntry.COLUMN_NAME_PROVINCE,
-                            AddressEntry.COLUMN_NAME_CITY,
-                            AddressEntry.COLUMN_NAME_SURBURB
-                    }, AddressEntry._ID + "=?",new String[] { String.valueOf(id) }, null, null, null, null);
-            if (address!= null)
                 cursor.moveToFirst();
 
             Profile profile = new Profile(cursor.getString(0),
@@ -202,11 +183,13 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
                     cursor.getString(3),
                     cursor.getString(4),
                     cursor.getString(5),
-                    cursor.getString(6),cursor.getString(7),cursor.getString(8),
-                    address.getString(1),
-                    address.getString(2),
-                    address.getString(3),
-                    address.getString(4) );
+                    cursor.getString(6),
+                    cursor.getString(7),
+                    cursor.getString(8),
+                    cursor.getString(9),
+                    cursor.getString(10),
+                    cursor.getString(11),
+                    cursor.getString(12) );
             // return contact
             return profile;
         }
@@ -214,11 +197,12 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         // Getting All Contacts
         public List<Profile> getAllProfile() {
             List<Profile> contactList = new ArrayList<>();
-
             String selectQuery = "SELECT  * FROM " + ProfileEntry.TABLE_NAME;
+            //String selectQueryAddress = "SELECT  * FROM " + AddressEntry.TABLE_NAME;
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
+            //Cursor addresCursor = db.rawQuery(selectQueryAddress,null);
 
             // looping through all rows and adding to list
             if (cursor.moveToFirst()) {
@@ -234,10 +218,16 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
                     profile.setClass_number(cursor.getString(6));
                     profile.setWork_status(cursor.getString(7));
                     profile.setDob(cursor.getString(8));
+                   // profile.setUserID(cursor.getString(9));
+                    profile.setCountry(cursor.getString(9));
+                    profile.setProvince(cursor.getString(10));
+                    profile.setCity(cursor.getString(11));
+                    profile.setSurburb(cursor.getString(12));
 
                     // Adding contact to list
                     contactList.add(profile);
-                } while (cursor.moveToNext());
+                }
+                while (cursor.moveToNext());
             }
 
             // return contact list
@@ -268,10 +258,10 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
 
             ContentValues values = new ContentValues();
-            values.put(AddressEntry.COLUMN_NAME_COUNTRY, profile.getCountry());
-            values.put(AddressEntry.COLUMN_NAME_CITY, profile.getCity());
-            values.put(AddressEntry.COLUMN_NAME_PROVINCE, profile.getProvince());
-            values.put(AddressEntry.COLUMN_NAME_SURBURB, profile.getSurburb());
+            values.put(ProfileEntry.COLUMN_NAME_COUNTRY, profile.getCountry());
+            values.put(ProfileEntry.COLUMN_NAME_CITY, profile.getCity());
+            values.put(ProfileEntry.COLUMN_NAME_PROVINCE, profile.getProvince());
+            values.put(ProfileEntry.COLUMN_NAME_SURBURB, profile.getSurburb());
 
             // updating row
             return db.update(ProfileEntry.TABLE_NAME, values, ProfileEntry._ID + " = ?",
@@ -282,8 +272,6 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public void deleteProfile(Profile profile) {
             SQLiteDatabase db = this.getWritableDatabase();
             db.delete(ProfileEntry.TABLE_NAME,ProfileEntry._ID + " = ?",
-                    new String[] { String.valueOf(profile.getUserID()) });
-            db.delete(AddressEntry.TABLE_NAME,AddressEntry._ID + " = ?",
                     new String[] { String.valueOf(profile.getUserID()) });
             db.close();
         }
