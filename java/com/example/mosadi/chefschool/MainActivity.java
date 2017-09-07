@@ -19,6 +19,8 @@ import com.example.mosadi.chefschool.navigation_fragments.navigation_meeting_req
 import com.example.mosadi.chefschool.userinformation.Profile;
 import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -121,25 +123,36 @@ public class MainActivity extends AppCompatActivity {
         bar.setDisplayHomeAsUpEnabled(false);
         fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.navigation_main);
+        StudentAccountContract db = new StudentAccountContract(this);
+        System.out.println("Insert");
+        Log.d("Insert: ", "Inserting ..");
+        Profile profile =new Profile("1","Nosipho", "Brodie","22","amy@khumalo.com");
+        db.addProfile(new Profile("1","Nosipho", "Brodie","22","amy@khumalo.com"));
+        db.addProfile(new Profile("2","Nosipho", "Brodie","22","amy@khumalo.com"));
+        db.addProfile(new Profile("3","Nosipho2", "Brodie2","22","00706050"));
+        Log.d("Reading: ", "Reading all contacts..");
+
          ft = fragmentManager.beginTransaction();
         fragment= new navigation_home_fragment();
         ft.replace(R.id.content, fragment);
         ft.commit();
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        StudentAccountContract db = new StudentAccountContract(this);
 
-        Log.d("Insert: ", "Inserting ..");
-        db.addProfile(new Profile("001","Nosipho", "Brodie","22","amy@khumalo.com"));
-        /* db.addProfile(new Profile("003","Nosipho2", "Brodie2","22","00706050"));
-        Log.d("Reading: ", "Reading all contacts..");
-        List<Profile> contacts = db.getAllProfile();//all the user profiles
+
+        //Profile cn = db.getContact(1);
+        List<Profile> contacts = db.getAllProfile();
+        //String log = "Id: "+cn.getUserID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhone() + " ,Email: " + cn.getEmail();
+        // Writing Contacts to log
+        //Log.d("Name: ", log);
+       /* List<Profile> contacts = db.getAllProfile();//all the user profiles
         for (Profile cn : contacts) {
             String log = "Id: "+cn.getUserID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhone() + " ,Email: " + cn.getEmail();
             // Writing Contacts to log
             Log.d("Name: ", log);
         }
         */
+
     }
 
 

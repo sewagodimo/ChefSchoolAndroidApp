@@ -25,7 +25,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public static final String TABLE_NAME = "events";
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_DATE = "date";
-        public static final String COLUMN_NAME_TIME = "date";
+        public static final String COLUMN_NAME_TIME = "time";
         public static final String COLUMN_NAME_VENUE = "venue";
         public static final String COLUMN_NAME_RSVP = "RSVP";
     }
@@ -62,7 +62,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
 
     //A table to store all the profile entries
     public static class ProfileEntry implements BaseColumns {
-        public static final String TABLE_NAME = "profiles";
+        public static final String TABLE_NAME = "profile_entries";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_SURNAME = "surname";
         public static final String COLUMN_NAME_PICTURE = "picture";
@@ -70,7 +70,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_PHONE = "Phone";
         public static final String COLUMN_NAME_CLASS = "class";
         public static final String COLUMN_NAME_WORK_STATUS = "work_status";
-        public static final String COLUMN_NAME_DOB = "date-of-birth";
+        public static final String COLUMN_NAME_DOB = "date_of_birth";
     }
         private static final String SQL_CREATE_PROFILE_ENTRIES =
            "CREATE TABLE " + ProfileEntry.TABLE_NAME + " (" +
@@ -108,7 +108,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
 
     //the sdqlite helper class
 
-        public static final int DATABASE_VERSION = 1;
+        public static final int DATABASE_VERSION = 2;
         public static final String DATABASE_NAME = "ictstudents.db";
 
         public StudentAccountContract(Context context) {
@@ -118,17 +118,18 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(SQL_CREATE_EVENTS_ENTRIES);
             db.execSQL(SQL_CREATE_lOGIN_ENTRIES);
-            db.execSQL(SQL_CREATE_PROFILE_ENTRIES);
+           db.execSQL(SQL_CREATE_PROFILE_ENTRIES);
             db.execSQL(SQL_CREATE_ADDRESS_ENTRIES);
         }
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            // This database is only a cache for online data, so its upgrade policy is
-            // to simply to discard the data and start over
-            db.execSQL(SQL_DELETE_EVENTSENTRY);
-            db.execSQL(SQL_DELETE_LOGINDETAILS);
-            db.execSQL(SQL_DELETE_PROFILE);
-            db.execSQL(SQL_DELETE_ADDRESS);
+            // Drop older table if existed
+            db.execSQL("DROP TABLE IF EXISTS " + ProfileEntry.TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + AddressEntry.TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + EventsEntry.TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + LoginDetailsEntry.TABLE_NAME);
+
+            // Create tables again
             onCreate(db);
         }
         @Override
@@ -148,9 +149,10 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             values.put(ProfileEntry.COLUMN_NAME_EMAIL, profile.getEmail()); // Contact EMAIL
             values.put(ProfileEntry.COLUMN_NAME_DOB, profile.getDob()); // Contact DATE OF BIRTH
             values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status()); // Contact EMAIL
-            values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status());
-            // Inserting Profle Row
+            //values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status());
+          // Inserting Profle Row
             db.insert(ProfileEntry.TABLE_NAME, null, values);
+        /*
             //Add a new Address
             ContentValues address = new ContentValues();
            address.put(AddressEntry.COLUMN_NAME_COUNTRY, profile.getCountry()); //The user's country
@@ -158,6 +160,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             address.put(AddressEntry.COLUMN_NAME_CITY, profile.getCity()); //The user's country0
             address.put(AddressEntry.COLUMN_NAME_SURBURB, profile.getSurburb()); //The user's country0
             db.insert(AddressEntry.TABLE_NAME,null,address);
+        */
             db.close(); // Closing database connection
         }
 
@@ -210,12 +213,12 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         // Getting All Contacts
         public List<Profile> getAllProfile() {
             List<Profile> contactList = new ArrayList<>();
-            // Select All Query
+
             String selectQuery = "SELECT  * FROM " + ProfileEntry.TABLE_NAME;
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
-
+                /*
             // looping through all rows and adding to list
             if (cursor.moveToFirst()) {
                 do {
@@ -227,7 +230,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
                     contactList.add(profile);
                 } while (cursor.moveToNext());
             }
-
+                */
             // return contact list
             return contactList;
         }
