@@ -267,6 +267,15 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             return db.update(ProfileEntry.TABLE_NAME, values, ProfileEntry._ID + " = ?",
                     new String[] { String.valueOf(profile.getUserID()) });
         }
+    public int updateWork_status(Profile profile) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getCountry());
+        // updating row
+        return db.update(ProfileEntry.TABLE_NAME, values, ProfileEntry._ID + " = ?",
+                new String[] { String.valueOf(profile.getUserID()) });
+    }
 
         // Deleting single contact
         public void deleteProfile(Profile profile) {

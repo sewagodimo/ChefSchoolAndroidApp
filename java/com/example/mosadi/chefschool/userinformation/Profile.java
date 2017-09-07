@@ -78,7 +78,7 @@ public class Profile {
         this.setSurburb("");
     }
 
-    public void edit_profile( String name,String surname,String image,String email, String phone, String dob){//when a user register
+    public void edit_profile( String name,String surname,String image,String email, String phone, String dob,StudentAccountContract db){//when a user register
         //this.setUserID(id);
         this.setImage(image);//There is no image so far
         this.setName(name);
@@ -88,14 +88,18 @@ public class Profile {
         this.setPhone(phone);
        // this.setContact(contact);
         this.setDob(dob);
+        //then change sqlite
+        db.updateProfile(this);
 
 
     }//end of constructor
-public void edit_address(String country, String prov, String city, String surburb){
+public void edit_address(String country, String prov, String city, String surburb,StudentAccountContract db){
 this.setCountry(country);
     this.setProvince(prov);
     this.setCity(city);
     this.setSurburb(surburb);
+    //update sqlite
+    db.updateAddress(this);
 }
 
 

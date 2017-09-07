@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity {
 
 
       Profile contacts = db.getContact("Nosipho");//all the user profiles
-        contacts.edit_address("USA","Washington","Seattle","Town");
-        db.updateAddress(contacts);
+        contacts.edit_address("USA","Washington","Seattle","Town",db);
+       // db.updateAddress(contacts);
         System.out.println(contacts.addressString());
 
 
