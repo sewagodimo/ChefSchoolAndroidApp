@@ -126,10 +126,10 @@ public class MainActivity extends AppCompatActivity {
         StudentAccountContract db = new StudentAccountContract(this);
         System.out.println("Insert");
         Log.d("Insert: ", "Inserting ..");
-        Profile profile =new Profile("1","Nosipho", "Brodie","22","amy@khumalo.com");
-        db.addProfile(new Profile("1","Nosipho", "Brodie","22","amy@khumalo.com"));
-        db.addProfile(new Profile("2","Nosipho", "Brodie","22","amy@khumalo.com"));
-        db.addProfile(new Profile("3","Nosipho2", "Brodie2","22","00706050"));
+        Profile profile =new Profile("1","Nosipho", "Brodie","image","nos@brodie.com","0988","22","working","09 April 2016","SA","NW","Rusty","Btk");
+        db.addProfile(profile);
+
+        db.addProfile(new Profile("3","Nosipho2", "Brodie2","image","amy@khumalo.com","phone","class nr","working","09 April 2016","SA","NW","Rusty","Btk"));
         Log.d("Reading: ", "Reading all contacts..");
 
          ft = fragmentManager.beginTransaction();
@@ -141,17 +141,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Profile cn = db.getContact(1);
-        List<Profile> contacts = db.getAllProfile();
+        //List<Profile> contacts = db.getAllProfile();
         //String log = "Id: "+cn.getUserID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhone() + " ,Email: " + cn.getEmail();
         // Writing Contacts to log
         //Log.d("Name: ", log);
-       /* List<Profile> contacts = db.getAllProfile();//all the user profiles
+       List<Profile> contacts = db.getAllProfile();//all the user profiles
+        System.out.println("The size of the contact list"+contacts.size());
         for (Profile cn : contacts) {
-            String log = "Id: "+cn.getUserID()+" ,Name: " + cn.getName() + " ,Phone: " + cn.getPhone() + " ,Email: " + cn.getEmail();
+            String log = "Id: "+cn.getUserID()+" ,Name: " + cn.getName() +" ,Surame: " + cn.getSurname() +" ,Class: " + cn.getClass_number() + " ,Phone: " + cn.getPhone() + " ,Email: " + cn.getEmail();
             // Writing Contacts to log
-            Log.d("Name: ", log);
+            System.out.println(log);
         }
-        */
+
 
     }
 

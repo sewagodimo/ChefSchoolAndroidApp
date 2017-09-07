@@ -44,7 +44,7 @@ public class Profile {
         this.setName(name);
         this.setSurname(surname);
         this.setClass_number(classnr);
-        this.setEmail("");
+        this.setEmail("anemail");
         this.setPhone("");
         if(contact.contains("@")){
             this.setEmail(contact);

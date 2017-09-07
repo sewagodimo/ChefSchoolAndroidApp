@@ -142,8 +142,9 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             //Get a new profile
             ContentValues values = new ContentValues();
             values.put(ProfileEntry.COLUMN_NAME_NAME, profile.getName()); // Contact Name
-            values.put(ProfileEntry.COLUMN_NAME_SURNAME, profile.getPhone()); // Contact Phone Number
+            values.put(ProfileEntry.COLUMN_NAME_SURNAME, profile.getSurname()); // Contact Phone Number
             values.put(ProfileEntry.COLUMN_NAME_EMAIL, profile.getEmail()); // Contact EMAIL
+            values.put(ProfileEntry.COLUMN_NAME_PHONE, profile.getPhone()); // Contact EMAIL
             values.put(ProfileEntry.COLUMN_NAME_PICTURE, profile.getImage());// Contact the profile picture
             values.put(ProfileEntry.COLUMN_NAME_CLASS, profile.getClass_number()); // get the user's class
             values.put(ProfileEntry.COLUMN_NAME_EMAIL, profile.getEmail()); // Contact EMAIL
@@ -218,19 +219,27 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
-                /*
+
             // looping through all rows and adding to list
             if (cursor.moveToFirst()) {
                 do {
+                    //String id,String name, String surname,String classnr,String contact
                     Profile profile = new Profile();
                     profile.setUserID(cursor.getString(0));
                     profile.setName(cursor.getString(1));
+                    profile.setSurname(cursor.getString(2));
+                    profile.setImage(cursor.getString(3));
+                    profile.setEmail(cursor.getString(4));
                     profile.setPhone(cursor.getString(5));
+                    profile.setClass_number(cursor.getString(6));
+                    profile.setWork_status(cursor.getString(7));
+                    profile.setDob(cursor.getString(8));
+
                     // Adding contact to list
                     contactList.add(profile);
                 } while (cursor.moveToNext());
             }
-                */
+
             // return contact list
             return contactList;
         }
@@ -270,7 +279,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         }
 
         // Deleting single contact
-        public void deleteContact(Profile profile) {
+        public void deleteProfile(Profile profile) {
             SQLiteDatabase db = this.getWritableDatabase();
             db.delete(ProfileEntry.TABLE_NAME,ProfileEntry._ID + " = ?",
                     new String[] { String.valueOf(profile.getUserID()) });
