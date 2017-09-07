@@ -101,7 +101,9 @@ this.setCountry(country);
     //update sqlite
     db.updateAddress(this);
 }
-
+public Profile userProfile(){
+    return this;
+}
 
     public String profileString(){
         String log = "Id: "+this.getUserID()+" ,Name: " + this.getName() +" ,Surame: " + this.getSurname()

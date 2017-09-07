@@ -111,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+    StudentAccountContract db;
+    Profile user;
+    String username="Nosipho"; //This will come from the login table
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,15 +124,11 @@ public class MainActivity extends AppCompatActivity {
         bar.setDisplayHomeAsUpEnabled(false);
         fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.navigation_main);
-        StudentAccountContract db = new StudentAccountContract(this);
+        db = new StudentAccountContract(this);
         System.out.println("Insert");
         Log.d("Insert: ", "Inserting ..");
-        Profile profile =new Profile("1","Nosipho", "Brodie","image","nos@brodie.com","0988","22","working","09 April 2016","SA","NW","Rusty","Btk");
-        db.addProfile(profile);
-
-        db.addProfile(new Profile("3","Nosipho2", "Brodie2","image","amy@khumalo.com","phone","class nr","working","09 April 2016","SA","NW","Rusty","Btk"));
-        Log.d("Reading: ", "Reading all contacts..");
-
+        user = db.getContact(username);//all the user profiles
+        //changeViewvalues();
          ft = fragmentManager.beginTransaction();
         fragment= new navigation_home_fragment();
         ft.replace(R.id.content, fragment);
@@ -137,14 +136,9 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-
-
-      Profile contacts = db.getContact("Nosipho");//all the user profiles
-        contacts.edit_address("USA","Washington","Seattle","Town",db);
-       // db.updateAddress(contacts);
-        System.out.println(contacts.addressString());
-
-
+    }
+    public Profile getUser(){
+        return user;
     }
 
 
