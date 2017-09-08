@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -74,7 +75,7 @@ public class help_transport_money extends Fragment {
                         amount.setError(null);
                         View focusView = null;
                         if(TextUtils.isEmpty(reason.getText().toString())){
-                            reason.setError("Please tell why do not have transport money");
+                            reason.setError("This field is required");
                             focusView = reason;
                             focusView.requestFocus();
                         }
@@ -83,8 +84,13 @@ public class help_transport_money extends Fragment {
                             focusView = location;
                             focusView.requestFocus();
                         }
+                        else if(TextUtils.isEmpty(phone.getText().toString())){
+                            phone.setError("Phone number missing");
+                            focusView = phone;
+                            focusView.requestFocus();
+                        }
                         else if(TextUtils.isEmpty(amount.getText().toString())){
-                            amount.setError("Please tell us where you are");
+                            amount.setError("Enter where you are now");
                             focusView = amount;
                             focusView.requestFocus();
                         }
@@ -114,10 +120,32 @@ public class help_transport_money extends Fragment {
     }
     public String sendSMS(){
         String sent= "SMS sent";
+        message =composeMessage();
+
+            String toPhoneNumber =  "0764270487";
+
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(toPhoneNumber, null, message, null, null);
+
+            } catch (Exception e) {
+                sent="SMS sending failed";
+
+        }
 
         return sent;
 
     }
+    public String composeMessage(){
+
+        return "I need Transport Money\n"
+                +user.getName()+" "+user.getSurname()+
+                "\n"+reason.getText().toString()+
+                "\nStuck at: "+location.getText().toString()+
+                "\nNeeds about: "+amount.getText().toString()+
+                "\nContact on: "+phone.getText().toString();
+    }
+
 
 
 
