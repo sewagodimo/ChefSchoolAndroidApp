@@ -14,11 +14,14 @@ import java.util.List;
  * Created by Mosadi on 2017/09/04.
  */
 
+
 public class StudentAccountContract  extends SQLiteOpenHelper {
-    //make the constructor private
 
+    public static final int DATABASE_VERSION = 2;
+    public static final String DATABASE_NAME = "ictstudents.db";
+   // StudentAccountContract mDbHelper = new StudentAccountContract(getContext());
+   // SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-    //public static final String COLUMN_NAME_= "";
 
     /* Inner class that defines the table contents */
     public static class EventsEntry implements BaseColumns {
@@ -101,8 +104,6 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
 
     //the sdqlite helper class
 
-        public static final int DATABASE_VERSION = 2;
-        public static final String DATABASE_NAME = "ictstudents.db";
 
         public StudentAccountContract(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -125,6 +126,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             // Create tables again
             onCreate(db);
         }
+
         @Override
         public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             onUpgrade(db, oldVersion, newVersion);
@@ -284,6 +286,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
                     new String[] { String.valueOf(profile.getUserID()) });
             db.close();
         }
+
     }
     //ACCESS THE DB
    // StudentsAccountDbHelper mDbHelper = new StudentsAccountDbHelper(getContext());

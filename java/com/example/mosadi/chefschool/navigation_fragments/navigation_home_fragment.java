@@ -17,6 +17,11 @@ import com.example.mosadi.chefschool.userinformation.Profile;
 
 public class navigation_home_fragment extends Fragment{
     TextView name;
+    TextView surname;
+    TextView phone;
+    TextView email;
+    TextView work_status;
+    TextView dob;
     Profile user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,6 +29,11 @@ public class navigation_home_fragment extends Fragment{
         View v =inflater.inflate(R.layout.navigation_home, container, false);
         user=((MainActivity)this.getActivity()).getUser();
         name = (TextView) v.findViewById(R.id.display_name);
+        surname = (TextView) v.findViewById(R.id.display_surname);
+        phone = (TextView) v.findViewById(R.id.display_phone);
+        email = (TextView) v.findViewById(R.id.display_email);
+        work_status = (TextView) v.findViewById(R.id.display_employment);
+        dob = (TextView) v.findViewById(R.id.display_dob);
         // Inflate the layout for this fragment
         //change th content of the view stuff
         changedisplayValues(user);
@@ -33,7 +43,11 @@ public class navigation_home_fragment extends Fragment{
     }
     public void changedisplayValues(Profile user){
         name.setText(user.getName());
-
+        surname.setText(user.getSurname());
+        phone.setText(user.getPhone());
+        email.setText(user.getEmail());
+        work_status.setText(user.getWork_status());
+        dob.setText(user.getDob());
     }
 
 }

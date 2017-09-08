@@ -111,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
-    StudentAccountContract db;
+   private StudentAccountContract db;//=new StudentAccountContract(this);
     Profile user;
-    String username="Nosipho"; //This will come from the login table
+    String username="Passion"; //This will come from the login table
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,9 +122,11 @@ public class MainActivity extends AppCompatActivity {
         bar.setTitle("Alumni App");
         bar.setHomeButtonEnabled(false);
         bar.setDisplayHomeAsUpEnabled(false);
+        db=new StudentAccountContract(this);
         fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.navigation_main);
-        db = new StudentAccountContract(this);
+       // db =
+        db.addProfile(new Profile("1", "Passion","Drive","image","ednecia@codedojo.com","+5553245","5","studying","09/04/95","SA","","",""));
         System.out.println("Insert");
         Log.d("Insert: ", "Inserting ..");
         user = db.getContact(username);//all the user profiles
@@ -140,7 +142,16 @@ public class MainActivity extends AppCompatActivity {
     public Profile getUser(){
         return user;
     }
+    public void updateProfile(String name, String surname,String image,String email,String phone,String dob){
+        username=name;
+        user.edit_profile(name,surname,image,email,phone,dob,db);
+        db.updateProfile(user);
+        System.out.println(user.profileString());
+    }
+    public void updateAddress(String co,String pr,String ci, String sub){
+        user.edit_address(co,pr,ci,sub,db);
 
+    }
 
 
 }
