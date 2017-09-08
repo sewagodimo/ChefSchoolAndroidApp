@@ -39,13 +39,16 @@ public class help_transport_money extends Fragment {
         user=((MainActivity)this.getActivity()).getUser();// so that we can also send their information
         View v= inflater.inflate(R.layout.help_transport_money, container, false);
         send= (Button)v.findViewById(R.id.send_transport_money);
+
         reason=(EditText) v.findViewById(R.id.edit_reason);
-        amount=(EditText) v.findViewById(R.id.edit_reason);
+        amount=(EditText) v.findViewById(R.id.transport_amount);
+        location=(EditText) v.findViewById(R.id.transport_location);
+        System.out.println(amount.getText().toString());
         phone=(EditText) v.findViewById(R.id.edit_number);
         phone.setText(user.getPhone());
         bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         bar.setTitle("Transport Money");
-        location=(EditText) v.findViewById(R.id.edit_reason);
+
         clear= (Button)v.findViewById(R.id.clear_transport);
 
         clear.setOnClickListener(
@@ -95,9 +98,9 @@ public class help_transport_money extends Fragment {
                             focusView.requestFocus();
                         }
                         else{
-                            onClear();
                             sendSMS();
                             makeToast("Sending SMS...");
+                            onClear();
                         }
 
                     }
@@ -140,7 +143,7 @@ public class help_transport_money extends Fragment {
 
         return "I need Transport Money\n"
                 +user.getName()+" "+user.getSurname()+
-                "\n"+reason.getText().toString()+
+                "\nReason "+reason.getText().toString()+
                 "\nStuck at: "+location.getText().toString()+
                 "\nNeeds about: "+amount.getText().toString()+
                 "\nContact on: "+phone.getText().toString();
