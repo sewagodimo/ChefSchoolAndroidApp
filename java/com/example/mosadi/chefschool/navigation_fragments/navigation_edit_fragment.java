@@ -40,7 +40,7 @@ public class navigation_edit_fragment extends Fragment {
         initialiseValues(v);
         bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         save = (Button) v.findViewById(R.id.savebutton);
-       back= (Button) v.findViewById(R.id.cancel_profile_editing);
+       back= (Button) v.findViewById(R.id.clear_transport);
         back.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {

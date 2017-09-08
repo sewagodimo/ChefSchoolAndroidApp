@@ -50,7 +50,7 @@
                 android:id="@+id/contact_website"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cancel_profile_editing"
+                android:layout_alignBottom="@+id/clear_transport"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="54dp"

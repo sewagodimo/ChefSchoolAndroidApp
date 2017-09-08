@@ -1,15 +1,18 @@
 package com.example.mosadi.chefschool.navigation_fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.mosadi.chefschool.MainActivity;
 import com.example.mosadi.chefschool.R;
@@ -39,6 +42,7 @@ public class navigation_edit_address extends Fragment {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // WHEN the user clicks that they want to get a new address
+                        makeToast("Saved changes");
                        onUpdate();
                     }
                 });
@@ -60,6 +64,12 @@ public class navigation_edit_address extends Fragment {
                 });
 
         return v;
+    }
+    public void makeToast(String text){
+        Context context =getActivity().getApplicationContext();
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+        toast.show();
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
     }
     public void initialise(View v){
         //initialise text views

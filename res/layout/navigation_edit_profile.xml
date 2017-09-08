@@ -206,11 +206,11 @@
                 android:id="@+id/edit_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:background="@color/editText"
                 android:ems="10"
                 android:gravity="start"
-
+                android:layout_weight="1"
                 android:inputType="date"
                 android:text="09/04/1995"
                 android:textAlignment="viewStart" />
@@ -225,7 +225,7 @@
             android:paddingTop="40dp">
 
             <Button
-                android:id="@+id/cancel_profile_editing"
+                android:id="@+id/clear_transport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.42"

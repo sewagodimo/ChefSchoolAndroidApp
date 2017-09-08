@@ -42,4 +42,5 @@
         date as you will be contacted shortly</string>
     <string name="contact_message">Your message has been sent, make sure you contact details are up to date as you will be contacted shortly</string>
 
+    <string name="transport_money">If you need money getting to class, fill in ALL the information below and press send</string>
 </resources>
