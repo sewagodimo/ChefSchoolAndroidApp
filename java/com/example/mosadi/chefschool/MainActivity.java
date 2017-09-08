@@ -19,6 +19,8 @@ import com.example.mosadi.chefschool.navigation_fragments.navigation_meeting_req
 import com.example.mosadi.chefschool.userinformation.Profile;
 import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -126,11 +128,14 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         setContentView(R.layout.navigation_main);
        // db =
-        db.addProfile(new Profile("1", "Passion","Drive","image","ednecia@codedojo.com","+5553245","5","studying","09/04/95","SA","","",""));
+       // db.addProfile(new Profile("1", "Passion","Drive","image","ednecia@codedojo.com","+5553245","5","studying","09/04/95","SA","","",""));
         System.out.println("Insert");
         Log.d("Insert: ", "Inserting ..");
-        user = db.getContact(username);//all the user profiles
+        List<Profile> cn= db.getAllProfile();
+        user = cn.get(0);//all the user profiles
         //changeViewvalues();
+
+
          ft = fragmentManager.beginTransaction();
         fragment= new navigation_home_fragment();
         ft.replace(R.id.content, fragment);

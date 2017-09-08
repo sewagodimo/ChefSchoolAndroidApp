@@ -33,7 +33,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_RSVP = "RSVP";
     }
         private static final String SQL_CREATE_EVENTS_ENTRIES =
-                "CREATE TABLE " + EventsEntry.TABLE_NAME + " (" +
+                "CREATE TABLE IF NOT EXISTS" + EventsEntry.TABLE_NAME + " (" +
                         EventsEntry._ID + " INTEGER PRIMARY KEY," +
                         EventsEntry.COLUMN_NAME_TITLE + " TEXT," +
                         EventsEntry.COLUMN_NAME_DATE + " TEXT," +
@@ -52,7 +52,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_PASSWORD = "Password";
     }
         private static final String SQL_CREATE_lOGIN_ENTRIES =
-                "CREATE TABLE " + LoginDetailsEntry.TABLE_NAME + " (" +
+                "CREATE TABLE IF NOT EXISTS" + LoginDetailsEntry.TABLE_NAME + " (" +
                         EventsEntry._ID + " INTEGER PRIMARY KEY," +
                         LoginDetailsEntry.COLUMN_NAME_ID + " TEXT," +
                         LoginDetailsEntry.COLUMN_NAME_USERNAME + " TEXT," +
@@ -80,7 +80,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_SURBURB = "Surburb";
     }
         private static final String SQL_CREATE_PROFILE_ENTRIES =
-           "CREATE TABLE " + ProfileEntry.TABLE_NAME + " (" +
+           "CREATE TABLE IF NOT EXISTS" + ProfileEntry.TABLE_NAME + " (" +
                    ProfileEntry._ID + " INTEGER PRIMARY KEY," +
                    ProfileEntry.COLUMN_NAME_NAME + " TEXT," +
                    ProfileEntry.COLUMN_NAME_SURNAME + " TEXT," +
