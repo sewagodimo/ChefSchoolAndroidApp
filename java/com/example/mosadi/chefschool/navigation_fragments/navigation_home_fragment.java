@@ -22,6 +22,7 @@ public class navigation_home_fragment extends Fragment{
     TextView email;
     TextView work_status;
     TextView dob;
+    TextView addressview;
     Profile user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +35,7 @@ public class navigation_home_fragment extends Fragment{
         email = (TextView) v.findViewById(R.id.display_email);
         work_status = (TextView) v.findViewById(R.id.display_employment);
         dob = (TextView) v.findViewById(R.id.display_dob);
+        addressview=(TextView)v.findViewById(R.id.display_address);
         // Inflate the layout for this fragment
         //change th content of the view stuff
         changedisplayValues(user);
@@ -48,6 +50,8 @@ public class navigation_home_fragment extends Fragment{
         email.setText(user.getEmail());
         work_status.setText(user.getWork_status());
         dob.setText(user.getDob());
+        String text= user.getCountry()+"\n"+user.getProvince()+"\n"+user.getCity()+"\n"+user.getSurburb();
+        addressview.setText(text);
     }
 
 }

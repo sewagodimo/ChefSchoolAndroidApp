@@ -61,6 +61,7 @@ public class Profile {
         this.setSurburb("");
 
     }
+
     public Profile(){
         this.setUserID("");
         this.setImage("");//There is no image so far
