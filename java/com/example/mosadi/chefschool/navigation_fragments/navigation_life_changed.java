@@ -45,7 +45,6 @@ public class navigation_life_changed extends Fragment {
                     }
                 });
 
-
         return v;
     }
 }

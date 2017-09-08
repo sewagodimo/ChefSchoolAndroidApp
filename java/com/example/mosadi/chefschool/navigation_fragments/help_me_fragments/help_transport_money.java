@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.example.mosadi.chefschool.MainActivity;
 import com.example.mosadi.chefschool.R;
-import com.example.mosadi.chefschool.navigation_fragments.navigation_life_changed;
+import com.example.mosadi.chefschool.navigation_fragments.navigation_help_fragment;
 import com.example.mosadi.chefschool.userinformation.Profile;
 
 /**
@@ -26,7 +26,7 @@ import com.example.mosadi.chefschool.userinformation.Profile;
 
 public class help_transport_money extends Fragment {
     Button clear,send;
-    EditText reason,amount,location;
+    EditText reason,amount,location,phone;
     Profile user;
     ActionBar bar;
     Fragment fragment;
@@ -35,15 +35,18 @@ public class help_transport_money extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.navigation_edit_address, container, false);
+        user=((MainActivity)this.getActivity()).getUser();// so that we can also send their information
+        View v= inflater.inflate(R.layout.help_transport_money, container, false);
         send= (Button)v.findViewById(R.id.send_transport_money);
         reason=(EditText) v.findViewById(R.id.edit_reason);
         amount=(EditText) v.findViewById(R.id.edit_reason);
+        phone=(EditText) v.findViewById(R.id.edit_number);
+        phone.setText(user.getPhone());
         bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         bar.setTitle("Transport Money");
         location=(EditText) v.findViewById(R.id.edit_reason);
         clear= (Button)v.findViewById(R.id.clear_transport);
-        user=((MainActivity)this.getActivity()).getUser();// so that we can also send their information
+
         clear.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -51,7 +54,7 @@ public class help_transport_money extends Fragment {
 
                         bar.setTitle(R.string.my_life_has_changed);
                         ft = getFragmentManager().beginTransaction();
-                        fragment = new navigation_life_changed();
+                        fragment = new navigation_help_fragment();
                         //moving down
                         ft.setCustomAnimations(R.anim.enter_from_top, R.anim.exit_to_bottom);
 
@@ -64,8 +67,8 @@ public class help_transport_money extends Fragment {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // WHEN the user clicks that they want to get a new address
-                        makeToast("Sending SMS...");
-                        onClear();
+
+
                         reason.setError(null);
                         location.setError(null);
                         amount.setError(null);
@@ -86,8 +89,11 @@ public class help_transport_money extends Fragment {
                             focusView.requestFocus();
                         }
                         else{
+                            onClear();
                             sendSMS();
+                            makeToast("Sending SMS...");
                         }
+
                     }
                 }
         );
@@ -106,7 +112,10 @@ public class help_transport_money extends Fragment {
         amount.setText("");
         location.setText("");
     }
-    public void sendSMS(){
+    public String sendSMS(){
+        String sent= "SMS sent";
+
+        return sent;
 
     }
 
