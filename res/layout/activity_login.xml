@@ -74,7 +74,7 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@color/mywhite" />
+                    android:textColor="@android:color/background_dark" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -124,6 +124,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:background="@color/logoColorTransparent"
+                    android:onClick="onLogin"
                     android:text="LOGIN"
                     android:textSize="24sp"
                     android:textStyle="bold" />

@@ -6,16 +6,14 @@ package com.example.mosadi.chefschool.webserver;
 
 import android.app.Application;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.mosadi.chefschool.R;
 
 public class AppController extends Application {
 
-    public static final String TAG = AppController.class.getSimpleName();
+    public static final String TAG = "ICT Student App";
 
     private RequestQueue mRequestQueue;
 

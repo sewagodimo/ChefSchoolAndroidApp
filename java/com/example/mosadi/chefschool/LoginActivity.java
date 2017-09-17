@@ -53,6 +53,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     ActionBar bar;
     // json object response url
-    private String urlJsonObj ="https://api.androidhive.info/volley/person_object.json";// "http://localhost:8000/Nontlantla%20Felani/students/";
+    private String urlJsonObj = "http://localhost:8000/Nontlantla%20Felani/students/";
     public static final String TAG = AppController.class.getSimpleName();
     // json array response url
     private String urlJsonArry = "http://localhost:8000/Nontlantla%20Felani/students/";
@@ -331,9 +332,9 @@ public void onLoginRegister(View view){
     public void onLogin(View v){
         //This is their login
         attemptLogin();
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        //Intent intent = new Intent(this, MainActivity.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+       // startActivity(intent);
     }
 
 
@@ -384,14 +385,20 @@ public void onLoginRegister(View view){
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-             makeJsonObjectRequest();
+            makeJsonObjectRequest();
+            showProgress(false);
 
         }
     }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        if (email.contains("@")){
+            return email.contains(".");
+        }
+        //check it its gigits only
+        return (Pattern.matches("[0-9]+", email) == true && email.length()>=9 );
+
     }
 
     private boolean isPasswordValid(String password) {
@@ -400,6 +407,7 @@ public void onLoginRegister(View view){
     }
      void makeJsonObjectRequest() {
         //showpDialog(true);
+         System.out.println("inside the make Json");
          JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                  urlJsonObj, "", new Response.Listener<JSONObject>() {
 
@@ -409,14 +417,21 @@ public void onLoginRegister(View view){
 
                 try {
                     // Parsing json object response
+                    String fullname= response.getString("name");
+                    String idno=response.getString("id_no");
+                    String email = response.getString("email");
+                    JSONObject phone = response.getJSONObject("phone");
+                    String home = phone.getString("home");
                     // response will be a json object
                     List<Profile> cn= db.getAllProfile();
                     user = cn.get(0);
                     Profile profile = new Profile();
-                    String name = response.getString("name");
-                    String email = response.getString("email");
-                    JSONObject phone = response.getJSONObject("phone");
-                    String home = phone.getString("home");
+                    profile.setUserID("0");
+
+                    profile.setName(fullname.substring(0,fullname.indexOf(" ")));
+                    profile.setSurname(fullname.substring(fullname.indexOf(" ")+1));
+
+
                     String mobile = phone.getString("mobile");
 
                     jsonResponse = "";
@@ -426,7 +441,7 @@ public void onLoginRegister(View view){
                     jsonResponse += "Mobile: " + mobile + "\n\n";
 
                     System.out.println(jsonResponse);
-                  //  db.addProfile(profile);
+                  textResponse.setText(jsonResponse);
 
 
                 } catch (JSONException e) {
@@ -441,9 +456,10 @@ public void onLoginRegister(View view){
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                VolleyLog.d(TAG, "Error:Response Error:  " + error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("Response error listener");
                 // hide the progress dialog
                // hidepDialog();
             }
