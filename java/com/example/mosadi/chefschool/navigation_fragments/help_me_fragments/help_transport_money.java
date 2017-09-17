@@ -98,8 +98,8 @@ public class help_transport_money extends Fragment {
                             focusView.requestFocus();
                         }
                         else{
-                            sendSMS();
-                            makeToast("Sending SMS...");
+
+                            makeToast(sendSMS());
                             onClear();
                         }
 

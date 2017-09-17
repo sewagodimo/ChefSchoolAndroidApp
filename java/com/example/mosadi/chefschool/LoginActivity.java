@@ -22,6 +22,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -33,11 +34,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.mosadi.chefschool.loginfragments.ContactSchool;
 import com.example.mosadi.chefschool.loginfragments.ForgotPassword;
 import com.example.mosadi.chefschool.loginfragments.RegisterAgreement;
 import com.example.mosadi.chefschool.loginfragments.RegisterConfirmation;
 import com.example.mosadi.chefschool.loginfragments.RegisterFragment;
+import com.example.mosadi.chefschool.userinformation.Profile;
+import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
+import com.example.mosadi.chefschool.webserver.AppController;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,13 +77,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
-
+    private StudentAccountContract db;//=new StudentAccountContract(this);
+    Profile user;
+    String username="student";
+    String password="123infinityschool";
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
     ActionBar bar;
+    // json object response url
+    private String urlJsonObj ="https://api.androidhive.info/volley/person_object.json";// "http://localhost:8000/Nontlantla%20Felani/students/";
+    public static final String TAG = AppController.class.getSimpleName();
+    // json array response url
+    private String urlJsonArry = "http://localhost:8000/Nontlantla%20Felani/students/";
+    private String jsonResponse;
+    TextView textResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +106,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //The Default View
         setContentView(R.layout.activity_login);
 
-
+        textResponse=(TextView) findViewById(R.id.textResponse);
+        db=new StudentAccountContract(this);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -304,8 +328,9 @@ public void onLoginRegister(View view){
         fragmentTransaction.commit();
     }
 
-    public void onTempLogin(View v){
+    public void onLogin(View v){
         //This is their login
+        attemptLogin();
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -359,8 +384,8 @@ public void onLoginRegister(View view){
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+             makeJsonObjectRequest();
+
         }
     }
 
@@ -372,6 +397,60 @@ public void onLoginRegister(View view){
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
+    }
+     void makeJsonObjectRequest() {
+        //showpDialog(true);
+         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                 urlJsonObj, "", new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    // Parsing json object response
+                    // response will be a json object
+                    List<Profile> cn= db.getAllProfile();
+                    user = cn.get(0);
+                    Profile profile = new Profile();
+                    String name = response.getString("name");
+                    String email = response.getString("email");
+                    JSONObject phone = response.getJSONObject("phone");
+                    String home = phone.getString("home");
+                    String mobile = phone.getString("mobile");
+
+                    jsonResponse = "";
+                    jsonResponse += "Name: " + name + "\n\n";
+                    jsonResponse += "Email: " + email + "\n\n";
+                    jsonResponse += "Home: " + home + "\n\n";
+                    jsonResponse += "Mobile: " + mobile + "\n\n";
+
+                    System.out.println(jsonResponse);
+                  //  db.addProfile(profile);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),
+                            "Error: " + e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
+                //showDialog(0);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
+                // hide the progress dialog
+               // hidepDialog();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 
     /**
