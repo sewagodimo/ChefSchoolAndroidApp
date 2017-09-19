@@ -171,6 +171,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         }
 
         // Getting single contact
+
         public Profile getContact(String name) {
             SQLiteDatabase db = this.getReadableDatabase();
 
