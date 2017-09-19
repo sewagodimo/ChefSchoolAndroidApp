@@ -109,7 +109,7 @@ public Profile userProfile(){
     public String profileString(){
         String log = "Id: "+this.getUserID()+" ,Name: " + this.getName() +" ,Surame: " + this.getSurname()
                 +" ,Class: " + this.getClass_number() + " ,Phone: " + this.getPhone() + " ,Email: "
-                + this.getEmail();
+                + this.getEmail()+"dob: "+this.getDob();
         // Writing Contacts to log
         return log;
     }

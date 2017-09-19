@@ -78,6 +78,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_CITY = "City";
         public static final String COLUMN_NAME_PROVINCE = "Province";
         public static final String COLUMN_NAME_SURBURB = "Surburb";
+        public static final String COLUMN_NAME_ACTIVE = "Active";
     }
         private static final String SQL_CREATE_PROFILE_ENTRIES =
            "CREATE TABLE IF NOT EXISTS" + ProfileEntry.TABLE_NAME + " (" +
@@ -93,7 +94,8 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
                    ProfileEntry.COLUMN_NAME_COUNTRY + " TEXT," +
                    ProfileEntry.COLUMN_NAME_CITY + " TEXT," +
                    ProfileEntry.COLUMN_NAME_PROVINCE+ " TEXT," +
-                   ProfileEntry.COLUMN_NAME_SURBURB+ " TEXT)" ;
+                   ProfileEntry.COLUMN_NAME_SURBURB+ " TEXT" +
+                   ProfileEntry.COLUMN_NAME_ACTIVE+ "TEXT)" ;
         private static final String SQL_DELETE_PROFILE =
                 "DROP TABLE IF EXISTS " + ProfileEntry.TABLE_NAME;
 
@@ -108,6 +110,18 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public StudentAccountContract(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
+        public void onLogin( Profile profile){
+            //delet all existing tables
+            SQLiteDatabase db = this.getReadableDatabase();
+            db.execSQL(SQL_CREATE_PROFILE_ENTRIES);//CREATE A NEW ONE
+            addProfile(profile);//add a new user to the table
+        }
+    public void onLogout(){
+        //delet all existing tables
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL(SQL_DELETE_PROFILE);//DELETE THE OLD TABLE
+        //add a new user to the table
+    }
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(SQL_CREATE_EVENTS_ENTRIES);
@@ -115,6 +129,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
            db.execSQL(SQL_CREATE_PROFILE_ENTRIES);
            // db.execSQL(SQL_CREATE_ADDRESS_ENTRIES);
         }
+
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             // Drop older table if existed
@@ -149,6 +164,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
             values.put(ProfileEntry.COLUMN_NAME_PROVINCE, profile.getProvince()); //The user's country
             values.put(ProfileEntry.COLUMN_NAME_CITY, profile.getCity()); //The user's country0
             values.put(ProfileEntry.COLUMN_NAME_SURBURB, profile.getSurburb()); //The user's country0
+            values.put(ProfileEntry.COLUMN_NAME_ACTIVE, "true");
           //  db.insert(AddressEntry.TABLE_NAME,null,address);
             db.insert(ProfileEntry.TABLE_NAME, null, values);
             db.close(); // Closing database connection

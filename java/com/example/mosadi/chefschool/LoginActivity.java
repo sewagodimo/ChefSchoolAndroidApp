@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
     private StudentAccountContract db;//=new StudentAccountContract(this);
     Profile user;
+    boolean loggedin=false;
     String username="student";
     String password="123infinityschool";
     // UI references.
@@ -333,9 +334,11 @@ public void onLoginRegister(View view){
     public void onLogin(View v){
         //This is their login
         attemptLogin();
-        //Intent intent = new Intent(this, MainActivity.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-       // startActivity(intent);
+        if(loggedin) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             startActivity(intent);
+        }
     }
 
 
@@ -434,7 +437,7 @@ public void onLoginRegister(View view){
                     String address= response.getString("address");
                     String phone="";
                     String other_contact="";
-                    //String home = phone.getString("home");
+
                     //Logic for dealing with too many contact
                     for(int i=0;i<contact.length();i++){
                         if (contact.get(i).toString().contains("@")){
@@ -444,9 +447,9 @@ public void onLoginRegister(View view){
                         }
 
                         else{
-                            if(phone.length()>2) {
+
                                 phone = contact.get(i).toString();
-                            }
+
                         }
                         if(phone.length()>2 && other_contact.length()>2){
                             i=contact.length();//basically break if the contact his too many contact
@@ -454,26 +457,39 @@ public void onLoginRegister(View view){
 
                     }
 
-                    List<Profile> cn= db.getAllProfile();
-                    user = cn.get(0);
-                    Profile profile = new Profile();
-                    profile.setUserID("0");
-
-                    profile.setName(fullname.substring(0,fullname.indexOf(" ")));
-                    profile.setSurname(fullname.substring(fullname.indexOf(" ")+1));
 
 
-                    jsonResponse = "Home: " + address + "\n\n";
-                    jsonResponse += "Name: " + fullname + "\n\n";
-                    jsonResponse += "id_no: " + idno + "\n\n";
-                    jsonResponse += "contact: " + phone + "\n\n";
-                    jsonResponse += "contact: " + other_contact + "\n\n";
-                    jsonResponse += "Email: " + contact.toString() + "\n\n";
-                    jsonResponse += "work: " + work_status + "\n\n";
-                    jsonResponse += "class: " + class_no + "\n\n";
+                    String name =(fullname.substring(0,fullname.indexOf(" ")));
+                   String surname=(fullname.substring(fullname.indexOf(" ")+1));
+                    String country="";
+                    String province="";
+                    String city="";
+                    String surburg=" ";
+                    if(address.contains(",")){
+                    String[] addresslist= address.split(",");
+                        if(addresslist.length>=2){
+                            country=addresslist[0];
+                            province=addresslist[1];
+                        }
+                        if(addresslist.length>=3){
+                            city=addresslist[2];
 
-                    System.out.println(jsonResponse);
-                  textResponse.setText(jsonResponse);
+                        }
+                        if(addresslist.length>=4){
+                            city=addresslist[3];
+                        }
+                    }
+                    else{ country=address;}
+
+                    String image="not done yet";
+
+                    db.onLogout();//remove any existing user by clearing the table
+//public Profile(String id, String name,String surname,String image,String email,String phone, String classnr, String work_status,
+// String dob,String country, String province,String city,String surburb){//when a user register
+                    Profile profile = new Profile("0",name,surname,image,other_contact,phone,class_no,work_status,idno.substring(0,6),country,province,city,surburg);
+                    textResponse.setText(profile.profileString()+"\n"+profile.addressString());
+                    //db.onLogin(profile);//add a user to the table
+                    loggedin=true;
 
 
                 } catch (JSONException e) {
