@@ -48,6 +48,7 @@ import com.example.mosadi.chefschool.userinformation.Profile;
 import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 import com.example.mosadi.chefschool.webserver.AppController;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     ActionBar bar;
     // json object response url
-    private String urlJsonObj = "http://localhost:8000/Nontlantla%20Felani/students/";
+    private String urlJsonObj = "http://10.0.0.12:8000/Nontlantla%20Felani/students/";
     public static final String TAG = AppController.class.getSimpleName();
     // json array response url
     private String urlJsonArry = "http://localhost:8000/Nontlantla%20Felani/students/";
@@ -403,7 +404,7 @@ public void onLoginRegister(View view){
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 2;
     }
      void makeJsonObjectRequest() {
         //showpDialog(true);
@@ -413,16 +414,46 @@ public void onLoginRegister(View view){
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                Log.d(TAG, "what is going on"+response.toString());
 
                 try {
                     // Parsing json object response
                     String fullname= response.getString("name");
                     String idno=response.getString("id_no");
-                    String email = response.getString("email");
-                    JSONObject phone = response.getJSONObject("phone");
-                    String home = phone.getString("home");
-                    // response will be a json object
+                   JSONArray contact =  response.getJSONArray("contact_details");
+                    JSONArray student_stuff = response.getJSONArray("student_info");//GET THE ARRAY
+                    JSONObject student_object = (JSONObject) student_stuff.get(0);//convert array to object
+                    String class_no = student_object.getString("class_no");//get object contantsS
+                    String student_grad = student_object.getString("grad_or_student");
+                    JSONArray employment_array = response.getJSONArray("employment_info");//get array
+                    JSONObject employmentObject =(JSONObject) employment_array.get(0);//convert to object
+                    String work_status = employmentObject.getString("current_employment");//get value
+                    if(student_grad.equalsIgnoreCase("student")){
+                        work_status=student_grad;
+                    }
+                    String address= response.getString("address");
+                    String phone="";
+                    String other_contact="";
+                    //String home = phone.getString("home");
+                    //Logic for dealing with too many contact
+                    for(int i=0;i<contact.length();i++){
+                        if (contact.get(i).toString().contains("@")){
+                           // if(other_contact.length()>1) { //there is already another email
+                                other_contact = contact.get(i).toString();
+                           // }
+                        }
+
+                        else{
+                            if(phone.length()>2) {
+                                phone = contact.get(i).toString();
+                            }
+                        }
+                        if(phone.length()>2 && other_contact.length()>2){
+                            i=contact.length();//basically break if the contact his too many contact
+                        }
+
+                    }
+
                     List<Profile> cn= db.getAllProfile();
                     user = cn.get(0);
                     Profile profile = new Profile();
@@ -432,13 +463,14 @@ public void onLoginRegister(View view){
                     profile.setSurname(fullname.substring(fullname.indexOf(" ")+1));
 
 
-                    String mobile = phone.getString("mobile");
-
-                    jsonResponse = "";
-                    jsonResponse += "Name: " + name + "\n\n";
-                    jsonResponse += "Email: " + email + "\n\n";
-                    jsonResponse += "Home: " + home + "\n\n";
-                    jsonResponse += "Mobile: " + mobile + "\n\n";
+                    jsonResponse = "Home: " + address + "\n\n";
+                    jsonResponse += "Name: " + fullname + "\n\n";
+                    jsonResponse += "id_no: " + idno + "\n\n";
+                    jsonResponse += "contact: " + phone + "\n\n";
+                    jsonResponse += "contact: " + other_contact + "\n\n";
+                    jsonResponse += "Email: " + contact.toString() + "\n\n";
+                    jsonResponse += "work: " + work_status + "\n\n";
+                    jsonResponse += "class: " + class_no + "\n\n";
 
                     System.out.println(jsonResponse);
                   textResponse.setText(jsonResponse);
@@ -456,8 +488,9 @@ public void onLoginRegister(View view){
 
             @Override
             public void onErrorResponse(VolleyError error) {
+
                 VolleyLog.d(TAG, "Error:Response Error:  " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
+                Toast.makeText(getApplicationContext(), "Volley error"+
                         error.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println("Response error listener");
                 // hide the progress dialog
