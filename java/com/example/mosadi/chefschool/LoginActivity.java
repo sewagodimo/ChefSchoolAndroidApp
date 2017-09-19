@@ -334,6 +334,7 @@ public void onLoginRegister(View view){
     public void onLogin(View v){
         //This is their login
         attemptLogin();
+        db.close();
         if(loggedin) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

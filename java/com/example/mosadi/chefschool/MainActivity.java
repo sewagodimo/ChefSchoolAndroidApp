@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     };
    private StudentAccountContract db;//=new StudentAccountContract(this);
     Profile user;
-    String username="Passion"; //This will come from the login table
+    String username=""; //This will come from the login table
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
