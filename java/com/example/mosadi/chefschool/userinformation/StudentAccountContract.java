@@ -81,7 +81,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_ACTIVE = "Active";
     }
         private static final String SQL_CREATE_PROFILE_ENTRIES =
-           "CREATE TABLE IF NOT EXISTS" + ProfileEntry.TABLE_NAME + " (" +
+           "CREATE TABLE IF NOT EXISTS " + ProfileEntry.TABLE_NAME + " (" +
                    ProfileEntry._ID + " INTEGER PRIMARY KEY," +
                    ProfileEntry.COLUMN_NAME_NAME + " TEXT," +
                    ProfileEntry.COLUMN_NAME_SURNAME + " TEXT," +
@@ -94,8 +94,8 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
                    ProfileEntry.COLUMN_NAME_COUNTRY + " TEXT," +
                    ProfileEntry.COLUMN_NAME_CITY + " TEXT," +
                    ProfileEntry.COLUMN_NAME_PROVINCE+ " TEXT," +
-                   ProfileEntry.COLUMN_NAME_SURBURB+ " TEXT" +
-                   ProfileEntry.COLUMN_NAME_ACTIVE+ "TEXT)" ;
+                   ProfileEntry.COLUMN_NAME_SURBURB+ " TEXT, " +
+                   ProfileEntry.COLUMN_NAME_ACTIVE+ " TEXT)" ;
         private static final String SQL_DELETE_PROFILE =
                 "DROP TABLE IF EXISTS " + ProfileEntry.TABLE_NAME;
 
@@ -124,8 +124,8 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
     }
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(SQL_CREATE_EVENTS_ENTRIES);
-            db.execSQL(SQL_CREATE_lOGIN_ENTRIES);
+//            db.execSQL(SQL_CREATE_EVENTS_ENTRIES);
+           // db.execSQL(SQL_CREATE_lOGIN_ENTRIES);
            db.execSQL(SQL_CREATE_PROFILE_ENTRIES);
            // db.execSQL(SQL_CREATE_ADDRESS_ENTRIES);
         }
@@ -296,10 +296,12 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
     }
 
         // Deleting single contact
-        public void deleteProfile(Profile profile) {
+        public void deleteAllProfiles() {
+            //clear the entire table
             SQLiteDatabase db = this.getWritableDatabase();
-            db.delete(ProfileEntry.TABLE_NAME,ProfileEntry._ID + " = ?",
-                    new String[] { String.valueOf(profile.getUserID()) });
+            db.delete("profile_entries", null, null);
+           // String selectQuery = "DELETE FROM profile_entries";// + ProfileEntry.TABLE_NAME;//delete everyhing
+            //db.execSQL(selectQuery);
             db.close();
         }
 
