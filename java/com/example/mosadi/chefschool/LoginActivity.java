@@ -489,7 +489,7 @@ public void onLoginRegister(View view){
 //public Profile(String id, String name,String surname,String image,String email,String phone, String classnr, String work_status,
 // String dob,String country, String province,String city,String surburb){//when a user register
                     Profile profile = new Profile("0",name,surname,image,other_contact,phone,class_no,work_status,idno.substring(0,6),country,province,city,surburg);
-                    textResponse.setText(profile.profileString()+"\n"+profile.addressString());
+                   // textResponse.setText(profile.profileString()+"\n"+profile.addressString());
                     db.addProfile(profile);//add a user to the table
                     loggedin=true;
 
