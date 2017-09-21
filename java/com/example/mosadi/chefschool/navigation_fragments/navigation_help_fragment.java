@@ -53,6 +53,7 @@ public class navigation_help_fragment extends Fragment {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         ((MainActivity) getActivity()).dialog_method("Sending request for a new uniform", "uniform");
+                        ((MainActivity)getActivity()).notifitcation("Uniform request sent");
                     }
                 });
         contact.setOnClickListener(

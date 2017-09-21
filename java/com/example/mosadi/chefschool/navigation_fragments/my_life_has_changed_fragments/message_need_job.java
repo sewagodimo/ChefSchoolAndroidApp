@@ -113,6 +113,7 @@ public class message_need_job extends Fragment{
         new SendMailTask(((MainActivity) getActivity())).execute(fromEmail, fromPassword, toEmailList, emailSubject, emailBody);
         //mail.createEmailMessage();
         //   mail.sendEmail();
+        ((MainActivity)getActivity()).notifitcation("Job Request sent");
         return " Email Sent";
     }
     public String composeEmail(){

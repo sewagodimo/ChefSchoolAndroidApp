@@ -15,7 +15,6 @@ import android.widget.EditText;
 
 import com.example.mosadi.chefschool.MainActivity;
 import com.example.mosadi.chefschool.R;
-import com.example.mosadi.chefschool.navigation_fragments.navigation_help_fragment;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_life_changed;
 import com.example.mosadi.chefschool.userinformation.Profile;
 import com.example.mosadi.chefschool.userinformation.SendMailTask;
@@ -56,7 +55,7 @@ public class message_other extends Fragment {
 
                         bar.setTitle(R.string.my_life_has_changed);
                         ft = getFragmentManager().beginTransaction();
-                        fragment = new navigation_help_fragment();
+                        fragment = new navigation_life_changed();
                         //moving down
                         ft.setCustomAnimations(R.anim.enter_from_top, R.anim.exit_to_bottom);
 
@@ -111,7 +110,7 @@ public class message_other extends Fragment {
         String toEmails = "infinitystudentmail@gmail.com";
         List toEmailList = Arrays.asList(toEmails.split("\\s*,\\s*"));
         Log.i("SendMailActivity", "To List: " + toEmailList);
-        String emailSubject = user.getName() +" "+user.getSurname()+" needs a job";
+        String emailSubject = user.getName() +" "+user.getSurname()+" has had changes in their life";
         String emailBody = composeEmail();
         new SendMailTask(((MainActivity) getActivity())).execute(fromEmail, fromPassword, toEmailList, emailSubject, emailBody);
         //mail.createEmailMessage();

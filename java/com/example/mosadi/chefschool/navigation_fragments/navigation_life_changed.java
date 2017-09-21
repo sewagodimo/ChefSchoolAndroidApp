@@ -53,11 +53,11 @@ public class navigation_life_changed extends Fragment {
                 new View.OnClickListener() {
             public void onClick(View v) {
                 // WHEN the user clicks that they want to get a new address
-                builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);//change the theme each time
+                builder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogStyle);//change the theme each time
                 builder.setTitle("Notifying the school that you have lost your jo");
 
                 // Setting Dialog Message
-                /builder.setMessage("Are you sure?");
+                builder.setMessage("Are you sure?");
 
                 // Setting Icon to Dialog
                 builder.setIcon(R.drawable.logo);
@@ -66,7 +66,7 @@ public class navigation_life_changed extends Fragment {
                         sendEmail();
                     }
                 });
-                builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                        // DO nothing
                     }
