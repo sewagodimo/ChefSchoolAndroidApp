@@ -55,14 +55,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/unemployed"
+                android:id="@+id/lost_job"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/savebutton"
 
 
-                android:text="I am unemployed" />
+                android:text="I lost my job" />
         </LinearLayout>
 
         <LinearLayout
@@ -96,7 +96,7 @@
                 android:background="@drawable/savebutton"
                 android:paddingRight="10dp"
 
-                android:text="Other" />
+                android:text="Other changes" />
         </LinearLayout>
 
     </LinearLayout>

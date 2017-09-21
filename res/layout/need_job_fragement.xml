@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Old Job"
+                android:text="Previous Job"
 
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
@@ -41,7 +41,7 @@
                 android:hint="I am having problems at work "
                 android:inputType="textLongMessage"
                 android:textAlignment="center"
-                tools:text="where are you working now" />
+                tools:text="where did you work before" />
         </LinearLayout>
 
         <LinearLayout
@@ -54,11 +54,11 @@
                 android:id="@+id/nextext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Job"
                 android:layout_weight="2"
+                android:text="Preferences"
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/new_job"
@@ -67,34 +67,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textLongMessage"
-                tools:text="which company offered you a job" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="20dp">
-
-            <TextView
-                android:id="@+id/reasontxt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="Offer"
-                android:textAlignment="textStart"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/new_offer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textLongMessage"
-                tools:text="what makes the new offer better" />
+                tools:text="where would like to work" />
 
         </LinearLayout>
 

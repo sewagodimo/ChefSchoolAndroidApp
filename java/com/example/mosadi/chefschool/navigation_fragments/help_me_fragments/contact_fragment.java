@@ -80,7 +80,15 @@ public class contact_fragment extends Fragment {
                         } else {
 
                             ((MainActivity)getActivity()).notifitcation(sendSMS());//so now we can make statements
-                            onClear();
+                            bar.setTitle(R.string.my_life_has_changed);
+                            ft = getFragmentManager().beginTransaction();
+                            fragment = new navigation_help_fragment();
+                            fragment = new navigation_help_fragment();
+                            //moving down
+                            ft.setCustomAnimations(R.anim.enter_from_top, R.anim.exit_to_bottom);
+
+                            ft.replace(R.id.content, fragment);
+                            ft.commit();
                         }
 
                     }

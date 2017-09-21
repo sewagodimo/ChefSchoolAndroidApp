@@ -22,26 +22,24 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/oldtext"
+                android:id="@+id/reasontxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Old Job"
-
+                android:text="Reason"
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/old_job"
+                android:id="@+id/reason_other"
                 android:layout_width="159dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:ems="10"
                 android:hint="I am having problems at work "
                 android:inputType="textLongMessage"
-                android:textAlignment="center"
-                tools:text="where are you working now" />
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,50 +49,22 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/nextext"
-                android:layout_width="match_parent"
+                android:id="@+id/timeEstimation"
+                android:layout_width="66dp"
                 android:layout_height="wrap_content"
-                android:text="New Job"
-                android:layout_weight="2"
+                android:text="When "
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/new_job"
-                android:layout_width="match_parent"
+                android:id="@+id/when"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textLongMessage"
-                tools:text="which company offered you a job" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="20dp">
-
-            <TextView
-                android:id="@+id/reasontxt"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="Offer"
-                android:textAlignment="textStart"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/new_offer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textLongMessage"
-                tools:text="what makes the new offer better" />
+                android:inputType="textPersonName"
+                tools:text="Tomorrow, Friday,  Next Week" />
 
         </LinearLayout>
 

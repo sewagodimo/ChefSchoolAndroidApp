@@ -1,5 +1,6 @@
 package com.example.mosadi.chefschool.navigation_fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -42,8 +43,25 @@ public class navigation_edit_address extends Fragment {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         // WHEN the user clicks that they want to get a new address
-                        makeToast("Saved changes");
-                       onUpdate();
+                        ProgressDialog progress = new ProgressDialog(getContext());
+                        progress.setMessage("Sending SMS to ICT ");
+                        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        progress.setIndeterminate(true);
+                        progress.setProgress(0);
+                        progress.show();
+                        progress.setProgress(5);
+                        onUpdate();
+                        ((MainActivity)getActivity()).notifitcation("Address Updated");
+                        progress.hide();
+                        //back to my life has changed
+                        bar.setTitle(R.string.my_life_has_changed);
+                        ft = getFragmentManager().beginTransaction();
+                        fragment = new navigation_life_changed();
+                        //moving down
+                        ft.setCustomAnimations(R.anim.enter_from_top, R.anim.exit_to_bottom);
+
+                        ft.replace(R.id.content, fragment);
+                        ft.commit();
                     }
                 });
         bar = ((AppCompatActivity)getActivity()).getSupportActionBar();

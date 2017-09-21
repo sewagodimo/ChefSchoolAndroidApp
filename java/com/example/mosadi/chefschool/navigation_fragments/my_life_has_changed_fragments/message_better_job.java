@@ -41,8 +41,10 @@ public class message_better_job extends Fragment {
         offer = (EditText) v.findViewById(R.id.new_offer);//reasong for meeting
         new_job = (EditText) v.findViewById(R.id.new_job);
         old_job = (EditText) v.findViewById(R.id.old_job);
+
         //set the user
         user = ((MainActivity) this.getActivity()).getUser();
+        old_job.setText(user.getWork_status());
         //the buttons
         cancel = (Button) v.findViewById(R.id.clear_transport);
         send = (Button) v.findViewById(R.id.savebutton);
@@ -75,18 +77,26 @@ public class message_better_job extends Fragment {
                         offer.setError(null);
                         View focusView = null;
                         if (TextUtils.isEmpty(offer.getText().toString())) {
-                            offer.setError("When do you want to meet");
+                            offer.setError("required field");
                             focusView = offer;
                             focusView.requestFocus();
                         } else if (TextUtils.isEmpty(old_job.getText().toString())) {
-                            old_job.setError("Why do you want to meet");
+                            old_job.setError("required field");
                             focusView = old_job;
                             focusView.requestFocus();
                         }
                         else {
 
-                            ((MainActivity)getActivity()).notifitcation(sendEmail());//so now we can make statements
+                           sendEmail();//so now we can make statements
                            // onClear();
+                            bar.setTitle(R.string.my_life_has_changed);
+                            ft = getFragmentManager().beginTransaction();
+                            fragment = new navigation_life_changed();
+                            //moving down
+                            ft.setCustomAnimations(R.anim.enter_from_top, R.anim.exit_to_bottom);
+
+                            ft.replace(R.id.content, fragment);
+                            ft.commit();
                         }
 
                     }
@@ -110,8 +120,17 @@ public class message_better_job extends Fragment {
         return " Email Sent";
     }
     public String composeEmail(){
-        return "Dear Melinda\n"+user.getName()+" "+user.getSurname()
-                +"\nI have found a new job";
+        return "Dear Melinda\nI hope this email finds you well\n\n"
+                +"\n\nMy name is " +user.getName()+" "+user.getSurname()
+                +"\nI am proud to inform you that I have found a new job"
+                +"\n I graduated in the class of "+user.getClass_number()
+                +"\nI am currently working at " +user.getWork_status()
+                +"\nI got an offer from " +new_job.getText().toString()
+                +"\nThey are offering me " +offer.getText().toString()
+                +"\nPlease contact me  on " +user.getPhone() +" or "+user.getEmail()
+                +"\n\n\n\nKind Regards"
+                ;
+
     }
 
 

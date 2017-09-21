@@ -1,5 +1,6 @@
 package com.example.mosadi.chefschool.navigation_fragments.help_me_fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ public class help_transport_money extends Fragment {
     Fragment fragment;
     FragmentTransaction ft;
     String message;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -93,9 +95,23 @@ public class help_transport_money extends Fragment {
                             focusView.requestFocus();
                         }
                         else{
+                      ProgressDialog progress = new ProgressDialog(getContext());
+                      progress.setMessage("Sending SMS to ICT ");
+                      progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                      progress.setIndeterminate(true);
+                      progress.setProgress(0);
+                      progress.show();
+                      progress.setProgress(5);
+                      ((MainActivity)getActivity()).notifitcation(sendSMS());
+                      progress.hide();
+                      bar.setTitle(R.string.my_life_has_changed);
+                      ft = getFragmentManager().beginTransaction();
+                      fragment = new navigation_help_fragment();
+                      //moving down
+                      ft.setCustomAnimations(R.anim.enter_from_top, R.anim.exit_to_bottom);
 
-                            makeToast(sendSMS());
-                            onClear();
+                      ft.replace(R.id.content, fragment);
+                      ft.commit();
                         }
 
                     }
@@ -117,8 +133,9 @@ public class help_transport_money extends Fragment {
         location.setText("");
     }
     public String sendSMS(){
-        String sent= "SMS sent";
+        String sent= "Mesage sent succefully";
         message =composeMessage();
+        //the progress bar
 
             String toPhoneNumber =  "0764270487";
 
@@ -126,8 +143,10 @@ public class help_transport_money extends Fragment {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(toPhoneNumber, null, message, null, null);
 
+
             } catch (Exception e) {
                 sent="SMS sending failed";
+
 
         }
 

@@ -292,17 +292,7 @@ public void dialog_method(String message, final String method){
         builder.setIcon(R.drawable.logo);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                if (currentNav != 0) {
-                    bar.setTitle(R.string.home);
-                    ft = fragmentManager.beginTransaction();
-                    fragment = new navigation_home_fragment();
-                    //moving down
-                    ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
 
-                    ft.replace(R.id.content, fragment);
-                    ft.commit();
-                    currentNav = 0;
-                }
             }
         });
         builder.show();
