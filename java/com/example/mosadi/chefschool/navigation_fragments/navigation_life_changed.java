@@ -17,7 +17,7 @@ import com.example.mosadi.chefschool.R;
  */
 
 public class navigation_life_changed extends Fragment {
-    Button address;
+    Button address,other;
     FragmentTransaction ft;
     ActionBar bar;
     Fragment fragment;
@@ -44,6 +44,7 @@ public class navigation_life_changed extends Fragment {
                         ft.commit();
                     }
                 });
+
 
         return v;
     }

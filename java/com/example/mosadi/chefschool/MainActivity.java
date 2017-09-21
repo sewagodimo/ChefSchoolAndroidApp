@@ -1,5 +1,6 @@
 package com.example.mosadi.chefschool;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -153,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        builder = new AlertDialog.Builder(MainActivity.this);
+
 
 
     }
@@ -183,14 +186,15 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.logout_button:
-                builder.setTitle("User log out");
+                builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);//change the theme each time
+                builder.setTitle("You are about to log out");
 
                 // Setting Dialog Message
-                builder.setMessage("You are about to log out");
+                builder.setMessage("Are you sure");
 
                 // Setting Icon to Dialog
                 builder.setIcon(R.drawable.logo);
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Log out", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // User pressed YES button. Write Logic Here
                         Toast.makeText(getApplicationContext(), "Logging out",
@@ -198,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                         logout();
                     }
                 });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // User pressed No button. Write Logic Here
                         //   Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
@@ -219,6 +223,90 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+public void dialog_method(String message, final String method){
+    builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);//change the theme each time
+    builder.setTitle(message);
+
+    builder.setMessage("Are your contact details up to date?");
+
+    // Setting Icon to Dialog
+    builder.setIcon(R.drawable.logo);
+    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            if(method.equalsIgnoreCase("uniform")){
+                helpSMS("I need transport money");
+            }
+            else    if(method.equalsIgnoreCase("contact")){
+                helpSMS("Please contact me");
+            }
+        }
+
+
+    });
+
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+    builder.show();
+}
+    public void helpSMS(String headline){
+        //String sent= "SMS sent";
+       String message =headline+"\n"
+                +"Student: "+user.getName()+" "+user.getSurname()+
+                "\nContact on: "+user.getPhone()+
+                "\nAlternative Contact on: "+user.getEmail();
+
+        String toPhoneNumber =  "0764270487";
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(toPhoneNumber, null, message, null, null);
+
+        } catch (Exception e) {
+            makeToast("SMS sending failed");
+
+        }
+
+        makeToast("SMS sent");
+
+    }
+    public void makeToast(String text){
+        Context context =this.getApplicationContext();
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+        toast.show();
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
+    }
+    public void notifitcation(String message){
+        builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);//change the theme each time
+        builder.setTitle(message);
+
+        // Setting Dialog Message
+       // builder.setMessage("Are you sure");
+
+        // Setting Icon to Dialog
+        builder.setIcon(R.drawable.logo);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (currentNav != 0) {
+                    bar.setTitle(R.string.home);
+                    ft = fragmentManager.beginTransaction();
+                    fragment = new navigation_home_fragment();
+                    //moving down
+                    ft.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right);
+
+                    ft.replace(R.id.content, fragment);
+                    ft.commit();
+                    currentNav = 0;
+                }
+            }
+        });
+        builder.show();
+
     }
 
 

@@ -22,7 +22,7 @@ import com.example.mosadi.chefschool.userinformation.Profile;
  * Created by Mosadi on 2017/09/08.
  */
 
-public class help_other extends Fragment {
+public class contact_fragment extends Fragment {
     String message = "";
     EditText rtext, wtext;
     Profile user;
@@ -34,15 +34,14 @@ public class help_other extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.help_other, container, false);
-        bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         rtext = (EditText) v.findViewById(R.id.other_text);//reasong for meeting
         wtext = (EditText) v.findViewById(R.id.when_text);
-        //set the user
         user = ((MainActivity) this.getActivity()).getUser();
-        //the buttons
         cancel = (Button) v.findViewById(R.id.clear_transport);
         send= (Button)v.findViewById(R.id.savebutton);
-        bar.setTitle("Contact us");
+        bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+
+        bar.setTitle("Contact Request");
 
         cancel.setOnClickListener(
                 new View.OnClickListener() {
@@ -75,7 +74,7 @@ public class help_other extends Fragment {
                             focusView = wtext;
                             focusView.requestFocus();
                         } else if (TextUtils.isEmpty(rtext.getText().toString())) {
-                            rtext.setError("Why do you want to meet");
+                            rtext.setError("Phone number missing");
                             focusView = rtext;
                             focusView.requestFocus();
                         } else {
@@ -117,7 +116,7 @@ public class help_other extends Fragment {
 
     public String composeMessage() {
 
-        return "Personalised contact \n"
+        return "Contact me \n"
                 + "Student: " + user.getName() + " " + user.getSurname()
                 + "\nReason: " + rtext.getText().toString() +
                 "\nWhen: " + wtext.getText().toString() +

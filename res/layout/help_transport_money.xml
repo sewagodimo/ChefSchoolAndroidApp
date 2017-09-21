@@ -48,36 +48,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/reason"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:paddingTop="5dp">
-
-        <TextView
-            android:id="@+id/reasontxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Reason"
-            android:textAlignment="viewStart"
-
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/edit_reason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="I ran out of money"
-            android:inputType="textPersonName"
-            android:textAlignment="center"
-            android:textSize="12sp" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

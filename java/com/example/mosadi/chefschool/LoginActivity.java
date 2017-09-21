@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     ActionBar bar;
     // json object response url
-    private String urlJsonObj = "http://10.0.0.12:8000/Nontlantla%20Felani/students/";
+    private String urlJsonObj = "http://196.24.180.92:8000/Nontlantla%20Felani/students/";
     public static final String TAG = AppController.class.getSimpleName();
     // json array response url
     private String urlJsonArry = "http://localhost:8000/Nontlantla%20Felani/students/";

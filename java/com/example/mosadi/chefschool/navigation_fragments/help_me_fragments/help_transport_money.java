@@ -27,7 +27,7 @@ import com.example.mosadi.chefschool.userinformation.Profile;
 
 public class help_transport_money extends Fragment {
     Button clear,send;
-    EditText reason,amount,location,phone;
+    EditText amount,location,phone;
     Profile user;
     ActionBar bar;
     Fragment fragment;
@@ -40,7 +40,7 @@ public class help_transport_money extends Fragment {
         View v= inflater.inflate(R.layout.help_transport_money, container, false);
         send= (Button)v.findViewById(R.id.send_transport_money);
 
-        reason=(EditText) v.findViewById(R.id.edit_reason);
+       // reason=(EditText) v.findViewById(R.id.edit_reason);
         amount=(EditText) v.findViewById(R.id.transport_amount);
         location=(EditText) v.findViewById(R.id.transport_location);
         System.out.println(amount.getText().toString());
@@ -73,16 +73,11 @@ public class help_transport_money extends Fragment {
                         // WHEN the user clicks that they want to get a new address
 
 
-                        reason.setError(null);
+                      //  reason.setError(null);
                         location.setError(null);
                         amount.setError(null);
                         View focusView = null;
-                        if(TextUtils.isEmpty(reason.getText().toString())){
-                            reason.setError("This field is required");
-                            focusView = reason;
-                            focusView.requestFocus();
-                        }
-                        else if(TextUtils.isEmpty(location.getText().toString())){
+                  if(TextUtils.isEmpty(location.getText().toString())){
                             location.setError("Please tell us where you are");
                             focusView = location;
                             focusView.requestFocus();
@@ -117,7 +112,7 @@ public class help_transport_money extends Fragment {
     }
 
     public void onClear(){
-        reason.setText("");
+
         amount.setText("");
         location.setText("");
     }
@@ -139,11 +134,31 @@ public class help_transport_money extends Fragment {
         return sent;
 
     }
+    public String uniformSMS(){
+        String sent= "SMS sent";
+        message ="I need a new uniform\n"
+                +"Student: "+user.getName()+" "+user.getSurname()+
+                "\nContact on: "+phone.getText().toString();;
+
+        String toPhoneNumber =  "0764270487";
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(toPhoneNumber, null, message, null, null);
+
+        } catch (Exception e) {
+            sent="SMS sending failed";
+
+        }
+
+        return sent;
+
+    }
     public String composeMessage(){
 
         return "I need Transport Money\n"
                 +user.getName()+" "+user.getSurname()+
-                "\nReason "+reason.getText().toString()+
+
                 "\nStuck at: "+location.getText().toString()+
                 "\nNeeds about: "+amount.getText().toString()+
                 "\nContact on: "+phone.getText().toString();
