@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.mosadi.chefschool.R;
+import com.example.mosadi.chefschool.navigation_fragments.my_life_has_changed_fragments.message_better_job;
 
 /**
  * Created by Mosadi on 2017/09/02.
  */
 
 public class navigation_life_changed extends Fragment {
-    Button address,other;
+    Button address,other,betterjob;
     FragmentTransaction ft;
     ActionBar bar;
     Fragment fragment;
@@ -30,6 +31,7 @@ public class navigation_life_changed extends Fragment {
 
         bar.setTitle(R.string.my_life_has_changed);
         address = (Button) v.findViewById(R.id.changeAddress);
+        betterjob=  (Button) v.findViewById(R.id.betterjobbutton);
         address.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -44,6 +46,21 @@ public class navigation_life_changed extends Fragment {
                         ft.commit();
                     }
                 });
+        betterjob.setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        // WHEN the user clicks that they want to get a new address
+                        bar.setTitle("I found a better Job");
+                        ft = getFragmentManager().beginTransaction();
+                        fragment = new message_better_job();
+                        //moving down
+                        ft.setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_top);
+
+                        ft.replace(R.id.content, fragment);
+                        ft.commit();
+                    }
+                });
+
 
 
         return v;
