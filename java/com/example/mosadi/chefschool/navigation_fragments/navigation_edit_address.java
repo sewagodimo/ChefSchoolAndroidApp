@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.mosadi.chefschool.MainActivity;
 import com.example.mosadi.chefschool.R;
 import com.example.mosadi.chefschool.userinformation.Profile;
+import com.example.mosadi.chefschool.webserver.PostToServer;
 
 /**
  * Created by Mosadi on 2017/09/02.
@@ -29,6 +30,8 @@ public class navigation_edit_address extends Fragment {
     ActionBar bar;
     Fragment fragment;
     EditText co,ci,pr,sub;
+    PostToServer toserver;
+    String json, response;
     //String country,city,prov,suburb;
     Profile user;
     @Override
@@ -52,6 +55,7 @@ public class navigation_edit_address extends Fragment {
                         progress.setProgress(5);
                         onUpdate();
                         ((MainActivity)getActivity()).notifitcation("Address Updated");
+
                         progress.hide();
                         //back to my life has changed
                         bar.setTitle(R.string.my_life_has_changed);
@@ -104,12 +108,13 @@ public class navigation_edit_address extends Fragment {
 
     public void onUpdate(){
 
-
-
         ((MainActivity)this.getActivity()).updateAddress(co.getText().toString(),
                 pr.getText().toString(),
                 ci.getText().toString()
         ,sub.getText().toString());
+        toserver = new PostToServer();
+
+        json = toserver.update_address(user.getUserID(),co.getText().toString(), pr.getText().toString(), ci.getText().toString(),sub.getText().toString());
     }
 
 

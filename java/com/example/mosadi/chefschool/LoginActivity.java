@@ -62,9 +62,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -225,6 +222,14 @@ public void onForgotPassword(View view){
 
 }
 public void onRegisterUser( View v) throws IOException {
+
+    toserver = new PostToServer();
+        json = toserver.add_student("This righthere","I dow aht it do","1234");//so number one go fired
+    //RequestBody respo = RequestBody.create(PostToServer.JSON, json);
+    Context context = getApplicationContext();
+    response = toserver.post((LoginActivity.URL), json);
+    System.out.println(response);
+    ((this)).notifitcation(response);
     //fetch the values from the view
     AutoCompleteTextView nametxt = (AutoCompleteTextView) findViewById(R.id.register_name);
     AutoCompleteTextView surnametxt = (AutoCompleteTextView) findViewById(R.id.register_surname);
@@ -290,15 +295,16 @@ public void onRegisterUser( View v) throws IOException {
         new SendMailTask(this).execute(fromEmail, fromPassword, toEmailList, emailSubject, emailBody);
         //mail.createEmailMessage();
         //   mail.sendEmail();
-        ((this)).notifitcation("Registration details sent");
+
         //server stuff
         toserver = new PostToServer();
         name=name+" "+surname;
          json = toserver.add_student(name,contact,password);//so number one go fired
         //RequestBody respo = RequestBody.create(PostToServer.JSON, json);
-        Context context = getApplicationContext();
+       // Context context = getApplicationContext();
          response = toserver.post((LoginActivity.URL), json);
         System.out.println(response);
+        ((this)).notifitcation(response);
         Toast toast = Toast.makeText(context, response, Toast.LENGTH_SHORT);
         toast.show();
         toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now

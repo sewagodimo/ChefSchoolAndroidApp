@@ -9,7 +9,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <TextView
             android:id="@+id/register_background"
@@ -22,7 +23,10 @@
             android:id="@+id/register_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/logoColorTransparent">
+            android:background="@color/editText"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="30dp">
 
             <LinearLayout
                 android:id="@+id/register_form"
@@ -97,7 +101,8 @@
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:textColor="@color/mywhite" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -117,14 +122,18 @@
                         android:imeOptions="actionUnspecified"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:textColor="@color/mywhite" />
 
                 </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp"
+                    android:paddingTop="30dp">
 
 
                     <Button

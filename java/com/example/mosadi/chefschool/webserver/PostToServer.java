@@ -21,7 +21,7 @@ public class PostToServer {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     OkHttpClient client = new OkHttpClient();
-    String responseString="";
+    String responseString="Nothing happened";
 
 
   public   String post(String url, String json) throws IOException {
