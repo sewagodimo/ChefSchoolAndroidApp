@@ -31,7 +31,7 @@ import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
 
     private Fragment fragment;
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBar bar;
     TextView dialog_message;
     FragmentTransaction ft;
+  //  public static  String URL="http://10.0.0.14:8000/Nontlantla%20Felani/students/";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -165,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
     public Profile getUser(){
         return user;
     }
-    public void updateProfile(String name, String surname,String image,String email,String phone,String dob){
+    public void updateProfile(String name, String surname,String image,String email,String phone){
         username=name;
-        user.edit_profile(name,surname,image,email,phone,dob,db);
+        user.edit_profile(name,surname,image,email,phone,db);
         db.updateProfile(user);
         System.out.println(user.profileString());
     }
@@ -235,7 +236,8 @@ public void dialog_method(String message, final String method){
     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
             if(method.equalsIgnoreCase("uniform")){
-                helpSMS("I need transport money");
+                helpSMS("I need a new uniform");
+                notifitcation("Uniform request sent");
             }
             else    if(method.equalsIgnoreCase("contact")){
                 helpSMS("Please contact me");

@@ -101,7 +101,11 @@ public class navigation_edit_address extends Fragment {
         pr.setText(user.getProvince());
         sub.setText(user.getSurburb());
     }
+
     public void onUpdate(){
+
+
+
         ((MainActivity)this.getActivity()).updateAddress(co.getText().toString(),
                 pr.getText().toString(),
                 ci.getText().toString()

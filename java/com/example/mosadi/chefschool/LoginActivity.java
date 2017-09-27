@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -45,28 +47,37 @@ import com.example.mosadi.chefschool.loginfragments.RegisterAgreement;
 import com.example.mosadi.chefschool.loginfragments.RegisterConfirmation;
 import com.example.mosadi.chefschool.loginfragments.RegisterFragment;
 import com.example.mosadi.chefschool.userinformation.Profile;
+import com.example.mosadi.chefschool.userinformation.SendMailTask;
 import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 import com.example.mosadi.chefschool.webserver.AppController;
+import com.example.mosadi.chefschool.webserver.PostToServer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import okhttp3.Call;
+import okhttp3.Callback;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>{
 
     /**
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+    PostToServer toserver;
+    String json, response;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -91,10 +102,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     ActionBar bar;
     // json object response url
-    private String urlJsonObj = "http://196.24.180.92:8000/Nontlantla%20Felani/students/";
+   // private String urlJsonObj = "http://10.0.0.14:8000/Nontlantla%20Felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
     public static final String TAG = AppController.class.getSimpleName();
+    public static  String URL="http://10.0.0.15:8000/";
+    public static final String TOKEN="d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
     // json array response url
-    private String urlJsonArry = "http://localhost:8000/Nontlantla%20Felani/students/";
+    private String urlJsonArry = "http://10.0.0.14:8000/1234/Nontlantla%20felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
     private String jsonResponse;
     TextView textResponse;
 
@@ -211,11 +224,12 @@ public void onForgotPassword(View view){
     fragmentTransaction.commit();
 
 }
-public void onRegisterUser( View v){
+public void onRegisterUser( View v) throws IOException {
     //fetch the values from the view
-    AutoCompleteTextView nametxt =(AutoCompleteTextView) findViewById(R.id.register_name);
-    AutoCompleteTextView surnametxt=(AutoCompleteTextView) findViewById(R.id.register_surname);
-    AutoCompleteTextView contacttxt=(AutoCompleteTextView) findViewById(R.id.register_contact);;
+    AutoCompleteTextView nametxt = (AutoCompleteTextView) findViewById(R.id.register_name);
+    AutoCompleteTextView surnametxt = (AutoCompleteTextView) findViewById(R.id.register_surname);
+    AutoCompleteTextView contacttxt = (AutoCompleteTextView) findViewById(R.id.register_contact);
+    ;
     EditText regpasswordtxt = (EditText) findViewById(R.id.look);
     EditText confirmpasswordtxt = (EditText) findViewById(R.id.confirm_look);
     //assume that all the values are ok
@@ -228,62 +242,91 @@ public void onRegisterUser( View v){
     String name = nametxt.getText().toString();
     String surname = surnametxt.getText().toString();
     String contact = contacttxt.getText().toString();
-    String password= regpasswordtxt.getText().toString();
-    String cpassword= confirmpasswordtxt.getText().toString();
+    String password = regpasswordtxt.getText().toString();
+    String cpassword = confirmpasswordtxt.getText().toString();
     //whhat to look at if things go wrong
     boolean cancel = false;//cancel the whole transaction
     View focusView = null;
     //check for a valid name
-    if(TextUtils.isEmpty(name)){
+    if (TextUtils.isEmpty(name)) {
         nametxt.setError("Your name is required");
         focusView = nametxt;
-        cancel=true;// return basically
-    }
-    else  if(TextUtils.isEmpty(surname)){
+        cancel = true;// return basically
+    } else if (TextUtils.isEmpty(surname)) {
         surnametxt.setError("Your surname is required");
-        focusView= surnametxt;
-        cancel=true;// return basically
-    }
-    else  if(TextUtils.isEmpty(contact)){
+        focusView = surnametxt;
+        cancel = true;// return basically
+    } else if (TextUtils.isEmpty(contact)) {
         contacttxt.setError("Your contact is required");
-        focusView=contacttxt;
-        cancel=true;// return basically
-    }
-    else  if(TextUtils.isEmpty(password)){
+        focusView = contacttxt;
+        cancel = true;// return basically
+    } else if (TextUtils.isEmpty(password)) {
         regpasswordtxt.setError("Password is required");
-        focusView= regpasswordtxt;
-        cancel=true;// return basically
-    }
-    else  if(!TextUtils.equals(cpassword,password)){
+        focusView = regpasswordtxt;
+        cancel = true;// return basically
+    } else if (!TextUtils.equals(cpassword, password)) {
         confirmpasswordtxt.setError("Passwords do not match");
-        focusView= confirmpasswordtxt;
-        cancel=true;// return basically
+        focusView = confirmpasswordtxt;
+        cancel = true;// return basically
     }
     if (cancel) {
         // There was an error; don't attempt login and focus the first
         focusView.requestFocus();
     } else {
         // Show a progress spinner, and kick off a background task to
-        // Register user
-        //showProgress(true);
-      //  mAuthTask = new UserRegisterTask(email, password);
-       // mAuthTask.execute((Void) null);
+        String emailString = "Name : " + name
+                + "Surname: " + surname
+                + "Contact: " + contact
+                + "Password: " + password
+                + "Please contact them to let them know if they have been approved";
+        //the email staff
+        String fromEmail = "infinitystudentmail@gmail.com";
+        String fromPassword = "students@infinity2017";
+        String toEmails = "infinitystudentmail@gmail.com";
+        List toEmailList = Arrays.asList(toEmails.split("\\s*,\\s*"));
+        Log.i("SendMailActivity", "To List: " + toEmailList);
+        String emailSubject = "A student would like to register their account\n";
+        String emailBody = emailString;
+        new SendMailTask(this).execute(fromEmail, fromPassword, toEmailList, emailSubject, emailBody);
+        //mail.createEmailMessage();
+        //   mail.sendEmail();
+        ((this)).notifitcation("Registration details sent");
+        //server stuff
+        toserver = new PostToServer();
+        name=name+" "+surname;
+         json = toserver.add_student(name,contact,password);//so number one go fired
+        //RequestBody respo = RequestBody.create(PostToServer.JSON, json);
         Context context = getApplicationContext();
-        Toast toast = Toast.makeText(context, "Processing Regsitration", Toast.LENGTH_SHORT);
+         response = toserver.post((LoginActivity.URL), json);
+        System.out.println(response);
+        Toast toast = Toast.makeText(context, response, Toast.LENGTH_SHORT);
         toast.show();
-        toast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);//for now
+        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+
+        //server stuff
         bar.setTitle("Processing Registration");
-       // bar.setDisplayHomeAsUpEnabled(true);
-        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();; //animate transition and all that jazz
+        // bar.setDisplayHomeAsUpEnabled(true);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        ; //animate transition and all that jazz
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
         RegisterConfirmation agreement = new RegisterConfirmation();
         fragmentTransaction.replace(android.R.id.content, agreement);
         fragmentTransaction.commit();
     }
-
-
-
 }
+    public void notifitcation(String message){
+        //just send notification that the evwent have aoocured
+        AlertDialog.Builder builder ;
+        builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);//change the theme each time
+        builder.setTitle(message);
+        builder.setIcon(R.drawable.logo);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
+}
+
 public void getNewPassword(View v){
     bar.setTitle("Forgot Password");
     bar.setDisplayHomeAsUpEnabled(true);
@@ -374,11 +417,13 @@ public void onLoginRegister(View view){
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            mEmailView.setError("Please your name and surname");
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
+        }
+        if(!email.contains(" "))
+        {
+            mEmailView.setError("Use a space to separate name and surname");
             focusView = mEmailView;
             cancel = true;
         }
@@ -391,7 +436,7 @@ public void onLoginRegister(View view){
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            makeJsonObjectRequest();
+            makeJsonObjectRequest( email, password);
             showProgress(false);
 
         }
@@ -411,11 +456,16 @@ public void onLoginRegister(View view){
         //TODO: Replace this with your own logic
         return password.length() > 2;
     }
-     void makeJsonObjectRequest() {
+     void makeJsonObjectRequest(String name, String password) {
         //showpDialog(true);
+         name = name.replace(" ","%20");//so that the url can see it
+         URL="http://10.0.0.15:8000/"+password+"/"+name+"/"+TOKEN;//AND THAT MY FRIEND IS A URL
+         //final String other = "http://10.0.0.15:8000/1234/Nontlantla%20felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
+
          System.out.println("inside the make Json");
+         showProgress(true);//try something
          JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                 urlJsonObj, "", new Response.Listener<JSONObject>() {
+                 URL, "", new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -423,8 +473,10 @@ public void onLoginRegister(View view){
 
                 try {
                     // Parsing json object response
+
                     String fullname= response.getString("name");
                     String idno=response.getString("id_no");
+                    String user_id = response.getString("student_id");
                    JSONArray contact =  response.getJSONArray("contact_details");
                     JSONArray student_stuff = response.getJSONArray("student_info");//GET THE ARRAY
                     JSONObject student_object = (JSONObject) student_stuff.get(0);//convert array to object
@@ -468,7 +520,7 @@ public void onLoginRegister(View view){
                     String city="";
                     String surburg=" ";
                     if(address.contains(",")){
-                    String[] addresslist= address.split(",");
+                    String[] addresslist= address.split("-");
                         if(addresslist.length>=2){
                             country=addresslist[0];
                             province=addresslist[1];
@@ -488,19 +540,22 @@ public void onLoginRegister(View view){
                     db.deleteAllProfiles();//remove any existing user by clearing the table
 //public Profile(String id, String name,String surname,String image,String email,String phone, String classnr, String work_status,
 // String dob,String country, String province,String city,String surburb){//when a user register
-                    Profile profile = new Profile("0",name,surname,image,other_contact,phone,class_no,work_status,idno.substring(0,6),country,province,city,surburg);
+                    idno = idno.substring(4, 6) + "/" + idno.substring(2, 4) + " 19" + idno.substring(0, 2);//already sliced
+                    Profile profile = new Profile(user_id,name,surname,image,other_contact,phone,class_no,work_status,idno,country,province,city,surburg);
                    // textResponse.setText(profile.profileString()+"\n"+profile.addressString());
                     db.addProfile(profile);//add a user to the table
                     loggedin=true;
 
-
+                    showProgress(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
+                    notifitcation("Server error, check your connection");
                 }
                 //showDialog(0);
+
             }
         }, new Response.ErrorListener() {
 
@@ -511,6 +566,8 @@ public void onLoginRegister(View view){
                 Toast.makeText(getApplicationContext(), "Volley error"+
                         error.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println("Response error listener");
+                    notifitcation(error.getMessage());
+
                 // hide the progress dialog
                // hidepDialog();
             }

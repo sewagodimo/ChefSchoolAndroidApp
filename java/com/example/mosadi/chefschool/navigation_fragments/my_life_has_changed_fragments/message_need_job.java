@@ -48,7 +48,7 @@ public class message_need_job extends Fragment{
         //the buttons
         cancel = (Button) v.findViewById(R.id.clear_transport);
         send = (Button) v.findViewById(R.id.savebutton);
-        bar.setTitle("Contact us");
+        bar.setTitle("I need a job");
         cancel.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {

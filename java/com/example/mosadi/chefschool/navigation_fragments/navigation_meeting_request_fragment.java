@@ -41,14 +41,14 @@ public class navigation_meeting_request_fragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.navigation_meetin_request, container, false);
         bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        rtext = (EditText) v.findViewById(R.id.reason_other);//reasong for meeting
-        wtext = (EditText) v.findViewById(R.id.when);
+        rtext = (EditText) v.findViewById(R.id.rtext);//reasong for meeting
+        wtext = (EditText) v.findViewById(R.id.wtext);
         //set the user
         user = ((MainActivity) this.getActivity()).getUser();
         //the buttons
         cancel = (Button) v.findViewById(R.id.clear_transport);
         send= (Button)v.findViewById(R.id.savebutton);
-        bar.setTitle("Other Changes in my life");
+        bar.setTitle("Request a meeting");
 
         cancel.setOnClickListener(
                 new View.OnClickListener() {

@@ -52,7 +52,7 @@
                 android:id="@+id/timeEstimation"
                 android:layout_width="66dp"
                 android:layout_height="wrap_content"
-                android:text="When "
+                android:text="Day"
                 android:textAlignment="viewStart"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
@@ -63,8 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName"
-                tools:text="Tomorrow, Friday,  Next Week" />
+                android:hint="Tomorrow, Friday,  Next Week"
+                android:inputType="textPersonName" />
 
         </LinearLayout>
 

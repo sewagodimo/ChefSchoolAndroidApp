@@ -38,10 +38,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:ems="10"
-                android:hint="I am having problems at work "
+                android:hint="where did you work before"
                 android:inputType="textLongMessage"
-                android:textAlignment="center"
-                tools:text="where did you work before" />
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout
@@ -66,8 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textLongMessage"
-                tools:text="where would like to work" />
+                android:hint="where would like to work"
+                android:inputType="textLongMessage" />
 
         </LinearLayout>
 

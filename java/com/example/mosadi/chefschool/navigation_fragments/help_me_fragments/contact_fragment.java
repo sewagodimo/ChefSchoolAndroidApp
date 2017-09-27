@@ -41,7 +41,7 @@ public class contact_fragment extends Fragment {
         send= (Button)v.findViewById(R.id.savebutton);
         bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
 
-        bar.setTitle("Contact Request");
+        bar.setTitle("Please contact me");
 
         cancel.setOnClickListener(
                 new View.OnClickListener() {

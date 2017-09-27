@@ -79,7 +79,7 @@ public class Profile {
         this.setSurburb("");
     }
 
-    public void edit_profile( String name,String surname,String image,String email, String phone, String dob,StudentAccountContract db){//when a user register
+    public void edit_profile( String name,String surname,String image,String email, String phone,StudentAccountContract db){//when a user register
         //this.setUserID(id);
         this.setImage(image);//There is no image so far
         this.setName(name);
@@ -88,7 +88,7 @@ public class Profile {
         this.setEmail(email);
         this.setPhone(phone);
        // this.setContact(contact);
-        this.setDob(dob);
+       // this.setDob(dob);
         //then change sqlite
         db.updateProfile(this);
 
@@ -185,8 +185,9 @@ public Profile userProfile(){
         return dob;
     }
 
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setDob(String dobstr) {
+        //so you get year month and date
+            this.dob=dobstr;
     }
 
     public String getCountry() {

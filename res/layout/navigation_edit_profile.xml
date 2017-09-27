@@ -11,36 +11,8 @@
         android:layout_marginTop="10dp"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
+        android:paddingTop="40dp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/image_container"
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/display_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-
-                android:adjustViewBounds="false"
-                android:cropToPadding="true"
-                app:srcCompat="@drawable/profilepic" />
-
-            <Button
-                android:id="@+id/edit_image"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Change Photo"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                android:textColor="@color/logoColorTransparent"
-                android:textSize="10sp"
-                android:textStyle="italic" />
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/name_container"
@@ -187,33 +159,6 @@
 
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/dobtxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="Date of Birth"
-
-                android:textAlignment="textStart"
-
-
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/edit_dob"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:background="@color/editText"
-                android:ems="10"
-                android:gravity="start"
-                android:layout_weight="1"
-                android:inputType="date"
-                android:text="09/04/1995"
-                android:textAlignment="viewStart" />
 
         </LinearLayout>
 

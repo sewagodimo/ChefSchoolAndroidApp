@@ -29,8 +29,8 @@ public class navigation_edit_fragment extends Fragment {
     ActionBar bar;
     Profile user;
 
-    String name,surname, phone,email,dob, image;
-    EditText name_edit,surname_edit,phone_edit,email_edit,dob_edit, image_edit;
+    String name,surname, phone,email;
+    EditText name_edit,surname_edit,phone_edit,email_edit;
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,19 +70,19 @@ public class navigation_edit_fragment extends Fragment {
         surname_edit=(EditText) v.findViewById(R.id.edit_surname);
         phone_edit=(EditText) v.findViewById(R.id.edit_phone);
         email_edit =(EditText) v.findViewById(R.id.edit_email);
-        dob_edit=(EditText) v.findViewById(R.id.edit_dob);
+       // dob_edit=(EditText) v.findViewById(R.id.edit_dob);
         //reset the edit values to the user's values
         name_edit.setText(user.getName());
         surname_edit.setText(user.getSurname());
         phone_edit.setText(user.getPhone());
         email_edit.setText(user.getEmail());
-        dob_edit.setText(user.getDob());
+       // dob_edit.setText(user.getDob());
         //set the strings, so you can cancel them later
         name=user.getName();
         surname=user.getSurname();
         phone=user.getPhone();
         email=user.getEmail();
-        dob=user.getDob();
+       // dob=user.getDob();
 
     }
     public void cancelChanges(){
@@ -90,7 +90,7 @@ public class navigation_edit_fragment extends Fragment {
         surname_edit.setText(surname);
         phone_edit.setText(phone);
         email_edit.setText(email);
-        dob_edit.setText(dob);
+       // dob_edit.setText(dob);
     }
     public void onSave(){
         //when Write to the db
@@ -98,8 +98,8 @@ public class navigation_edit_fragment extends Fragment {
                 surname_edit.getText().toString(),
                 "image",
                 email_edit.getText().toString(),
-                phone_edit.getText().toString(),
-        dob_edit.getText().toString());
+                phone_edit.getText().toString());
+      //  dob_edit.getText().toString());
     }
 
 

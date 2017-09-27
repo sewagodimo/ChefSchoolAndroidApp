@@ -66,8 +66,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textLongMessage"
-                tools:text="which company offered you a job" />
+                android:hint="which company offered you a job"
+                android:inputType="textLongMessage" />
 
         </LinearLayout>
 
@@ -93,8 +93,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textLongMessage"
-                tools:text="what makes the new offer better" />
+                android:hint="what makes the new offer better"
+                android:inputType="textLongMessage" />
 
         </LinearLayout>
 

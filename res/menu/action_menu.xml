@@ -6,8 +6,12 @@
         android:title="About"
         />
     <item
+        android:id="@+id/donate"
+        android:title="Donate"
+         />
+    <item
         android:id="@+id/logout_button"
         android:title="Log Out"
-         />
+        />
 </menu>
 
