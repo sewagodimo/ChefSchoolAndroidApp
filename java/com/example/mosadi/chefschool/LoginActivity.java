@@ -41,6 +41,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.mosadi.chefschool.loginfragments.ContactSchool;
 import com.example.mosadi.chefschool.loginfragments.ForgotPassword;
 import com.example.mosadi.chefschool.loginfragments.RegisterAgreement;
@@ -50,7 +51,6 @@ import com.example.mosadi.chefschool.userinformation.Profile;
 import com.example.mosadi.chefschool.userinformation.SendMailTask;
 import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 import com.example.mosadi.chefschool.webserver.AppController;
-import com.example.mosadi.chefschool.webserver.PostToServer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,7 +59,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -73,8 +75,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-    PostToServer toserver;
-    String json, response;
+
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -101,10 +102,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // json object response url
    // private String urlJsonObj = "http://10.0.0.14:8000/Nontlantla%20Felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
     public static final String TAG = AppController.class.getSimpleName();
-    public static  String URL="http://10.0.0.15:8000/";
+    public static  String URL;
+    public static String SERVER="http://10.0.0.15:8000/";
     public static final String TOKEN="d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
     // json array response url
-    private String urlJsonArry = "http://10.0.0.14:8000/1234/Nontlantla%20felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
+    private String urlJsonArry = "http:192.168.1.5//10.0.0.14:8000/1234/Nontlantla%20felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
     private String jsonResponse;
     TextView textResponse;
 
@@ -144,11 +146,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //user = cn.get(0);//all the user profiles
         if(cn.size()>0){
             //basically they have logged int
+            user = cn.get(0);
+            String name= user.getName();
+            URL=SERVER+user.getImage()+"/"+name+"%20" +user.getSurname()+"/"+TOKEN;
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
         //changeViewvalues();
+
     }
 
 
@@ -222,19 +228,10 @@ public void onForgotPassword(View view){
 
 }
 public void onRegisterUser( View v) throws IOException {
-
-    toserver = new PostToServer();
-        json = toserver.add_student("This righthere","I dow aht it do","1234");//so number one go fired
-    //RequestBody respo = RequestBody.create(PostToServer.JSON, json);
-    Context context = getApplicationContext();
-    response = toserver.post((LoginActivity.URL), json);
-    System.out.println(response);
-    ((this)).notifitcation(response);
-    //fetch the values from the view
     AutoCompleteTextView nametxt = (AutoCompleteTextView) findViewById(R.id.register_name);
     AutoCompleteTextView surnametxt = (AutoCompleteTextView) findViewById(R.id.register_surname);
     AutoCompleteTextView contacttxt = (AutoCompleteTextView) findViewById(R.id.register_contact);
-    ;
+
     EditText regpasswordtxt = (EditText) findViewById(R.id.look);
     EditText confirmpasswordtxt = (EditText) findViewById(R.id.confirm_look);
     //assume that all the values are ok
@@ -244,10 +241,10 @@ public void onRegisterUser( View v) throws IOException {
     regpasswordtxt.setError(null);
     confirmpasswordtxt.setError(null);
     //Convert the values to strings
-    String name = nametxt.getText().toString();
-    String surname = surnametxt.getText().toString();
-    String contact = contacttxt.getText().toString();
-    String password = regpasswordtxt.getText().toString();
+    final String name = nametxt.getText().toString();
+    final String surname = surnametxt.getText().toString();
+    final String contact = contacttxt.getText().toString();
+    final String password = regpasswordtxt.getText().toString();
     String cpassword = confirmpasswordtxt.getText().toString();
     //whhat to look at if things go wrong
     boolean cancel = false;//cancel the whole transaction
@@ -296,18 +293,52 @@ public void onRegisterUser( View v) throws IOException {
         //mail.createEmailMessage();
         //   mail.sendEmail();
 
-        //server stuff
-        toserver = new PostToServer();
-        name=name+" "+surname;
-         json = toserver.add_student(name,contact,password);//so number one go fired
-        //RequestBody respo = RequestBody.create(PostToServer.JSON, json);
-       // Context context = getApplicationContext();
-         response = toserver.post((LoginActivity.URL), json);
-        System.out.println(response);
-        ((this)).notifitcation(response);
-        Toast toast = Toast.makeText(context, response, Toast.LENGTH_SHORT);
-        toast.show();
-        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+        String addURL= SERVER+"new_student/"+TOKEN;
+        StringRequest postRequest = new StringRequest(Request.Method.POST, addURL,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Toast toast = Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT);
+                        toast.show();
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Toast toast = Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT);
+                        toast.show();
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
+
+                        //Log.d("Error.Response", error);
+                        //Log.d("Error.Response", error);
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<>();
+                params.put("title", "Student Registered");
+                params.put("name", name+" "+surname);
+                params.put("contact", contact);
+                params.put("password", password);
+                //JSONObject jsonObject = new JSONObject(params);
+                //String jsonString = jsonObject.toString();
+
+                return params;
+            }
+
+        };
+        AppController.getInstance().addToRequestQueue(postRequest);
+        //queue.add(postRequest);
+
 
         //server stuff
         bar.setTitle("Processing Registration");
@@ -443,7 +474,9 @@ public void onLoginRegister(View view){
             // perform the user login attempt.
             showProgress(true);
             makeJsonObjectRequest( email, password);
+
             showProgress(false);
+
 
         }
     }
@@ -462,11 +495,17 @@ public void onLoginRegister(View view){
         //TODO: Replace this with your own logic
         return password.length() > 2;
     }
+    public static String pass="";
+    public static void resetURL(String name){
+        name = name.replace(" ","%20");
+        URL= SERVER+pass+"/"+name+"/"+TOKEN;
+    }
      void makeJsonObjectRequest(String name, String password) {
         //showpDialog(true);
          name = name.replace(" ","%20");//so that the url can see it
-         URL="http://10.0.0.15:8000/"+password+"/"+name+"/"+TOKEN;//AND THAT MY FRIEND IS A URL
-         //final String other = "http://10.0.0.15:8000/1234/Nontlantla%20felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
+         URL=SERVER+password+"/"+name+"/"+TOKEN;//AND THAT MY FRIEND IS A URL
+         pass= password;
+        //URL = "http://192.168.1.5:8000/1234/Nontlantla%20felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
 
          System.out.println("inside the make Json");
          showProgress(true);//try something
@@ -495,27 +534,16 @@ public void onLoginRegister(View view){
                         work_status=student_grad;
                     }
                     String address= response.getString("address");
-                    String phone="";
+                    String phone=contact.get(0).toString();
                     String other_contact="";
+                    if(contact.length()>1){
+                        other_contact=contact.get(1).toString();
+                    }
+
 
                     //Logic for dealing with too many contact
-                    for(int i=0;i<contact.length();i++){
-                        if (contact.get(i).toString().contains("@")){
-                           // if(other_contact.length()>1) { //there is already another email
-                                other_contact = contact.get(i).toString();
-                           // }
-                        }
 
-                        else{
 
-                                phone = contact.get(i).toString();
-
-                        }
-                        if(phone.length()>2 && other_contact.length()>2){
-                            i=contact.length();//basically break if the contact his too many contact
-                        }
-
-                    }
 
 
 
@@ -526,9 +554,11 @@ public void onLoginRegister(View view){
                     String city="";
                     String surburg=" ";
                     if(address.contains(",")){
-                    String[] addresslist= address.split("-");
-                        if(addresslist.length>=2){
+                    String[] addresslist= address.split(",");
+                        if(addresslist.length>=1){
                             country=addresslist[0];
+                        }
+                        if(addresslist.length>=2){
                             province=addresslist[1];
                         }
                         if(addresslist.length>=3){
@@ -541,24 +571,25 @@ public void onLoginRegister(View view){
                     }
                     else{ country=address;}
 
-                    String image="not done yet";
 
                     db.deleteAllProfiles();//remove any existing user by clearing the table
 //public Profile(String id, String name,String surname,String image,String email,String phone, String classnr, String work_status,
 // String dob,String country, String province,String city,String surburb){//when a user register
-                    idno = idno.substring(4, 6) + "/" + idno.substring(2, 4) + " 19" + idno.substring(0, 2);//already sliced
-                    Profile profile = new Profile(user_id,name,surname,image,other_contact,phone,class_no,work_status,idno,country,province,city,surburg);
+                    idno = idno.substring(4, 6) + " " + idno.substring(2, 4) + " 19" + idno.substring(0, 2);//already sliced
+                    Profile profile = new Profile(user_id,name,surname,pass,other_contact,phone,class_no,work_status,idno,country,province,city,surburg);
                    // textResponse.setText(profile.profileString()+"\n"+profile.addressString());
                     db.addProfile(profile);//add a user to the table
                     loggedin=true;
 
-                    showProgress(false);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(),
                             "Error: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
-                    notifitcation("Server error, check your connection");
+                    notifitcation("There was a problem connecting you to the internet");
                 }
                 //showDialog(0);
 
@@ -572,7 +603,8 @@ public void onLoginRegister(View view){
                 Toast.makeText(getApplicationContext(), "Volley error"+
                         error.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println("Response error listener");
-                    notifitcation(error.getMessage());
+                error.printStackTrace();
+                    notifitcation( "Username and password do not match");
 
                 // hide the progress dialog
                // hidepDialog();
@@ -581,6 +613,7 @@ public void onLoginRegister(View view){
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq);
+
     }
 
     /**

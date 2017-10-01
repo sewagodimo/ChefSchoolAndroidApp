@@ -8,11 +8,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.mosadi.chefschool.LoginActivity;
 import com.example.mosadi.chefschool.MainActivity;
 import com.example.mosadi.chefschool.R;
 import com.example.mosadi.chefschool.navigation_fragments.my_life_has_changed_fragments.message_better_job;
@@ -20,9 +27,12 @@ import com.example.mosadi.chefschool.navigation_fragments.my_life_has_changed_fr
 import com.example.mosadi.chefschool.navigation_fragments.my_life_has_changed_fragments.message_other;
 import com.example.mosadi.chefschool.userinformation.Profile;
 import com.example.mosadi.chefschool.userinformation.SendMailTask;
+import com.example.mosadi.chefschool.webserver.AppController;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Mosadi on 2017/09/02.
@@ -54,16 +64,61 @@ public class navigation_life_changed extends Fragment {
             public void onClick(View v) {
                 // WHEN the user clicks that they want to get a new address
                 builder = new AlertDialog.Builder(getActivity(), R.style.MyAlertDialogStyle);//change the theme each time
-                builder.setTitle("Notifying the school that you have lost your jo");
+                builder.setTitle("Notifying the school that you have lost your job");
 
                 // Setting Dialog Message
                 builder.setMessage("Are you sure?");
+
+                //queue.add(postRequest);
+
 
                 // Setting Icon to Dialog
                 builder.setIcon(R.drawable.logo);
                 builder.setPositiveButton("Notify", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        sendEmail();
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, LoginActivity.URL,
+                                new Response.Listener<String>()
+                                {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        // response
+                                        sendEmail();
+                                        user.setWork_status("not working");
+                                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "A message is sent to school", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+
+                                        Log.d("Response", response);
+                                    }
+                                },
+                                new Response.ErrorListener()
+                                {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // error
+                                        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Failed to send, please check your internet connection", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
+
+                                        //Log.d("Error.Response", error);
+                                        //Log.d("Error.Response", error);
+                                    }
+                                }
+                        ) {
+                            @Override
+                            protected Map<String, String> getParams()
+                            {
+                                Map<String, String>  params = new HashMap<>();
+                                params.put("owner", "lost job");
+                                params.put("id", user.getUserID());
+                                params.put("employment", "unemployed");
+
+
+                                return params;
+                            }
+                        };
+                        AppController.getInstance().addToRequestQueue(postRequest);
+
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -22,24 +22,29 @@ public class PostToServer {
 
     OkHttpClient client = new OkHttpClient();
     String responseString="Nothing happened";
+    RequestBody body;
 
+    public   String post(String url, String json) throws IOException {
+      //client = new OkHttpClient();
+         body = RequestBody.create(JSON, json);
 
-  public   String post(String url, String json) throws IOException {
-        RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
+                .header("Content-Type", "application/json")
                 .url(url)
+
                 .post(body)
                 .build();
+      responseString= json;
 
-      client.newCall(request).enqueue( new Callback() {
+       client.newCall(request).enqueue( new Callback() {
           @Override
           public void onFailure(Call call, IOException e) {
-              responseString = call.toString();//body().string();
+              responseString = "Failed "+call.toString();//body().string();
           }
 
           @Override
           public void onResponse(Call call, Response response) throws IOException {
-              responseString="failed";
+              responseString=response.body().toString();;
           }
 
 
@@ -52,27 +57,25 @@ public class PostToServer {
         //return "Error in Request";
     }
 
-   public String edit_profile(String id,String name,String surname,String contact, String second_contact) {
-        return "{'title':'update_profile',"
-                + "'student_id':'"+id+" ,"
-                + "'contact':'"+contact+" ,"
-                + "'name':'"+name+" ,"
-                + "'surname':'"+surname+" ,"
-                + "'second_contact':"+second_contact+""
-                + "]}";
+   public String edit_profile(String name,String surname,String contact, String second_contact) {
+        return "{'title' : 'edit_profile', "
+                + "'name' : '"+name+" "+surname+"' , "
+                + "'contact' : '"+contact+"' , "
+                + "'other_contact' : '"+second_contact+"' "
+                + "}";
     }
     public String update_address(String id, String country,String province,String city, String surburb) {
         String address=country+"- "+province+"- "+city+"- "+surburb;
         return "{'title':'Change address',"
                 + "'student_id':'"+id+" ,"
                 + "'address':''" + address + "'"
-                + "]}";
+                + "}";
     }
     public String got_fired(String studentid) {
         return "{'title':'Fired',"
                 + "'student_id':'"+studentid+" ,"
                 + "'work_status':'unemployed'"
-                + "]}";
+                + "}";
     }
     public String add_student(String name,String contact, String password) {
         return "{'title':'Add Student',"
@@ -80,7 +83,7 @@ public class PostToServer {
                 + "'contact':'"+contact+" ,"
                 + "'password':'"+password+" '"
                 + "'active':'0'"
-                + "]}";
+                + "}";
     }
 
     public static void main(String[] args) throws IOException {

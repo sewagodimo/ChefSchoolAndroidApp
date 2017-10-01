@@ -12,11 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mosadi.chefschool.MainActivity;
 import com.example.mosadi.chefschool.R;
 import com.example.mosadi.chefschool.userinformation.Profile;
+
+import java.io.IOException;
 
 /**
  * Created by Mosadi on 2017/09/02.
@@ -31,11 +34,13 @@ public class navigation_edit_fragment extends Fragment {
 
     String name,surname, phone,email;
     EditText name_edit,surname_edit,phone_edit,email_edit;
+    TextView text;
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.navigation_edit_profile, container, false);
         user=((MainActivity)this.getActivity()).getUser();
+        text= (TextView)v.findViewById(R.id.error_message);
         // Inflate the layout for this fragment
         initialiseValues(v);
         bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
@@ -51,8 +56,15 @@ public class navigation_edit_fragment extends Fragment {
         save.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        onSave();//you have to create some form of a user model to store data
-                        makeToast("Changes saved");
+                        try {
+                            onSave();//you have to create some form of a user model to store data
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast toast = Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT);
+                            toast.show();
+                            toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
+                        }
+                        //makeToast("Changes saved");
                     }
                 });
 
@@ -92,8 +104,9 @@ public class navigation_edit_fragment extends Fragment {
         email_edit.setText(email);
        // dob_edit.setText(dob);
     }
-    public void onSave(){
+    public void onSave() throws IOException {
         //when Write to the db
+
         ((MainActivity)this.getActivity()).updateProfile(name_edit.getText().toString(),
                 surname_edit.getText().toString(),
                 "image",
@@ -101,6 +114,10 @@ public class navigation_edit_fragment extends Fragment {
                 phone_edit.getText().toString());
       //  dob_edit.getText().toString());
     }
+    public void setErroMessage(String msg){
+        text.setText(msg);
+    }
+
 
 
 }

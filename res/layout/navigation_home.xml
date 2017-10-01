@@ -28,7 +28,7 @@
 
                 android:adjustViewBounds="false"
                 android:cropToPadding="true"
-                app:srcCompat="@drawable/profilepic" />
+                app:srcCompat="@drawable/logo" />
 
         </LinearLayout>
 

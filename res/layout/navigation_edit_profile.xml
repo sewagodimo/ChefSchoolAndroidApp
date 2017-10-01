@@ -14,6 +14,14 @@
         android:paddingTop="40dp"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/logoColor"
+            android:textSize="18sp"
+            tools:text="what is wrong" />
+
         <LinearLayout
             android:id="@+id/name_container"
             android:layout_width="match_parent"

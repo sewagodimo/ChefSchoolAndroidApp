@@ -21,6 +21,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_edit_fragment;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_help_fragment;
 import com.example.mosadi.chefschool.navigation_fragments.navigation_home_fragment;
@@ -29,7 +36,13 @@ import com.example.mosadi.chefschool.navigation_fragments.navigation_meeting_req
 import com.example.mosadi.chefschool.userinformation.Profile;
 import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -41,6 +54,8 @@ public class MainActivity extends AppCompatActivity{
     ActionBar bar;
     TextView dialog_message;
     FragmentTransaction ft;
+    RequestQueue queue ;
+
   //  public static  String URL="http://10.0.0.14:8000/Nontlantla%20Felani/students/";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -148,6 +163,7 @@ public class MainActivity extends AppCompatActivity{
         dialog_message = (TextView) findViewById(R.id.dialog_message);
         user = cn.get(0);//all the user profiles
         //changeViewvalues();
+        queue = Volley.newRequestQueue(this);
 
 
         ft = fragmentManager.beginTransaction();
@@ -166,12 +182,63 @@ public class MainActivity extends AppCompatActivity{
     public Profile getUser(){
         return user;
     }
-    public void updateProfile(String name, String surname,String image,String email,String phone){
-        username=name;
-        user.edit_profile(name,surname,image,email,phone,db);
-        db.updateProfile(user);
-        System.out.println(user.profileString());
-    }
+    public void updateProfile(final String name, final String surname,final String image,final String email,final String phone) throws IOException {
+/**
+        PostToServer example = new PostToServer();
+        String json = example.edit_profile(name,surname,phone,email);//so number one go fired
+        String response = example.post("http://196.47.237.174:8000/1234/Nontlantla%20felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/", json);
+        Toast toast = Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT);
+        toast.show();
+        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+        **/
+
+            Map<String, String> params = new HashMap<>();
+            params.put("title", "edit profile");
+            params.put("id", user.getUserID());
+            params.put("name",name+" "+surname);
+            params.put("contact",phone);
+            params.put("other_contact",email);
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,LoginActivity.URL, new JSONObject(params),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        username=name;
+                        user.edit_profile(name,surname,image,email,phone,db);
+                        LoginActivity.resetURL(name+" "+surname);//reset the URL
+                        db.updateProfile(user);
+                        System.out.println(user.profileString());
+                        //user.setWork_status("not working");
+                        Toast toast = Toast.makeText(getApplicationContext(), "Succefully updated your detail", Toast.LENGTH_SHORT);
+                        toast.show();
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("change Pass response -->> " + error.toString());
+                        notifitcation("Error " +error.getMessage());
+                    }
+                }
+
+                );
+
+        queue.getCache().clear();
+   notifitcation(request.toString());
+       request.setRetryPolicy(new
+
+                DefaultRetryPolicy(5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        );
+
+        queue.add(request);
+
+        }
+
+
     public void updateAddress(String co,String pr,String ci, String sub){
         user.edit_address(co,pr,ci,sub,db);
 
