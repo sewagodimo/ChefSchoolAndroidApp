@@ -290,7 +290,7 @@ public class StudentAccountContract  extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getCountry());
+        values.put(ProfileEntry.COLUMN_NAME_WORK_STATUS, profile.getWork_status());
         // updating row
         return db.update(ProfileEntry.TABLE_NAME, values, ProfileEntry._ID + " = ?",
                 new String[] { String.valueOf(profile.getUserID()) });

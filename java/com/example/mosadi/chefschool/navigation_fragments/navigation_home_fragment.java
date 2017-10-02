@@ -43,6 +43,7 @@ public class navigation_home_fragment extends Fragment{
 
         return v;
     }
+
     public void changedisplayValues(Profile user){
         name.setText(user.getName());
         surname.setText(user.getSurname());

@@ -102,6 +102,11 @@ this.setCountry(country);
     //update sqlite
     db.updateAddress(this);
 }
+public void update_work(String new_job,StudentAccountContract db){
+    this.setWork_status(new_job);
+    db.updateWork_status(this);
+}
+
 public Profile userProfile(){
     return this;
 }

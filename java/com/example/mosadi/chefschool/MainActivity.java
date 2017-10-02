@@ -39,7 +39,6 @@ import com.example.mosadi.chefschool.userinformation.StudentAccountContract;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -182,23 +181,18 @@ public class MainActivity extends AppCompatActivity{
     public Profile getUser(){
         return user;
     }
-    public void updateProfile(final String name, final String surname,final String image,final String email,final String phone) throws IOException {
-/**
-        PostToServer example = new PostToServer();
-        String json = example.edit_profile(name,surname,phone,email);//so number one go fired
-        String response = example.post("http://196.47.237.174:8000/1234/Nontlantla%20felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/", json);
-        Toast toast = Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT);
-        toast.show();
-        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
-        **/
+    public void updateProfile(final String name, final String surname,final String image,final String email,final String phone)  {
+
 
             Map<String, String> params = new HashMap<>();
             params.put("title", "edit profile");
             params.put("id", user.getUserID());
-            params.put("name",name+" "+surname);
+            params.put("new_name",name+" "+surname);
+            params.put("image",user.getImage());//the image is the password, I just dontlike using it explicitly
+            params.put("name",user.getName()+" "+user.getSurname());
             params.put("contact",phone);
             params.put("other_contact",email);
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,LoginActivity.URL, new JSONObject(params),
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,LoginActivity.postURL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -208,9 +202,10 @@ public class MainActivity extends AppCompatActivity{
                         db.updateProfile(user);
                         System.out.println(user.profileString());
                         //user.setWork_status("not working");
-                        Toast toast = Toast.makeText(getApplicationContext(), "Succefully updated your detail", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getApplicationContext(), "Succefully updated your details", Toast.LENGTH_SHORT);
                         toast.show();
                         toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+
 
 
                     }
@@ -219,14 +214,27 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println("change Pass response -->> " + error.toString());
-                        notifitcation("Error " +error.getMessage());
+                        if(error.getMessage()==null || !(error.getMessage().contains("Connect")) ){
+                            //there is no appearent reason
+                            username=name;
+                            user.edit_profile(name,surname,image,email,phone,db);
+                            LoginActivity.resetURL(name+" "+surname);//reset the URL
+                            db.updateProfile(user);
+                            System.out.println(user.profileString());
+                            //user.setWork_status("not working");
+                            Toast toast = Toast.makeText(getApplicationContext(), "Succefully maybe updated your details", Toast.LENGTH_SHORT);
+                            toast.show();
+                            toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+                        }
+                        else{
+                            notifitcation("check your internet connection" );
+                        }
                     }
                 }
 
                 );
 
         queue.getCache().clear();
-   notifitcation(request.toString());
        request.setRetryPolicy(new
 
                 DefaultRetryPolicy(5000,
@@ -235,13 +243,117 @@ public class MainActivity extends AppCompatActivity{
         );
 
         queue.add(request);
-
+        //reload(name+" "+surname,image);
         }
+public void changedwork(final String new_job){
+    Map<String, String> params = new HashMap<>();
+    if(new_job.equalsIgnoreCase("")){
+    params.put("title", "lost job");}
+    else{
+        params.put("title", "new job");
+    }
+    params.put("image",user.getImage());//the image is the password, I just dontlike using it explicitly
+    params.put("name",user.getName()+" "+user.getSurname());
+    params.put("new job",new_job);
+    JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,LoginActivity.postURL, new JSONObject(params),
+            new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    user.update_work(new_job,db);
+                    Toast toast = Toast.makeText(getApplicationContext(), "Updated..", Toast.LENGTH_SHORT);
+                    toast.show();
+                    toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for no
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("change Pass response -->> " + error.toString());
+                    if(error.getMessage()==null || !(error.getMessage().contains("Connect")) ){
+                        user.update_work(new_job,db);
+                        Toast toast = Toast.makeText(getApplicationContext(), "Updated..", Toast.LENGTH_SHORT);
+                        toast.show();
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+                    }
+                    else{
+                        notifitcation("check your internet connection" );
+                    }
+                }
+            }
+
+    );
+
+    queue.getCache().clear();
+    request.setRetryPolicy(new
+
+            DefaultRetryPolicy(5000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+    );
+
+    queue.add(request);
+
+}
 
 
-    public void updateAddress(String co,String pr,String ci, String sub){
-        user.edit_address(co,pr,ci,sub,db);
 
+    public void updateAddress(final String co,final String pr,final String ci, final String sub){
+        String address= co+","+pr+","+ci+","+sub;
+        Map<String, String> params = new HashMap<>();
+        params.put("title", "update address");
+        params.put("image",user.getImage());//the image is the password, I just dontlike using it explicitly
+        params.put("name",user.getName()+" "+user.getSurname());
+        params.put("address",address);
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,LoginActivity.postURL, new JSONObject(params),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        user.edit_address(co,pr,ci,sub,db);
+                        //No nrrf
+                        db.updateAddress(user);
+                        System.out.println(user.addressString());
+                        //user.setWork_status("not working");
+                        Toast toast = Toast.makeText(getApplicationContext(), "Changed Address", Toast.LENGTH_SHORT);
+                        toast.show();
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("change Pass response -->> " + error.toString());
+                        if(error.getMessage()==null || !(error.getMessage().contains("Connect")) ){
+                            //there is no appearent reason
+                            user.edit_address(co,pr,ci,sub,db);
+                            //No nrrf
+                            db.updateAddress(user);
+                            System.out.println(user.addressString());
+                            //user.setWork_status("not working");
+                            Toast toast = Toast.makeText(getApplicationContext(), "Changed Address", Toast.LENGTH_SHORT);
+                            notifitcation(error.getMessage() );
+                            toast.show();
+                            toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+                        }
+                        else{
+                            notifitcation("check your internet connection" );
+                        }
+                    }
+                }
+
+        );
+
+        queue.getCache().clear();
+        request.setRetryPolicy(new
+
+                DefaultRetryPolicy(5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        );
+
+        queue.add(request);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

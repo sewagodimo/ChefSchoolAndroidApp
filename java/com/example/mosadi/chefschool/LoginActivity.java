@@ -36,12 +36,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mosadi.chefschool.loginfragments.ContactSchool;
 import com.example.mosadi.chefschool.loginfragments.ForgotPassword;
 import com.example.mosadi.chefschool.loginfragments.RegisterAgreement;
@@ -62,7 +65,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -98,14 +100,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    RequestQueue queue ;
     ActionBar bar;
     // json object response url
    // private String urlJsonObj = "http://10.0.0.14:8000/Nontlantla%20Felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
     public static final String TAG = AppController.class.getSimpleName();
     public static  String URL;
-    public static String SERVER="http://10.0.0.15:8000/";
+
+    public static String SERVER="http://10.0.0.13:8000/";
     public static final String TOKEN="d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
-    // json array response url
+    String addURL= SERVER+"passfhjbfhj4893y54/ICTchefsNew/"+TOKEN;
+    public static String postURL=SERVER+"passfhjbfhj4893y54/ICTchefmanage/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
+    // json array response urlf
     private String urlJsonArry = "http:192.168.1.5//10.0.0.14:8000/1234/Nontlantla%20felani/d309ff35fa8a4213de44d771e5cc341dictchefs2017/";
     private String jsonResponse;
     TextView textResponse;
@@ -123,6 +129,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         textResponse=(TextView) findViewById(R.id.textResponse);
         db=new StudentAccountContract(this);
+        queue = Volley.newRequestQueue(this);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -277,10 +284,10 @@ public void onRegisterUser( View v) throws IOException {
     } else {
         // Show a progress spinner, and kick off a background task to
         String emailString = "Name : " + name
-                + "Surname: " + surname
-                + "Contact: " + contact
-                + "Password: " + password
-                + "Please contact them to let them know if they have been approved";
+                + "  Surname: " + surname
+                + "  Contact: " + contact
+                + "  Password: " + password
+                + "  Please contact them to let them know if they have been approved";
         //the email staff
         String fromEmail = "infinitystudentmail@gmail.com";
         String fromPassword = "students@infinity2017";
@@ -289,60 +296,15 @@ public void onRegisterUser( View v) throws IOException {
         Log.i("SendMailActivity", "To List: " + toEmailList);
         String emailSubject = "A student would like to register their account\n";
         String emailBody = emailString;
+        registerUser(name,surname,password,contact);
         new SendMailTask(this).execute(fromEmail, fromPassword, toEmailList, emailSubject, emailBody);
         //mail.createEmailMessage();
         //   mail.sendEmail();
 
-        String addURL= SERVER+"new_student/"+TOKEN;
-        StringRequest postRequest = new StringRequest(Request.Method.POST, addURL,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        // response
-                        Toast toast = Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT);
-                        toast.show();
-                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
-
-                        Log.d("Response", response);
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Toast toast = Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT);
-                        toast.show();
-                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);
-
-                        //Log.d("Error.Response", error);
-                        //Log.d("Error.Response", error);
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<>();
-                params.put("title", "Student Registered");
-                params.put("name", name+" "+surname);
-                params.put("contact", contact);
-                params.put("password", password);
-                //JSONObject jsonObject = new JSONObject(params);
-                //String jsonString = jsonObject.toString();
-
-                return params;
-            }
-
-        };
-        AppController.getInstance().addToRequestQueue(postRequest);
-        //queue.add(postRequest);
-
-
         //server stuff
         bar.setTitle("Processing Registration");
-        // bar.setDisplayHomeAsUpEnabled(true);
+        this.registerUser(name,surname,password,contact); //nazo
+        // bar.setDispayHomeAsUpEnabled(true);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         ; //animate transition and all that jazz
         fragmentTransaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);
@@ -451,6 +413,11 @@ public void onLoginRegister(View view){
             focusView = mPasswordView;
             cancel = true;
         }
+        if (!TextUtils.isEmpty(email) && !isNameValid(email)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
@@ -481,24 +448,23 @@ public void onLoginRegister(View view){
         }
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        if (email.contains("@")){
-            return email.contains(".");
-        }
-        //check it its gigits only
-        return (Pattern.matches("[0-9]+", email) == true && email.length()>=9 );
+    private boolean isNameValid(String email) {
+
+        return email.contains(" ");
 
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 2;
+        return password.length() > 1;
     }
     public static String pass="";
     public static void resetURL(String name){
         name = name.replace(" ","%20");
         URL= SERVER+pass+"/"+name+"/"+TOKEN;
+    }
+    public static void resetURL(String name,String password){
+        name = name.replace(" ","%20");
+        URL= SERVER+password+"/"+name+"/"+TOKEN;
     }
      void makeJsonObjectRequest(String name, String password) {
         //showpDialog(true);
@@ -537,7 +503,7 @@ public void onLoginRegister(View view){
                     String phone=contact.get(0).toString();
                     String other_contact="";
                     if(contact.length()>1){
-                        other_contact=contact.get(1).toString();
+                       other_contact=contact.get(1).toString();
                     }
 
 
@@ -566,7 +532,7 @@ public void onLoginRegister(View view){
 
                         }
                         if(addresslist.length>=4){
-                            city=addresslist[3];
+                            surburg=addresslist[3];
                         }
                     }
                     else{ country=address;}
@@ -575,8 +541,10 @@ public void onLoginRegister(View view){
                     db.deleteAllProfiles();//remove any existing user by clearing the table
 //public Profile(String id, String name,String surname,String image,String email,String phone, String classnr, String work_status,
 // String dob,String country, String province,String city,String surburb){//when a user register
-                    idno = idno.substring(4, 6) + " " + idno.substring(2, 4) + " 19" + idno.substring(0, 2);//already sliced
-                    Profile profile = new Profile(user_id,name,surname,pass,other_contact,phone,class_no,work_status,idno,country,province,city,surburg);
+                    if(idno.length()>6) {
+                        idno = idno.substring(4, 6) + " " + idno.substring(2, 4) + " 19" + idno.substring(0, 2);//already sliced
+                    }
+                        Profile profile = new Profile(user_id,name,surname,pass,other_contact,phone,class_no,work_status,idno,country,province,city,surburg);
                    // textResponse.setText(profile.profileString()+"\n"+profile.addressString());
                     db.addProfile(profile);//add a user to the table
                     loggedin=true;
@@ -762,5 +730,55 @@ public void onLoginRegister(View view){
             showProgress(false);
         }
     }
+    public void registerUser(final String name, final String surname, final String password, final String phone) throws IOException {
+
+
+        Map<String, String> params = new HashMap<>();
+        params.put("title", "register");
+        params.put("name",name+" "+surname);
+        params.put("contact",phone);
+        params.put("password",password);
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST,postURL, new JSONObject(params),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        LoginActivity.resetURL(name+" "+surname, password);//so they can login
+                        Toast toast = Toast.makeText(getApplicationContext(), "Created your account", Toast.LENGTH_SHORT);
+                        toast.show();
+                        toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("change Pass response -->> " + error.toString());
+                        if(error.getMessage()==null){
+                            //there is no appearent reason
+                            LoginActivity.resetURL(name+" "+surname, password);//so they can login
+                            Toast toast = Toast.makeText(getApplicationContext(), "Created your account", Toast.LENGTH_SHORT);
+                            toast.show();
+                            toast.setGravity(Gravity.CENTER | Gravity.CENTER, 0, 0);//for now
+                        }
+                        notifitcation("Error " +error.getMessage());
+                    }
+                }
+
+        );
+
+        queue.getCache().clear();
+        request.setRetryPolicy(new
+
+                DefaultRetryPolicy(5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        );
+
+        queue.add(request);
+
+    }
+
 }
 
