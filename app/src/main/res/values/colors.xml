@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e25b32</color>
+    <color name="colorPrimaryDark">#14c451</color>
+    <color name="colorAccent">#fffc40</color>
+    <color name="logoColor">#a10509</color>
+    <color name="logoColorTransparent">#c8a10509</color>
+    <color name="mywhite">#ffffff</color>
+    <color name="colorDivider">#2FE897</color>
+    <color name="colorBorder">#a7a4a4</color>
+    <color name="editText">#c5fdb5b5</color>
+    <color name="colorExtra">#faf07c</color>
+    <color name="transparent">#00fffac1</color>
+</resources>

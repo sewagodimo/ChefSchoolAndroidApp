@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">ICT chefs</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Name and Surname (separated by space)</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This username is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="login_register_agreement">
+        "
+        By continuing to create an account you are
+        agreeing agreeing to being an alumni
+        of Infinity culinary school.
+        The details you enter will be sent to the school
+        and they will confirm your account..."
+    </string>
+    <string name="contact_person">
+        "Contact Melinda"
+    </string>
+    <string name="contact_email">"Email : melinda@ictchefs.org" </string>
+    <string name="contact_website">"Go to: http://www.ictchefs.org" </string>
+    <string name="confirm_registration">
+        "
+        Your account is being processed,
+        you will be receive an SMS
+        or an email from us soon"</string>
+    <!--Strings related to the Top  Drawer -->
+    <string name="home"> Home</string>
+    <string name="my_life_has_changed"> My Life Has Changed</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="help_me"> Help Me</string>
+    <string name="request_meeting"> Request a Meeting</string>
+    <!--Strings related to the Message Sent Navigation Drawer -->
+    <string name="request_sent">Thank you for signing up</string>
+    <string name="contact_message">Your message has been sent, make sure you contact details are up to date as you will be contacted shortly</string>
+
+    <string name="transport_money">If you need money getting to class, fill in ALL the information below and press send</string>
+</resources>
